@@ -31,7 +31,7 @@ If hPanel only serves `public_html`, either:
 - put the project in the account home and set the domain folder to `public_html/public` after uploading there, or
 - upload the project so that `public_html` contains `public/`, `src/`, `.htaccess`, and the rest. The `.htaccess` in the project root rewrites visitors into `public/` and denies direct access to `.env`, `src/`, `storage/`, `migrations/`, `tests/`, `vendor/`, and the docs.
 
-Confirm `https://your-domain.example/assets/brand/loaded-valet-trash-logo.jpg` loads, and that `https://your-domain.example/.env` does not.
+Confirm `https://your-domain.example/assets/brand/loaded-valet-trash-logo.png` loads, and that `https://your-domain.example/.env` does not.
 
 ## 3. Environment file
 

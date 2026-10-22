@@ -28,7 +28,7 @@ $nav = [
   <meta property="og:url" content="<?= e($canonical) ?>">
   <meta property="og:image" content="<?= e(base_url('assets/brand/og-share.jpg')) ?>">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/brand/favicon-32.png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
@@ -43,7 +43,7 @@ $nav = [
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="/">
-      <img src="/assets/brand/loaded-valet-trash-logo.jpg" alt="Loaded Valet Trash">
+      <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897">
     </a>
     <details class="nav-toggle">
       <summary class="menu-button">Menu</summary>
@@ -65,6 +65,12 @@ $nav = [
   <?= $content ?>
 </main>
 <footer class="site-footer">
+  <div class="wrap footer-brand">
+    <picture>
+      <source srcset="/assets/brand/loaded-valet-trash-logo.webp" type="image/webp">
+      <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897">
+    </picture>
+  </div>
   <div class="wrap footer-grid">
     <div>
       <strong><?= e((string) $settings['business_name']) ?></strong>

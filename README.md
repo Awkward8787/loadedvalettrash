@@ -25,7 +25,7 @@ Admin, built to be usable on a phone in the field:
 
 PHP 8.3 and MySQL (or MariaDB), with server-rendered pages. There is no Node process to keep running.
 
-Hostinger shared hosting, premium hosting, and the business hosting plans all run PHP and MySQL. Node.js on Hostinger is a separate runtime and is not available on every plan. This app is uploaded as PHP files, pointed at `public/` as the document root, and connected to a MySQL database created in hPanel. Composer is used on a laptop, or over SSH if the plan has it. The browser downloads no framework from a CDN. Fonts are self-hosted.
+Hostinger shared hosting, premium hosting, and the business hosting plans all run PHP and MySQL. Node.js on Hostinger is a separate runtime and is not available on every plan. This app is uploaded as PHP files, pointed at `public/` as the document root, and connected to a MySQL database created in hPanel. Composer is used on a laptop, or over SSH if the plan has it. The browser downloads no framework from a CDN. Fonts are self-hosted (Archivo for text, Anton for headings). The public mark is `public/assets/brand/loaded-valet-trash-logo.png`, cut from the official badge. Lime `#85e006` is sampled from that crown. Small text stays black on white or black on lime. Lime type is used on black.
 
 Money is stored in integer cents. Dates and times use `America/New_York`.
 
