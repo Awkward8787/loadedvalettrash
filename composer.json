@@ -1,0 +1,39 @@
+{
+  "name": "loaded-valet-trash/website",
+  "description": "Public website and operations backend for Loaded Valet Trash.",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.2",
+    "ext-pdo": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "ext-fileinfo": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lvt\\": "src/"
+    },
+    "files": [
+      "src/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lvt\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "lint": "php bin/lint.php",
+    "migrate": "php bin/migrate.php",
+    "seed": "php bin/seed.php"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

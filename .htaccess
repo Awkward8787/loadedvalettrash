@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+
+RewriteRule ^(\.env|\.env\..*|composer\.(json|lock)|phpunit\.xml|README\.md|SECURITY\.md|LICENSE)$ - [F,L]
+RewriteRule ^(src|storage|migrations|tests|bin|templates|bootstrap|docs|vendor)(/|$) - [F,L]
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [L]
