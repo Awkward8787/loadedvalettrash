@@ -34,7 +34,7 @@ if ($user && $user['role'] !== 'porter') {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title><?= e($documentTitle) ?></title>
-  <meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -45,7 +45,7 @@ if ($user && $user['role'] !== 'porter') {
 <header class="admin-bar">
   <div class="wrap admin-bar-row">
     <a class="brand" href="<?= ($user['role'] ?? '') === 'porter' ? '/admin/tonight' : '/admin' ?>">
-      <img src="/assets/brand/loaded-valet-trash-logo.jpg" alt="Loaded">
+      <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897">
     </a>
     <details class="mobile-nav">
       <summary class="menu-button">Menu</summary>

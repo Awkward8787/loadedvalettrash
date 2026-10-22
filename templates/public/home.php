@@ -6,7 +6,13 @@ $pickup = clock_label((string) $settings['pickup_start']) . '–' . clock_label(
 ?>
 <section class="hero">
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-mark">
+      <picture>
+        <source srcset="/assets/brand/loaded-valet-trash-logo.webp" type="image/webp">
+        <img src="/assets/brand/loaded-valet-trash-logo.png" alt="" width="773" height="897">
+      </picture>
+    </div>
+    <div class="hero-copy">
       <?php if (filled($settings['service_area'] ?? null)): ?>
         <p class="eyebrow"><?= e((string) $settings['service_area']) ?></p>
       <?php endif; ?>
@@ -16,14 +22,13 @@ $pickup = clock_label((string) $settings['pickup_start']) . '–' . clock_label(
         <a class="btn btn-primary" href="/contact?intent=walkthrough">Book a walkthrough</a>
         <a class="btn btn-ghost" href="/contact">Request a proposal</a>
       </div>
+      <aside class="hero-card">
+        <div class="fact"><span>Set-out</span> <?= e($setout) ?></div>
+        <div class="fact"><span>Pickup</span> <?= e($pickup) ?></div>
+        <div class="fact"><span>Bags</span> Up to <?= (int) $settings['max_bags_per_night'] ?> a night</div>
+        <div class="fact"><span>Trial</span> 30 days, buildings you choose</div>
+      </aside>
     </div>
-    <aside class="hero-card">
-      <img src="/assets/brand/loaded-valet-trash-logo.jpg" alt="">
-      <div class="fact"><span>Set-out</span> <?= e($setout) ?></div>
-      <div class="fact"><span>Pickup</span> <?= e($pickup) ?></div>
-      <div class="fact"><span>Bags</span> Up to <?= (int) $settings['max_bags_per_night'] ?> a night</div>
-      <div class="fact"><span>Trial</span> 30 days, buildings you choose</div>
-    </aside>
   </div>
 </section>
 

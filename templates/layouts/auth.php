@@ -8,13 +8,20 @@ $documentTitle = ($title ?? 'Sign in') . ' | Loaded Valet Trash';
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title><?= e($documentTitle) ?></title>
-  <meta name="theme-color" content="#111111">
-  <link rel="icon" href="/favicon.ico">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/brand/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
   <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body class="auth-body">
   <main id="main" class="auth-card">
-    <a class="brand" href="/"><img src="/assets/brand/loaded-valet-trash-logo.jpg" alt="Loaded Valet Trash"></a>
+    <a class="brand" href="/">
+      <picture>
+        <source srcset="/assets/brand/loaded-valet-trash-logo.webp" type="image/webp">
+        <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897">
+      </picture>
+    </a>
     <?php foreach (flashes() as $type => $message): ?>
       <div class="banner banner-<?= e((string) $type) ?>" role="status"><?= e((string) $message) ?></div>
     <?php endforeach; ?>
