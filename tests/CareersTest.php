@@ -13,7 +13,9 @@ final class CareersTest extends TestCase
         $client = $this->client();
         $page = $client->get('/careers');
         $this->assertSame(200, $page->status);
-        $this->assertStringContainsString('Laborer / Porter', $page->body);
+        $this->assertStringContainsString('<h3>Laborer</h3>', $page->body);
+        $this->assertStringContainsString('<option value="laborer">Laborer</option>', $page->body);
+        $this->assertStringNotContainsString('Laborer / Porter', $page->body);
         $this->assertStringContainsString('Starting at $18 an hour.', $page->body);
         $this->assertStringContainsString('Supervisor', $page->body);
         $this->assertStringContainsString('Starting at $20 an hour.', $page->body);
@@ -184,6 +186,8 @@ final class CareersTest extends TestCase
         $list = $ownerClient->get('/admin/applications');
         $this->assertSame(200, $list->status);
         $this->assertStringContainsString('Riley Porter', $list->body);
+        $this->assertStringContainsString('>Laborer</option>', $list->body);
+        $this->assertStringNotContainsString('Laborer / Porter', $list->body);
         $this->assertStringContainsString('href="/admin/applications"', $list->body);
 
         $byRole = $ownerClient->get('/admin/applications?role=supervisor&status=all');

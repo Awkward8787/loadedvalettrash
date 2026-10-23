@@ -285,7 +285,7 @@ function inquiry_kind_label(string $kind): string
 function job_roles(): array
 {
     return [
-        'laborer' => 'Laborer / Porter',
+        'laborer' => 'Laborer',
         'supervisor' => 'Supervisor',
     ];
 }

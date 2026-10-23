@@ -17,7 +17,7 @@ $days = job_days();
       <h2>Two roles</h2>
       <div class="stack">
         <article class="card">
-          <h3>Laborer / Porter</h3>
+          <h3><?= e($roles['laborer']) ?></h3>
           <p><strong>Starting at $18 an hour.</strong></p>
           <p>Collect bagged trash from the can outside each apartment door and take it to the property compactor or dumpster. Residents set cans out from <?= e($setout) ?>. Pickup runs <?= e($pickup) ?>, Monday through Friday.</p>
         </article>

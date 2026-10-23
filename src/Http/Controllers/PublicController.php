@@ -524,7 +524,7 @@ final class PublicController extends Controller
         $s = Settings::get();
         return [
             'title' => 'Careers',
-            'description' => 'Laborer / Porter starts at $18 an hour. Supervisor starts at $20 an hour. Monday through Friday evening routes in Valdosta and Lowndes County.',
+            'description' => 'Laborer starts at $18 an hour. Supervisor starts at $20 an hour. Monday through Friday evening routes in Valdosta and Lowndes County.',
             'setout' => clock_range((string) $s['setout_start'], (string) $s['setout_end']),
             'pickup' => clock_range((string) $s['pickup_start'], (string) $s['pickup_end']),
         ];
