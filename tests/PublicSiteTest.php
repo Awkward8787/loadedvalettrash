@@ -46,7 +46,7 @@ final class PublicSiteTest extends TestCase
     public function testRobotsAndCorePagesExist(): void
     {
         $client = $this->client();
-        foreach (['/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'] as $path) {
+        foreach (['/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/faq', '/about', '/contact', '/careers', '/missed-pickup', '/privacy', '/terms'] as $path) {
             $response = $client->get($path);
             $this->assertSame(200, $response->status, $path);
             $this->assertStringNotContainsString('[ADD', $response->body, $path);

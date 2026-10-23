@@ -31,6 +31,8 @@ $router->get('/faq', [PublicController::class, 'faq']);
 $router->get('/about', [PublicController::class, 'about']);
 $router->get('/contact', [PublicController::class, 'contact']);
 $router->post('/contact', [PublicController::class, 'contactSubmit']);
+$router->get('/careers', [PublicController::class, 'careers']);
+$router->post('/careers', [PublicController::class, 'careersSubmit']);
 $router->get('/missed-pickup', [PublicController::class, 'missed']);
 $router->post('/missed-pickup', [PublicController::class, 'missedSubmit']);
 $router->get('/privacy', [PublicController::class, 'privacy']);
@@ -105,6 +107,9 @@ $router->get('/admin/reviews', [ModerationController::class, 'reviews'], $ops);
 $router->post('/admin/reviews/{id}', [ModerationController::class, 'review'], $ops);
 $router->get('/admin/inquiries', [ModerationController::class, 'inquiries'], $ops);
 $router->post('/admin/inquiries/{id}', [ModerationController::class, 'inquiry'], $ops);
+$router->get('/admin/applications', [ModerationController::class, 'applications'], $ops);
+$router->get('/admin/applications/{id}', [ModerationController::class, 'application'], $ops);
+$router->post('/admin/applications/{id}', [ModerationController::class, 'applicationUpdate'], $ops);
 
 $router->get('/admin/settings', [SettingsController::class, 'edit'], $owner);
 $router->post('/admin/settings', [SettingsController::class, 'update'], $owner);

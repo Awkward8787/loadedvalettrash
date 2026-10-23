@@ -349,6 +349,17 @@ input[type="radio"] {
   flex: 0 0 auto;
 }
 input[type="file"] { padding: 0.45rem 0.6rem; }
+fieldset.field {
+  border: 1.5px solid #1a1a1a;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0.55rem 0.75rem 0.65rem;
+  min-width: 0;
+}
+fieldset.field legend {
+  font-weight: 700;
+  padding: 0 0.3rem;
+}
 fieldset.field label,
 .form label:has(> input[type="checkbox"]),
 .form label:has(> input[type="radio"]) {
@@ -357,6 +368,11 @@ fieldset.field label,
   gap: 0.65rem;
   min-height: 44px;
   font-weight: 600;
+}
+fieldset.field label span,
+.form label:has(> input[type="checkbox"]) span,
+.form label:has(> input[type="radio"]) span {
+  min-width: 0;
 }
 input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-visible, summary:focus-visible, a:focus-visible {
   outline: 3px solid var(--lime);

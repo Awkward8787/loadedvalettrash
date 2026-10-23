@@ -24,6 +24,7 @@ abstract class TestCase extends PhpUnitTestCase
             'audit_log',
             'invoices',
             'inquiries',
+            'job_applications',
             'reviews',
             'issues',
             'time_entries',

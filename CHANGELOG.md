@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Careers page and application form for a laborer / porter starting at $18 an hour and a supervisor starting at $20 an hour, with an owner and manager review queue
 - Stylesheet and script links carry the file modification time so a returning browser does not keep a stale app.css
 - Home hero shows the 16:9 commercial from the poster frame, with English captions along the bottom and no autoplay. The video width is capped from a 60vh frame, and the hero section grows with its copy.
 - Home: lime buttons use near-black text, cards and the set-out note drop the one-sided lime bar, and the hero mark stays within 60vh

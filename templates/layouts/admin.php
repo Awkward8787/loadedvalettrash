@@ -15,6 +15,7 @@ if ($user && $user['role'] !== 'porter') {
         '/admin/employees' => 'Team',
         '/admin/reviews' => 'Reviews',
         '/admin/inquiries' => 'Inbox',
+        '/admin/applications' => 'Applications',
         '/admin/audit' => 'Audit',
     ];
     if ($user['role'] === 'owner') {

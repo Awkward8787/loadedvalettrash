@@ -281,6 +281,60 @@ function inquiry_kind_label(string $kind): string
     return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);
 }
 
+/** @return array<string,string> */
+function job_roles(): array
+{
+    return [
+        'laborer' => 'Laborer / Porter',
+        'supervisor' => 'Supervisor',
+    ];
+}
+
+function job_role_label(string $role): string
+{
+    return job_roles()[$role] ?? $role;
+}
+
+/** @return list<string> */
+function job_statuses(): array
+{
+    return ['new', 'reviewing', 'interview', 'hired', 'declined'];
+}
+
+function job_status_label(string $status): string
+{
+    return ucfirst($status);
+}
+
+/** @return array<string,string> */
+function job_days(): array
+{
+    return [
+        'mon' => 'Monday',
+        'tue' => 'Tuesday',
+        'wed' => 'Wednesday',
+        'thu' => 'Thursday',
+        'fri' => 'Friday',
+    ];
+}
+
+function job_days_label(string $csv): string
+{
+    $labels = [];
+    foreach (explode(',', $csv) as $day) {
+        $label = job_days()[trim($day)] ?? '';
+        if ($label !== '') {
+            $labels[] = $label;
+        }
+    }
+    return implode(', ', $labels);
+}
+
+function yes_no_label(mixed $value): string
+{
+    return (int) $value === 1 ? 'Yes' : 'No';
+}
+
 function property_address(array $property): string
 {
     $stateZip = trim(((string) ($property['state'] ?? '')) . ' ' . ((string) ($property['postal_code'] ?? '')));
