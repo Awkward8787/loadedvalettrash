@@ -6,6 +6,7 @@ $description = $description ?? 'Doorstep valet trash for apartment communities i
 $path = $path ?? '/';
 $canonical = base_url($path === '/' ? '/' : ltrim($path, '/'));
 $nav = [
+    '/services' => 'Services',
     '/how-it-works' => 'How it works',
     '/pricing' => 'Pricing',
     '/who-we-serve' => 'Who we serve',
@@ -27,6 +28,7 @@ $nav = [
   <meta property="og:type" content="website">
   <meta property="og:url" content="<?= e($canonical) ?>">
   <meta property="og:image" content="<?= e(base_url('assets/brand/og-share.jpg')) ?>">
+  <meta property="og:image:alt" content="Loaded Valet Trash logo">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -45,6 +47,12 @@ $nav = [
     <a class="brand" href="/">
       <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897">
     </a>
+    <nav class="nav-desktop" aria-label="Primary">
+      <?php foreach ($nav as $href => $label): ?>
+        <a href="<?= e($href) ?>"<?= $path === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?></a>
+      <?php endforeach; ?>
+      <a class="btn btn-primary" href="/contact">Request a proposal</a>
+    </nav>
     <details class="nav-toggle">
       <summary class="menu-button">Menu</summary>
       <nav class="nav-links" aria-label="Primary">
@@ -92,6 +100,7 @@ $nav = [
       <strong>For properties</strong>
       <p><a href="/contact">Request a proposal</a></p>
       <p><a href="/contact?intent=walkthrough">Book a walkthrough</a></p>
+      <p><a href="/services">Services</a></p>
       <p><a href="/pricing">Pricing</a></p>
       <p><a href="/reviews/new">Share a review</a></p>
     </div>

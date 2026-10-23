@@ -36,7 +36,8 @@
   <p class="muted">Columns: name, address, units, manager, phone, email, website, has_valet_trash. Gate codes are not imported.</p>
   <form class="form" method="post" action="/admin/pipeline/import" enctype="multipart/form-data">
     <?= csrf_field() ?>
-    <input type="file" name="csv" accept=".csv,text/csv" required>
+    <label for="lead-csv">CSV file</label>
+    <input id="lead-csv" type="file" name="csv" accept=".csv,text/csv" required>
     <button class="btn btn-primary" type="submit">Import CSV</button>
     <a href="/admin/pipeline/template.csv">Download the example template</a>
   </form>

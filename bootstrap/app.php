@@ -20,6 +20,7 @@ use Lvt\Router;
 $router = new Router();
 
 $router->get('/', [PublicController::class, 'home']);
+$router->get('/services', [PublicController::class, 'services']);
 $router->get('/how-it-works', [PublicController::class, 'how']);
 $router->get('/pricing', [PublicController::class, 'pricing']);
 $router->get('/who-we-serve', [PublicController::class, 'who']);

@@ -118,7 +118,7 @@ function field_error(string $key): string
     if ($msg === '') {
         return '';
     }
-    return '<p class="field-error" id="err-' . e($key) . '">' . e($msg) . '</p>';
+    return '<p class="field-error" id="err-' . e($key) . '" role="alert">' . e($msg) . '</p>';
 }
 
 function has_error(string $key): bool
@@ -230,6 +230,22 @@ function valid_date(string $value): bool
 {
     $dt = DateTimeImmutable::createFromFormat('Y-m-d', $value);
     return $dt !== false && $dt->format('Y-m-d') === $value;
+}
+
+/** @return array<string,string> */
+function inquiry_kinds(): array
+{
+    return [
+        'proposal' => 'Request a proposal',
+        'walkthrough' => 'Book a walkthrough',
+        'event_cleanup' => 'Party and event cleanup',
+        'move_out' => 'Move-out cleanout',
+    ];
+}
+
+function inquiry_kind_label(string $kind): string
+{
+    return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);
 }
 
 function property_address(array $property): string

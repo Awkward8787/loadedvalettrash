@@ -25,6 +25,15 @@ final class PublicController extends Controller
         ]);
     }
 
+    public function services(): Response
+    {
+        return $this->page(
+            'public/services',
+            'Services',
+            'Doorstep valet trash for apartment complexes, party and event cleanup quoted per event, and move-out cleanout quoted per job in Valdosta and Lowndes County, Georgia.'
+        );
+    }
+
     public function how(): Response
     {
         return $this->page('public/how', 'How valet trash works', 'Monday through Friday doorstep pickup for Valdosta apartment communities. Set-out window, bag rules, and what the leasing office does.', [
@@ -120,7 +129,7 @@ final class PublicController extends Controller
 
     public function contact(): Response
     {
-        return $this->page('public/contact', 'Request a proposal', 'Ask Loaded Valet Trash for a walkthrough or a proposal for your Valdosta property.');
+        return $this->page('public/contact', 'Request a quote', 'Ask Loaded Valet Trash for a proposal, a walkthrough, party and event cleanup, or a move-out cleanout.');
     }
 
     public function contactSubmit(): Response
@@ -138,7 +147,7 @@ final class PublicController extends Controller
         $phone = $req->string('contact_phone');
         $message = $req->string('message');
         $kind = $req->string('kind', 'proposal');
-        if (!in_array($kind, ['proposal', 'walkthrough'], true)) {
+        if (!array_key_exists($kind, inquiry_kinds())) {
             $kind = 'proposal';
         }
         if (mb_strlen($property) < 2 || mb_strlen($property) > 180) {
@@ -174,7 +183,7 @@ final class PublicController extends Controller
             Database::insertRow('property_notes', [
                 'property_id' => $propertyId,
                 'user_id' => null,
-                'body' => 'Website ' . $kind . ' request from ' . $contact . ($message !== '' ? ': ' . $message : '.'),
+                'body' => 'Website ' . inquiry_kind_label($kind) . ' request from ' . $contact . ($message !== '' ? ': ' . $message : '.'),
                 'created_at' => now_dt(),
             ]);
         } else {
@@ -298,7 +307,7 @@ final class PublicController extends Controller
 
     public function sitemap(): Response
     {
-        $paths = ['/', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'];
+        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'];
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         foreach ($paths as $path) {
             $xml .= '<url><loc>' . e(base_url($path === '/' ? '/' : ltrim($path, '/'))) . '</loc></url>';
@@ -365,19 +374,23 @@ final class PublicController extends Controller
             ],
             [
                 'q' => 'What do residents do?',
-                'a' => 'Monday through Friday, set tied bags outside the door between ' . $setout . '. Porters collect from ' . $pickup . ' and take the bags to the property compactor or dumpster. Bags left out before the window, or still out after pickup, go back inside.',
+                'a' => 'Monday through Friday, tie the trash in a bag and put it inside your can. Put your trash can outside your door with the bagged trash inside it during ' . $setout . '. Never put a loose bag on the ground. A second bag goes on top of the can, never on the ground or beside it. On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Not on stairs or walkways. Porters collect from ' . $pickup . ' and take the trash to the property compactor or dumpster. Cans left out before the window, or still out after pickup, go back inside. Loose bags scatter garbage.',
             ],
             [
                 'q' => 'What are the bag rules?',
-                'a' => 'Tied, leak-proof bags, kitchen size (13 gallon) up to 30 gallon, ' . $weight . ' pounds max, up to ' . $bags . ' bags a night (' . $holidayBags . ' the night after a holiday). Place them at the door, not on stairs or walkways. No loose trash, no open boxes, no leaking bags. Flatten and tie cardboard into a small bundle of up to 2 boxes, or take it to the compactor. We do not take furniture, mattresses, electronics, paint, chemicals, batteries, needles or medical waste, construction debris, hot ashes, or unbagged pet waste.',
+                'a' => 'Tie the trash in a bag and put it inside your can. Tied, leak-proof bags, kitchen size (13 gallon) up to 30 gallon, ' . $weight . ' pounds max, up to ' . $bags . ' bags a night (' . $holidayBags . ' the night after a holiday). On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Put your trash can outside your door with the bagged trash inside it. Never put a loose bag on the ground. Set the can right outside your door during the set-out window, not on stairs or walkways. A second bag goes on top of the can, never on the ground or beside it. Loose bags scatter garbage. No loose trash, no open boxes, no leaking bags. Flatten and tie cardboard into a small bundle of up to 2 boxes, or take it to the compactor. We do not take furniture, mattresses, electronics, paint, chemicals, batteries, needles or medical waste, construction debris, hot ashes, or unbagged pet waste.',
+            ],
+            [
+                'q' => 'Do you clean up after events or move-outs?',
+                'a' => 'Yes. Party and event cleanup is for residents, properties and clubhouses, and private events. Pricing is quoted per event. Move-out cleanout and trash haul-off is for leasing offices, apartment complexes, and homes. Pricing is quoted per job. Use the contact form and choose the job.',
             ],
             [
                 'q' => 'What if a pickup is missed?',
-                'a' => 'If the bag was out by the end of the set-out window and was not collected, tell the leasing office by ' . $report . ' the next day (or use the missed-pickup form on this site). If it was our miss, we come back the same day. If the bag went out late, it waits for the next service night.',
+                'a' => 'If the can was out by the end of the set-out window, with the bagged trash inside it, and it was not collected, tell the leasing office by ' . $report . ' the next day (or use the missed-pickup form on this site). If it was our miss, we come back the same day. If the can went out late, it waits for the next service night.',
             ],
             [
                 'q' => 'Will trash at the door cause pests or odor?',
-                'a' => 'Bags are out only during the set-out window and are collected the same night, so nothing is left overnight on a normal route. Bags have to be tied and leak-proof. A rule break gets a door notice and a photo for the office. Porters carry absorbent and a broom for drips they cause.',
+                'a' => 'The can is outside only during the set-out window and is collected the same night, so trash is not left overnight on a normal route. Tie the trash in a bag and put it inside the can. A second bag goes on top of the can, never on the ground or beside it. On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Never put a loose bag on the ground. Loose bags scatter garbage. A rule break gets a door notice and a photo for the office. Porters carry absorbent and a broom for drips they cause.',
             ],
             [
                 'q' => 'How much work is this for my staff?',
@@ -389,18 +402,17 @@ final class PublicController extends Controller
             ],
             [
                 'q' => 'Which nights do you run?',
-                'a' => 'Monday through Friday, including Friday night, so weekend-start trash can go out before the weekend. We do not run Saturday or Sunday. Listed holidays are off, with notice ahead of time, and the next service night allows up to ' . $holidayBags . ' bags. Severe storms, lightning, or a tropical-storm warning can delay a route up to two hours or cancel it. Residents are told by 7 PM, and the next night is a double-bag night.',
+                'a' => 'Monday through Friday, including Friday night, so the can can go out before the weekend. We do not run Saturday or Sunday. Listed holidays are off, with notice ahead of time, and the next service night allows up to ' . $holidayBags . ' bags. Severe storms, lightning, or a tropical-storm warning can delay a route up to two hours or cancel it. Residents are told by 7 PM, and the next night is a double-bag night. On those extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.',
             ],
+        ];
+        $items[] = [
+            'q' => 'Do porters go inside apartments?',
+            'a' => 'No. Porters pick up the can outside the door, with the bagged trash inside it, and a second bag only if it is on top of the can. They take that trash to the property compactor or dumpster. A certificate is provided before service starts. This website does not state a policy limit and does not name a property as an additional insured.',
         ];
         if (filled($s['insurance_text'] ?? null)) {
             $items[] = [
-                'q' => 'What insurance do you carry?',
-                'a' => trim((string) $s['insurance_text']) . ' Porters do not enter apartments.',
-            ];
-        } else {
-            $items[] = [
-                'q' => 'Do porters go inside apartments?',
-                'a' => 'No. Porters pick up only what is set outside the door and take it to the property compactor or dumpster. Ask us for a certificate of insurance when we prepare a proposal. Coverage is whatever the certificate says. This website does not state a policy limit until the owner adds it.',
+                'q' => 'Where is the certificate described?',
+                'a' => 'A certificate is provided before service starts. ' . trim((string) $s['insurance_text']),
             ];
         }
         $area = trim((string) ($s['service_area'] ?? ''));

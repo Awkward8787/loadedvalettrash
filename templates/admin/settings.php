@@ -44,10 +44,10 @@
   </ul>
   <form class="form" method="post" action="/admin/holidays">
     <?= csrf_field() ?>
-    <input name="name" placeholder="Holiday name" required>
-    <input type="date" name="observed_on" required>
+    <div class="field"><label for="holiday-name">Holiday name</label><input id="holiday-name" name="name" required></div>
+    <div class="field"><label for="holiday-date">Date</label><input id="holiday-date" type="date" name="observed_on" required></div>
     <label><input type="checkbox" name="service_off" value="1" checked> No service</label>
-    <input name="instructions" placeholder="What residents should do">
+    <div class="field"><label for="holiday-instructions">What residents should do</label><input id="holiday-instructions" name="instructions"></div>
     <button class="btn btn-ghost" type="submit">Save holiday</button>
   </form>
 </section>

@@ -2,7 +2,7 @@
 <?php if ($inquiries === []): ?><p class="card">No requests yet.</p><?php endif; ?>
 <?php foreach ($inquiries as $inquiry): ?>
   <article class="card">
-    <p><span class="badge"><?= e((string) $inquiry['status']) ?></span> <?= e((string) $inquiry['kind']) ?></p>
+    <p><span class="badge"><?= e((string) $inquiry['status']) ?></span> <?= e(inquiry_kind_label((string) $inquiry['kind'])) ?></p>
     <h2><?= e((string) $inquiry['property_name']) ?></h2>
     <p><?= e((string) $inquiry['contact_name']) ?> · <?= (int) ($inquiry['units_count'] ?? 0) ?> units</p>
     <p><?= e((string) ($inquiry['contact_email'] ?? '')) ?> <?= e((string) ($inquiry['contact_phone'] ?? '')) ?></p>

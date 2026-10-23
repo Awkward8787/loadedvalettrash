@@ -1,5 +1,6 @@
 <h1>Tonight</h1>
 <p class="muted"><?= e((string) $date) ?>. Check a building when every door is done, or mark a single door.</p>
+<p class="warning"><strong>Set-out.</strong> Put your trash can outside your door with the bagged trash inside it. Never put a loose bag on the ground. A second bag belongs on top of the can. On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Loose bags on the ground: report to the office. Mark the violation "loose bag (not in/on can)" and leave the bag.</p>
 <?php if (empty($run)): ?>
   <div class="card">
     <h2>No route assigned</h2>
@@ -49,11 +50,21 @@
           <span class="badge"><?= e(str_replace('_', ' ', (string) $door['status'])) ?></span>
           <form class="stack" method="post" action="/admin/tonight/doors/<?= (int) $door['id'] ?>" enctype="multipart/form-data">
             <?= csrf_field() ?>
-            <input name="notes" placeholder="Note" value="<?= e((string) ($door['notes'] ?? '')) ?>">
-            <select name="violation_kind">
-              <option value="">Violation type, if any</option>
-              <?php foreach (['loose','leaking','overweight','too_many','hazardous','wrong_time','other'] as $kind): ?>
-                <option value="<?= e($kind) ?>"><?= e(str_replace('_', ' ', $kind)) ?></option>
+            <label for="note-<?= (int) $door['id'] ?>">Note</label>
+            <input id="note-<?= (int) $door['id'] ?>" name="notes" value="<?= e((string) ($door['notes'] ?? '')) ?>">
+            <label for="violation-<?= (int) $door['id'] ?>">Violation type, if any</label>
+            <select id="violation-<?= (int) $door['id'] ?>" name="violation_kind">
+              <option value="">None</option>
+              <?php foreach ([
+                  'loose_bag' => 'loose bag (not in/on can)',
+                  'leaking' => 'leaking',
+                  'overweight' => 'overweight',
+                  'too_many' => 'too many',
+                  'hazardous' => 'hazardous',
+                  'wrong_time' => 'wrong time',
+                  'other' => 'other',
+              ] as $kind => $label): ?>
+                <option value="<?= e($kind) ?>"><?= e($label) ?></option>
               <?php endforeach; ?>
             </select>
             <label>Photo <input type="file" name="photo" accept="image/*" capture="environment"></label>

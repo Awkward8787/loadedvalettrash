@@ -4,10 +4,10 @@
     <h1>Privacy policy</h1>
     <p>This policy covers the Loaded Valet Trash website and the doorstep pickup service operated by Anthony Jaamal Jones. It is written in plain language. It is not a substitute for advice from your own lawyer.</p>
     <h2>Who we are</h2>
-    <p>Loaded Valet Trash picks up bagged household trash outside residents’ doors and carries it to the property’s compactor or dumpster. The public site is for property managers, and the missed-pickup form is also for residents.</p>
+    <p>Loaded Valet Trash picks up bagged household trash from the can outside the door and carries it to the property’s compactor or dumpster. Residents put the trash can outside the door with the bagged trash inside it. The public site is for property managers, and the missed-pickup form is also for residents. Party cleanup and move-out requests use the same contact form.</p>
     <h2>What the website collects</h2>
     <ul class="rule-list">
-      <li>Proposal and walkthrough requests: property name, unit count, your name, email or phone, and whatever you write in the message.</li>
+      <li>Proposal, walkthrough, event-cleanup, and move-out requests: property or location name, unit count, your name, email or phone, and whatever you write in the message.</li>
       <li>Missed-pickup reports: property, unit, your name, a way to reach you, and a description.</li>
       <li>Review submissions: your name, property, role, rating, and review text. A review is not shown publicly until it is approved.</li>
       <li>A session cookie used to protect forms from cross-site submissions. Staff sign-in uses a separate session cookie. We do not run advertising trackers on this site.</li>

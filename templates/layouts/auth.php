@@ -26,7 +26,7 @@ $documentTitle = ($title ?? 'Sign in') . ' | Loaded Valet Trash';
       <div class="banner banner-<?= e((string) $type) ?>" role="status"><?= e((string) $message) ?></div>
     <?php endforeach; ?>
     <?php if (!empty($formError)): ?>
-      <div class="banner banner-error" role="alert"><?= e((string) $formError) ?></div>
+      <div class="banner banner-error" id="form-error" role="alert"><?= e((string) $formError) ?></div>
     <?php endif; ?>
     <?= $content ?>
   </main>

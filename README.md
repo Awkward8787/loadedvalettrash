@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Loaded Valet Trash" width="100%">
+  <img src="assets/banner.png" alt="Loaded Valet Trash homepage: the badge, the doorstep valet headline, and the Monday-through-Friday schedule card." width="100%">
 </p>
 
 # Loaded Valet Trash
@@ -15,15 +15,15 @@
 
 Loaded Valet Trash is owned by Anthony Jaamal Jones (Dondon).
 
-Residents who want the service opt in for $35 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash outside each door Monday through Friday evenings and take it to the property compactor or dumpster. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site.
+Residents who want the service opt in for $35 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash from the can outside each door Monday through Friday evenings and take it to the property compactor or dumpster. A loose bag does not go on the ground. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site. Party and event cleanup is quoted per event. Move-out cleanout and haul-off is quoted per job.
 
 ## Features
 
 Public site, written for property managers:
 
-- Home, how it works, schedule and bag rules, who we serve, pricing, FAQ, about, privacy, and terms
+- Home, services, how it works, schedule and set-out rules, who we serve, pricing, FAQ, about, privacy, and terms
 - Revenue-share calculator (units × opt-in % × monthly price × property share)
-- Proposal and walkthrough request, resident missed-pickup report, and review submission
+- Proposal, walkthrough, event-cleanup, and move-out requests, a resident missed-pickup report, and review submission
 - Reviews appear only after an owner or manager approves them. A new install has none
 - Phone, email, address, and insurance text render only when an owner has saved them
 
@@ -38,17 +38,17 @@ Admin, built to be usable on a phone in the field:
 
 ```mermaid
 flowchart LR
-  visitor[Property manager / resident] --> publicSite[Public PHP site]
-  publicSite --> forms[Proposal / walkthrough / missed pickup / review]
+  visitor[Property manager or resident] --> publicSite[Public PHP site]
+  publicSite --> forms[Proposal, walkthrough, event cleanup, move-out, missed pickup, or review]
   forms --> mysql[(MySQL)]
-  owner[Owner / manager / porter] --> admin[Admin PHP desk]
+  staff[Owner, manager, or porter] --> admin[Admin desk]
   admin --> mysql
   admin --> routes[Nightly routes and porter check-off]
   admin --> invoices[Monthly invoices and profit]
-  mysql --> publicSite
+  mysql -->|settings and approved reviews| publicSite
 ```
 
-Public pages collect leads and resident reports. The owner desk manages properties, roster, routes, invoices, and review moderation. Money is stored in integer cents; times use `America/New_York`.
+Public pages save those requests in MySQL. The public site reads settings and approved reviews back out. Leads and missed-pickup reports stay on the admin desk, which also manages properties, the roster, nightly routes, invoices, and review moderation. Money is stored in integer cents. Times use `America/New_York`.
 
 ## Stack
 
@@ -98,7 +98,7 @@ vendor/bin/phpunit
 
 PHPUnit uses `.env.testing` and the `loaded_valet_test` database. Create that database and grant the user in `.env.testing`, or export `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS` before `vendor/bin/phpunit`. Those four variables are not forced by `phpunit.xml`, so a CI service account wins when it is already set. `APP_KEY` in the test config is a disposable 32-byte value for the test database only.
 
-The suite covers sign-in, two-factor recovery codes, CSRF, rate limiting, session timeout, role checks, billing math, route time estimates, holiday skipping, review moderation, the proposal and missed-pickup forms, and the public pages.
+The suite covers sign-in, two-factor recovery codes, CSRF, rate limiting, session timeout, role checks, billing math, route time estimates, holiday skipping, review moderation, the proposal, event-cleanup, move-out, and missed-pickup forms, and the public pages.
 
 ## Environment variables
 
@@ -139,7 +139,7 @@ Do not run `bin/demo-seed.php` on the server. Do not commit `.env`, resident lis
 
 ## What you still enter
 
-The repository does not contain a phone number, public email, street address, or insurance limit. Until those are saved in Settings, the site simply omits them. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” Connect the domain in Hostinger when you are ready for it to be public.
+The repository does not contain a phone number, public email, street address, or insurance limit. Until those are saved in Settings, the site simply omits them. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” The public site is [https://loadedvalet.com](https://loadedvalet.com).
 
 ## Status
 

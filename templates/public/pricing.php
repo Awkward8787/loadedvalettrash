@@ -21,6 +21,18 @@
         <p>There is no published community-wide price on this site. The number depends on unit count, layout, and how far the compactor is from the buildings.</p>
         <a class="btn btn-primary" href="/contact">Contact for a community-wide quote</a>
       </article>
+      <article class="card">
+        <h2>Party and event cleanup</h2>
+        <p class="service-price">Quoted per event</p>
+        <p>Cleanup after parties and events, for residents, for properties and clubhouses, and for private events. There is no published event price on this site.</p>
+        <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
+      </article>
+      <article class="card">
+        <h2>Move-outs</h2>
+        <p class="service-price">Quoted per job</p>
+        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes. There is no published move-out price on this site.</p>
+        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+      </article>
     </div>
     <div class="card">
       <h2>Free 30-day trial</h2>
