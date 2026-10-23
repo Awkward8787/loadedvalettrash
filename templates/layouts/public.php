@@ -76,7 +76,7 @@ $nav = [
   <div class="wrap footer-brand">
     <picture>
       <source srcset="/assets/brand/loaded-valet-trash-logo.webp" type="image/webp">
-      <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897">
+      <img src="/assets/brand/loaded-valet-trash-logo.png" alt="Loaded Valet Trash" width="773" height="897" loading="lazy">
     </picture>
   </div>
   <div class="wrap footer-grid">

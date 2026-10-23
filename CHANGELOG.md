@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Home: lime buttons use near-black text, cards and the set-out note drop the one-sided lime bar, and the hero mark stays within 60vh
+- Public time and day ranges use words ("6:00 to 8:00 PM", "Monday to Friday") instead of en dashes
 - Public services for doorstep valet, party and event cleanup (quoted per event), and move-outs (quoted per job)
 - Resident set-out rule: trash goes in the can at the door, and a loose bag does not go on the ground
 - Extra-bag nights: extra bags go only on top of the can, never on the ground or beside it

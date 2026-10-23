@@ -18,6 +18,10 @@ final class PublicSiteTest extends TestCase
         $this->assertStringContainsString('Quoted per job', $home->body);
         $this->assertStringContainsString('Never put a loose bag on the ground', $home->body);
         $this->assertStringContainsString('No published reviews yet', $home->body);
+        $this->assertStringContainsString('6:00 to 8:00 PM', $home->body);
+        $this->assertStringContainsString('8:00 to 10:00 PM', $home->body);
+        $this->assertStringNotContainsString('–', $home->body);
+        $this->assertStringNotContainsString('—', $home->body);
         $this->assertStringNotContainsString('[ADD', $home->body);
         $this->assertStringNotContainsString('Trusted by', $home->body);
         $this->assertStringNotContainsString('lorem', strtolower($home->body));

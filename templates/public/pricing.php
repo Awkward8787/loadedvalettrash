@@ -36,7 +36,7 @@
     </div>
     <div class="card">
       <h2>Free 30-day trial</h2>
-      <p>Monday–Friday service for 30 days on the buildings you pick, or the whole property. We bring flyers and the opt-in addendum. You give porters gate and compactor access and a short check-in around day 14 and day 30. At the end you continue, expand, or stop. The trial is free.</p>
+      <p>Monday to Friday service for 30 days on the buildings you pick, or the whole property. We bring flyers and the opt-in addendum. You give porters gate and compactor access and a short check-in around day 14 and day 30. At the end you continue, expand, or stop. The trial is free.</p>
       <a class="btn btn-ghost" href="/contact?intent=walkthrough">Book a walkthrough</a>
     </div>
   </div>
