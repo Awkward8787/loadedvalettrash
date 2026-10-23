@@ -12,7 +12,7 @@ $documentTitle = ($title ?? 'Sign in') . ' | Loaded Valet Trash';
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/brand/favicon-32.png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="<?= e(asset_href('/assets/css/app.css')) ?>">
 </head>
 <body class="auth-body">
   <main id="main" class="auth-card">

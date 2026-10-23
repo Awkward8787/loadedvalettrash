@@ -35,7 +35,7 @@ $nav = [
   <link rel="icon" type="image/png" href="/assets/brand/favicon-32.png" sizes="32x32">
   <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="<?= e(asset_href('/assets/css/app.css')) ?>">
   <?php if (!empty($jsonLd)): ?>
     <script type="application/ld+json" nonce="<?= e((string) ($GLOBALS['csp_nonce'] ?? '')) ?>"><?= json_encode($jsonLd, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
   <?php endif; ?>
@@ -114,6 +114,6 @@ $nav = [
   </div>
   <div class="wrap fine footer-copy">© <?= date('Y') ?> Anthony Jaamal Jones / Loaded Valet Trash. All rights reserved.</div>
 </footer>
-<script src="/assets/js/app.js" defer></script>
+<script src="<?= e(asset_href('/assets/js/app.js')) ?>" defer></script>
 </body>
 </html>
