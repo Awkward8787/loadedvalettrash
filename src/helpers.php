@@ -53,6 +53,29 @@ function e(mixed $value): string
     return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+if (!defined('LVT_ASSET_VERSION')) {
+    define('LVT_ASSET_VERSION', '1');
+}
+
+function asset_href(string $publicPath): string
+{
+    $publicPath = '/' . ltrim(str_replace('\\', '/', $publicPath), '/');
+    $version = LVT_ASSET_VERSION;
+    $publicRoot = realpath(LVT_ROOT . '/public');
+    if ($publicRoot !== false && !str_contains($publicPath, '..')) {
+        $realFile = realpath($publicRoot . $publicPath);
+        $prefix = $publicRoot . DIRECTORY_SEPARATOR;
+        if ($realFile !== false && is_file($realFile) && str_starts_with($realFile, $prefix)) {
+            $mtime = filemtime($realFile);
+            if ($mtime !== false) {
+                $version = (string) $mtime;
+            }
+        }
+    }
+
+    return $publicPath . '?v=' . $version;
+}
+
 function now_dt(): string
 {
     return date('Y-m-d H:i:s');

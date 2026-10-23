@@ -38,7 +38,7 @@ if ($user && $user['role'] !== 'porter') {
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="stylesheet" href="/assets/css/app.css">
+  <link rel="stylesheet" href="<?= e(asset_href('/assets/css/app.css')) ?>">
 </head>
 <body class="admin">
 <a class="skip" href="#main">Skip to content</a>
@@ -72,6 +72,6 @@ if ($user && $user['role'] !== 'porter') {
     <?= $content ?>
   </main>
   </div>
-<script src="/assets/js/app.js" defer></script>
+<script src="<?= e(asset_href('/assets/js/app.js')) ?>" defer></script>
 </body>
 </html>
