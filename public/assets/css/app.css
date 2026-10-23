@@ -175,13 +175,12 @@ p { margin: 0 0 1rem; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.3rem; }
 .hero-card {
   background: var(--white);
-  border: 3px solid var(--black);
-  border-radius: 28px;
-  padding: 0.55rem 1.15rem;
-  box-shadow: 0 0 0 6px var(--lime);
+  border: 1px solid #d4d4d4;
+  border-radius: 12px;
+  padding: 0.35rem 1.1rem;
   margin-top: 1.4rem;
 }
-.fact { display: flex; justify-content: space-between; gap: 1rem; padding: 0.7rem 0; border-top: 1px solid var(--line); font-weight: 600; }
+.fact { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 1rem; padding: 0.7rem 0; border-top: 1px solid var(--line); font-weight: 600; }
 .hero-card .fact:first-child { border-top: 0; }
 .fact span { color: var(--muted); font-weight: 500; }
 
