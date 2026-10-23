@@ -14,6 +14,9 @@ final class PublicSiteTest extends TestCase
         $this->assertStringContainsString('Valet Trash in Valdosta, GA', $home->body);
         $this->assertStringContainsString('Book a walkthrough', $home->body);
         $this->assertStringContainsString('Request a proposal', $home->body);
+        $this->assertStringContainsString('Quoted per event', $home->body);
+        $this->assertStringContainsString('Quoted per job', $home->body);
+        $this->assertStringContainsString('Never put a loose bag on the ground', $home->body);
         $this->assertStringContainsString('No published reviews yet', $home->body);
         $this->assertStringNotContainsString('[ADD', $home->body);
         $this->assertStringNotContainsString('Trusted by', $home->body);
@@ -27,10 +30,13 @@ final class PublicSiteTest extends TestCase
     public function testRobotsAndCorePagesExist(): void
     {
         $client = $this->client();
-        foreach (['/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'] as $path) {
+        foreach (['/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'] as $path) {
             $response = $client->get($path);
             $this->assertSame(200, $response->status, $path);
             $this->assertStringNotContainsString('[ADD', $response->body, $path);
+            $this->assertStringNotContainsString('$1,000,000', $response->body, $path);
+            $this->assertStringNotContainsString('$2,000,000', $response->body, $path);
+            $this->assertStringNotContainsString('Place bags at the door', $response->body, $path);
         }
         $robots = $client->get('/robots.txt');
         $this->assertStringContainsString('Disallow: /admin', $robots->body);

@@ -232,6 +232,22 @@ function valid_date(string $value): bool
     return $dt !== false && $dt->format('Y-m-d') === $value;
 }
 
+/** @return array<string,string> */
+function inquiry_kinds(): array
+{
+    return [
+        'proposal' => 'Request a proposal',
+        'walkthrough' => 'Book a walkthrough',
+        'event_cleanup' => 'Party and event cleanup',
+        'move_out' => 'Move-out cleanout',
+    ];
+}
+
+function inquiry_kind_label(string $kind): string
+{
+    return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);
+}
+
 function property_address(array $property): string
 {
     $stateZip = trim(((string) ($property['state'] ?? '')) . ' ' . ((string) ($property['postal_code'] ?? '')));

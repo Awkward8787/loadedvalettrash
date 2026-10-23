@@ -42,7 +42,7 @@ Porters needed is the estimate divided by the 120-minute pickup window, rounded 
 
 ## Tonight
 
-Owners and managers can open any route. Porters open only routes assigned to them. Check a door as picked up, missed, or a violation. A missed door or a violation opens an issue. A photo can be attached (JPEG, PNG, or WebP, up to 5 MB). Clock in when the route starts and clock out when the bags are in the compactor. A manager can mark stops. Clock-in is the assigned porter, or an owner covering the route.
+Owners and managers can open any route. Porters open only routes assigned to them. The page reminds them that trash belongs in the can, with any second bag on top of the can, and that a loose bag on the ground is reported to the office as the violation "loose bag (not in/on can)." Check a door as picked up, missed, or a violation. A missed door or a violation opens an issue. A photo can be attached (JPEG, PNG, or WebP, up to 5 MB). Clock in when the route starts and clock out when the bags are in the compactor. A manager can mark stops. Clock-in is the assigned porter, or an owner covering the route.
 
 ## Issues
 
@@ -62,7 +62,7 @@ Profit for a site is amount due, minus porter hours × wage × 1.10 payroll, min
 
 **Reviews** holds submissions from the public form. Approve to publish. Reject to keep it off the site. Nothing is published by default, and the software does not ship with sample quotes.
 
-**Inbox** is walkthrough and proposal requests. Update the status as you contact them. The matching lead is already on the pipeline.
+**Inbox** is walkthrough, proposal, party and event cleanup, and move-out requests. Update the status as you contact them. The matching lead is already on the pipeline.
 
 ## Settings and audit
 

@@ -1,16 +1,17 @@
 <?php
+$kinds = inquiry_kinds();
 $posted = (string) ($GLOBALS['_old']['kind'] ?? '');
 $intent = $posted !== '' ? $posted : \Lvt\Request::current()->string('intent');
-if (!in_array($intent, ['proposal', 'walkthrough'], true)) {
+if (!array_key_exists($intent, $kinds)) {
     $intent = 'proposal';
 }
 ?>
 <section class="section">
   <div class="wrap grid-2">
     <div>
-      <p class="eyebrow">Proposal</p>
-      <h1>Tell us about the property.</h1>
-      <p class="lede">Ask for a proposal or a 10-minute walkthrough. The note lands in our office queue. We reply with the contact details you give us.</p>
+      <p class="eyebrow">Request</p>
+      <h1>Tell us what you need.</h1>
+      <p class="lede">Ask for a proposal, a 10-minute walkthrough, party and event cleanup, or a move-out cleanout. The note lands in our office queue. We reply with the contact details you give us.</p>
       <?php if (filled($settings['phone'] ?? null) || filled($settings['email'] ?? null) || filled($settings['address'] ?? null)): ?>
         <div class="card">
           <?php if (filled($settings['phone'] ?? null)): ?><p><?= e((string) $settings['phone']) ?></p><?php endif; ?>
@@ -25,9 +26,11 @@ if (!in_array($intent, ['proposal', 'walkthrough'], true)) {
       <div class="field">
         <label for="kind">What do you need?</label>
         <select id="kind" name="kind">
-          <option value="proposal"<?= $intent === 'proposal' ? ' selected' : '' ?>>Request a proposal</option>
-          <option value="walkthrough"<?= $intent === 'walkthrough' ? ' selected' : '' ?>>Book a walkthrough</option>
+          <?php foreach ($kinds as $value => $label): ?>
+            <option value="<?= e($value) ?>"<?= $intent === $value ? ' selected' : '' ?>><?= e($label) ?></option>
+          <?php endforeach; ?>
         </select>
+        <p class="muted">For a home or a private event, put the location in Property name and enter 1 for units.</p>
       </div>
       <div class="field">
         <label for="property_name">Property name</label>
