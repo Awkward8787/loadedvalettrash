@@ -374,11 +374,11 @@ final class PublicController extends Controller
             ],
             [
                 'q' => 'What do residents do?',
-                'a' => 'Monday through Friday, tie the trash in a bag and put it inside your can. Put your trash can outside your door with the bagged trash inside it during ' . $setout . '. Never put a loose bag on the ground. A second bag goes on top of the can, never on the ground. Not on stairs or walkways. Porters collect from ' . $pickup . ' and take the trash to the property compactor or dumpster. Cans left out before the window, or still out after pickup, go back inside. Loose bags scatter garbage.',
+                'a' => 'Monday through Friday, tie the trash in a bag and put it inside your can. Put your trash can outside your door with the bagged trash inside it during ' . $setout . '. Never put a loose bag on the ground. A second bag goes on top of the can, never on the ground or beside it. On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Not on stairs or walkways. Porters collect from ' . $pickup . ' and take the trash to the property compactor or dumpster. Cans left out before the window, or still out after pickup, go back inside. Loose bags scatter garbage.',
             ],
             [
                 'q' => 'What are the bag rules?',
-                'a' => 'Tie the trash in a bag and put it inside your can. Tied, leak-proof bags, kitchen size (13 gallon) up to 30 gallon, ' . $weight . ' pounds max, up to ' . $bags . ' bags a night (' . $holidayBags . ' the night after a holiday). Put your trash can outside your door with the bagged trash inside it. Never put a loose bag on the ground. Set the can right outside your door during the set-out window, not on stairs or walkways. A second bag goes on top of the can, never on the ground. Loose bags scatter garbage. No loose trash, no open boxes, no leaking bags. Flatten and tie cardboard into a small bundle of up to 2 boxes, or take it to the compactor. We do not take furniture, mattresses, electronics, paint, chemicals, batteries, needles or medical waste, construction debris, hot ashes, or unbagged pet waste.',
+                'a' => 'Tie the trash in a bag and put it inside your can. Tied, leak-proof bags, kitchen size (13 gallon) up to 30 gallon, ' . $weight . ' pounds max, up to ' . $bags . ' bags a night (' . $holidayBags . ' the night after a holiday). On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Put your trash can outside your door with the bagged trash inside it. Never put a loose bag on the ground. Set the can right outside your door during the set-out window, not on stairs or walkways. A second bag goes on top of the can, never on the ground or beside it. Loose bags scatter garbage. No loose trash, no open boxes, no leaking bags. Flatten and tie cardboard into a small bundle of up to 2 boxes, or take it to the compactor. We do not take furniture, mattresses, electronics, paint, chemicals, batteries, needles or medical waste, construction debris, hot ashes, or unbagged pet waste.',
             ],
             [
                 'q' => 'Do you clean up after events or move-outs?',
@@ -390,7 +390,7 @@ final class PublicController extends Controller
             ],
             [
                 'q' => 'Will trash at the door cause pests or odor?',
-                'a' => 'The can is outside only during the set-out window and is collected the same night, so trash is not left overnight on a normal route. Tie the trash in a bag and put it inside the can. A second bag goes on top of the can, never on the ground. Never put a loose bag on the ground. Loose bags scatter garbage. A rule break gets a door notice and a photo for the office. Porters carry absorbent and a broom for drips they cause.',
+                'a' => 'The can is outside only during the set-out window and is collected the same night, so trash is not left overnight on a normal route. Tie the trash in a bag and put it inside the can. A second bag goes on top of the can, never on the ground or beside it. On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Never put a loose bag on the ground. Loose bags scatter garbage. A rule break gets a door notice and a photo for the office. Porters carry absorbent and a broom for drips they cause.',
             ],
             [
                 'q' => 'How much work is this for my staff?',
@@ -402,7 +402,7 @@ final class PublicController extends Controller
             ],
             [
                 'q' => 'Which nights do you run?',
-                'a' => 'Monday through Friday, including Friday night, so the can can go out before the weekend. We do not run Saturday or Sunday. Listed holidays are off, with notice ahead of time, and the next service night allows up to ' . $holidayBags . ' bags. Severe storms, lightning, or a tropical-storm warning can delay a route up to two hours or cancel it. Residents are told by 7 PM, and the next night is a double-bag night.',
+                'a' => 'Monday through Friday, including Friday night, so the can can go out before the weekend. We do not run Saturday or Sunday. Listed holidays are off, with notice ahead of time, and the next service night allows up to ' . $holidayBags . ' bags. Severe storms, lightning, or a tropical-storm warning can delay a route up to two hours or cancel it. Residents are told by 7 PM, and the next night is a double-bag night. On those extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.',
             ],
         ];
         $items[] = [

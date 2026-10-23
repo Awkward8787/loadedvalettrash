@@ -38,6 +38,12 @@ final class PublicSiteTest extends TestCase
             $this->assertStringNotContainsString('$2,000,000', $response->body, $path);
             $this->assertStringNotContainsString('Place bags at the door', $response->body, $path);
         }
+        $how = $client->get('/how-it-works');
+        $this->assertStringContainsString('On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.', $how->body);
+        $this->assertStringContainsString('Extra bags go only on top of the can, never on the ground or beside it.', $how->body);
+        $faq = $client->get('/faq');
+        $this->assertStringContainsString('On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.', $faq->body);
+        $this->assertStringContainsString('On those extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.', $faq->body);
         $robots = $client->get('/robots.txt');
         $this->assertStringContainsString('Disallow: /admin', $robots->body);
         $this->assertStringContainsString('Disallow: /login', $robots->body);

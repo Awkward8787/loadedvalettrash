@@ -15,7 +15,7 @@ For each stop:
 - If this property is on your route, any gate note is on the stop. It is only for getting in. Do not text it, do not put it in a door note, and do not read it out where it can be overheard.
 - Check each door: picked up, missed, or violation. If you are marking several doors picked up and the rest of the building was clean, use the button that marks the remaining doors picked up.
 - Missed and violation ask what happened. Add a photo when you can. The office uses that photo. You do not decide a fine. A third problem in 30 days is the office’s decision.
-- Bags you can take are tied, inside the can or as a second bag on top of the can, not leaking, up to 25 pounds, up to 2 per door (4 the night after a holiday). The resident rule is: put the trash can outside the door with the bagged trash inside it. Never a loose bag on the ground. Furniture, paint, batteries, needles, and loose trash stay. Note it as a violation instead of carrying it.
+- Bags you can take are tied, inside the can or stacked on top of the can, not leaking, up to 25 pounds, up to 2 per door (4 the night after a holiday). On an extra-bag night, extra bags go only on top of the can, never on the ground or beside it. The resident rule is: put the trash can outside the door with the bagged trash inside it. Never a loose bag on the ground. Furniture, paint, batteries, needles, and loose trash stay. Note a bag on the ground or beside the can as a violation instead of carrying it.
 
 ## Clock
 

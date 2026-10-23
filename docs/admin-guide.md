@@ -42,7 +42,7 @@ Porters needed is the estimate divided by the 120-minute pickup window, rounded 
 
 ## Tonight
 
-Owners and managers can open any route. Porters open only routes assigned to them. The page reminds them that trash belongs in the can, with any second bag on top of the can, and that a loose bag on the ground is reported to the office as the violation "loose bag (not in/on can)." Check a door as picked up, missed, or a violation. A missed door or a violation opens an issue. A photo can be attached (JPEG, PNG, or WebP, up to 5 MB). Clock in when the route starts and clock out when the bags are in the compactor. A manager can mark stops. Clock-in is the assigned porter, or an owner covering the route.
+Owners and managers can open any route. Porters open only routes assigned to them. The page reminds them that trash belongs in the can, with any second bag on top of the can. On an extra-bag night, extra bags go only on top of the can, never on the ground or beside it. A loose bag on the ground is reported to the office as the violation "loose bag (not in/on can)." Check a door as picked up, missed, or a violation. A missed door or a violation opens an issue. A photo can be attached (JPEG, PNG, or WebP, up to 5 MB). Clock in when the route starts and clock out when the bags are in the compactor. A manager can mark stops. Clock-in is the assigned porter, or an owner covering the route.
 
 ## Issues
 

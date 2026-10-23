@@ -4,6 +4,7 @@
 
 - Public services for doorstep valet, party and event cleanup (quoted per event), and move-outs (quoted per job)
 - Resident set-out rule: trash goes in the can at the door, and a loose bag does not go on the ground
+- Extra-bag nights: extra bags go only on top of the can, never on the ground or beside it
 - Inquiry kinds for event cleanup and move-out, and a porter violation for a loose bag that is not in or on the can
 - Desktop navigation is outside the mobile menu so the links stay on screen at 1280px and 1440px
 - Hero schedule card no longer clips its labels, form controls meet contrast, and staff fields have visible labels
