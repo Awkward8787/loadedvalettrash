@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.png" alt="Loaded Valet Trash" width="100%">
+  <img src="assets/banner.png" alt="Loaded Valet Trash homepage: the badge, the doorstep valet headline, and the Monday-through-Friday schedule card." width="100%">
 </p>
 
 # Loaded Valet Trash
@@ -33,6 +33,22 @@ Admin, built to be usable on a phone in the field:
 - Hashed passwords, authenticator-app two-factor authentication, recovery codes, login rate limits, CSRF checks, and idle session timeout
 - Lead pipeline, properties, roster, team, nightly routes, porter check-off, issues, monthly invoices, profit, review moderation, proposal inbox, settings, and an audit log
 - Gate and access notes are visible to owners, managers, and the porter assigned to that property. They are left out of CSV exports and weekly reports
+
+## How it works
+
+```mermaid
+flowchart LR
+  visitor[Property manager or resident] --> publicSite[Public PHP site]
+  publicSite --> forms[Proposal, walkthrough, event cleanup, move-out, missed pickup, or review]
+  forms --> mysql[(MySQL)]
+  staff[Owner, manager, or porter] --> admin[Admin desk]
+  admin --> mysql
+  admin --> routes[Nightly routes and porter check-off]
+  admin --> invoices[Monthly invoices and profit]
+  mysql -->|settings and approved reviews| publicSite
+```
+
+Public pages save those requests in MySQL. The public site reads settings and approved reviews back out. Leads and missed-pickup reports stay on the admin desk, which also manages properties, the roster, nightly routes, invoices, and review moderation. Money is stored in integer cents. Times use `America/New_York`.
 
 ## Stack
 
@@ -82,7 +98,7 @@ vendor/bin/phpunit
 
 PHPUnit uses `.env.testing` and the `loaded_valet_test` database. Create that database and grant the user in `.env.testing`, or export `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS` before `vendor/bin/phpunit`. Those four variables are not forced by `phpunit.xml`, so a CI service account wins when it is already set. `APP_KEY` in the test config is a disposable 32-byte value for the test database only.
 
-The suite covers sign-in, two-factor recovery codes, CSRF, rate limiting, session timeout, role checks, billing math, route time estimates, holiday skipping, review moderation, the proposal and missed-pickup forms, and the public pages.
+The suite covers sign-in, two-factor recovery codes, CSRF, rate limiting, session timeout, role checks, billing math, route time estimates, holiday skipping, review moderation, the proposal, event-cleanup, move-out, and missed-pickup forms, and the public pages.
 
 ## Environment variables
 
@@ -123,7 +139,7 @@ Do not run `bin/demo-seed.php` on the server. Do not commit `.env`, resident lis
 
 ## What you still enter
 
-The repository does not contain a phone number, public email, street address, or insurance limit. Until those are saved in Settings, the site simply omits them. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” Connect the domain in Hostinger when you are ready for it to be public.
+The repository does not contain a phone number, public email, street address, or insurance limit. Until those are saved in Settings, the site simply omits them. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” The public site is [https://loadedvalet.com](https://loadedvalet.com).
 
 ## Status
 
