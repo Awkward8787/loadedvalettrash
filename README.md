@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.png" alt="Loaded Valet Trash" width="100%">
+  <img src="assets/banner.png" alt="Loaded Valet Trash" width="100%">
 </p>
 
 # Loaded Valet Trash
@@ -33,6 +33,22 @@ Admin, built to be usable on a phone in the field:
 - Hashed passwords, authenticator-app two-factor authentication, recovery codes, login rate limits, CSRF checks, and idle session timeout
 - Lead pipeline, properties, roster, team, nightly routes, porter check-off, issues, monthly invoices, profit, review moderation, proposal inbox, settings, and an audit log
 - Gate and access notes are visible to owners, managers, and the porter assigned to that property. They are left out of CSV exports and weekly reports
+
+## How it works
+
+```mermaid
+flowchart LR
+  visitor[Property manager / resident] --> publicSite[Public PHP site]
+  publicSite --> forms[Proposal / walkthrough / missed pickup / review]
+  forms --> mysql[(MySQL)]
+  owner[Owner / manager / porter] --> admin[Admin PHP desk]
+  admin --> mysql
+  admin --> routes[Nightly routes and porter check-off]
+  admin --> invoices[Monthly invoices and profit]
+  mysql --> publicSite
+```
+
+Public pages collect leads and resident reports. The owner desk manages properties, roster, routes, invoices, and review moderation. Money is stored in integer cents; times use `America/New_York`.
 
 ## Stack
 
