@@ -6,12 +6,6 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
 ?>
 <section class="hero">
   <div class="wrap hero-grid">
-    <div class="hero-mark">
-      <picture>
-        <source srcset="/assets/brand/loaded-valet-trash-logo.webp" type="image/webp">
-        <img src="/assets/brand/loaded-valet-trash-logo.png" alt="" width="773" height="897" loading="lazy">
-      </picture>
-    </div>
     <div class="hero-copy">
       <?php if (filled($settings['service_area'] ?? null)): ?>
         <p class="eyebrow"><?= e((string) $settings['service_area']) ?></p>
@@ -22,12 +16,27 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <a class="btn btn-primary" href="/contact?intent=walkthrough">Book a walkthrough</a>
         <a class="btn btn-ghost" href="/contact">Request a proposal</a>
       </div>
-      <aside class="hero-card">
-        <div class="fact"><span>Set-out</span> <?= e($setout) ?></div>
-        <div class="fact"><span>Pickup</span> <?= e($pickup) ?></div>
-        <div class="fact"><span>Bags</span> Up to <?= (int) $settings['max_bags_per_night'] ?> a night</div>
-        <div class="fact"><span>Trial</span> 30 days, buildings you choose</div>
-      </aside>
+    </div>
+    <div class="hero-media">
+      <video
+        class="hero-video"
+        controls
+        playsinline
+        preload="none"
+        poster="/assets/media/lvt-commercial-poster.jpg"
+        width="1280"
+        height="720"
+        aria-label="Loaded Valet Trash commercial. Porters collect bagged trash from the can outside each door, Monday through Friday."
+      >
+        <source src="/assets/media/lvt-commercial-720p.mp4" type="video/mp4">
+        <track kind="captions" src="/assets/media/lvt-commercial.en.vtt" srclang="en" label="English" default>
+      </video>
+    </div>
+    <div class="hero-card">
+      <div class="fact"><span>Set-out</span> <?= e($setout) ?></div>
+      <div class="fact"><span>Pickup</span> <?= e($pickup) ?></div>
+      <div class="fact"><span>Bags</span> Up to <?= (int) $settings['max_bags_per_night'] ?> a night</div>
+      <div class="fact"><span>Trial</span> 30 days, buildings you choose</div>
     </div>
   </div>
 </section>
