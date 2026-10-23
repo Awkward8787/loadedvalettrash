@@ -24,6 +24,8 @@ abstract class TestCase extends PhpUnitTestCase
             'audit_log',
             'invoices',
             'inquiries',
+            'applications',
+            'form_attempts',
             'reviews',
             'issues',
             'time_entries',
@@ -48,6 +50,7 @@ abstract class TestCase extends PhpUnitTestCase
         $pdo->exec('SET FOREIGN_KEY_CHECKS=1');
         Database::exec(
             'UPDATE settings SET phone = NULL, email = NULL, address = NULL, insurance_text = NULL,
+             porter_job_details = NULL,
              opt_in_price_cents = 3500, default_property_share_percent = 10.00,
              minutes_per_door = 1.00, minutes_per_site = 45, pickup_window_minutes = 120,
              default_wage_cents = 1500, payroll_multiplier = 1.10,

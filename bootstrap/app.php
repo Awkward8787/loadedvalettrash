@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Lvt\App;
+use Lvt\Http\Controllers\ApplicationController;
 use Lvt\Http\Controllers\AuthController;
 use Lvt\Http\Controllers\BillingController;
 use Lvt\Http\Controllers\DashboardController;
@@ -31,6 +32,8 @@ $router->get('/faq', [PublicController::class, 'faq']);
 $router->get('/about', [PublicController::class, 'about']);
 $router->get('/contact', [PublicController::class, 'contact']);
 $router->post('/contact', [PublicController::class, 'contactSubmit']);
+$router->get('/apply', [ApplicationController::class, 'form']);
+$router->post('/apply', [ApplicationController::class, 'submit']);
 $router->get('/missed-pickup', [PublicController::class, 'missed']);
 $router->post('/missed-pickup', [PublicController::class, 'missedSubmit']);
 $router->get('/privacy', [PublicController::class, 'privacy']);
@@ -49,6 +52,7 @@ $router->post('/account/security', [AuthController::class, 'securityEnable'], ['
 
 $ops = ['auth', 'role:owner,manager'];
 $owner = ['auth', 'role:owner'];
+$hiring = ['auth', 'role:' . implode(',', application_review_roles())];
 
 $router->get('/admin', [DashboardController::class, 'index'], ['auth']);
 $router->get('/admin/pipeline', [PipelineController::class, 'index'], $ops);
@@ -105,6 +109,9 @@ $router->get('/admin/reviews', [ModerationController::class, 'reviews'], $ops);
 $router->post('/admin/reviews/{id}', [ModerationController::class, 'review'], $ops);
 $router->get('/admin/inquiries', [ModerationController::class, 'inquiries'], $ops);
 $router->post('/admin/inquiries/{id}', [ModerationController::class, 'inquiry'], $ops);
+$router->get('/admin/applications', [ApplicationController::class, 'index'], $hiring);
+$router->get('/admin/applications/{id}', [ApplicationController::class, 'show'], $hiring);
+$router->post('/admin/applications/{id}', [ApplicationController::class, 'update'], $hiring);
 
 $router->get('/admin/settings', [SettingsController::class, 'edit'], $owner);
 $router->post('/admin/settings', [SettingsController::class, 'update'], $owner);

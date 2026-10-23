@@ -21,13 +21,13 @@ abstract class Controller
     }
 
     /** @param array<string,string> $errors */
-    protected function invalid(string $template, array $errors, array $data = [], string $layout = 'layouts/public'): Response
+    protected function invalid(string $template, array $errors, array $data = [], string $layout = 'layouts/public', int $status = 422): Response
     {
         $GLOBALS['_errors'] = $errors;
         $post = Request::current()->post;
         unset($post['_csrf'], $post['password'], $post['password_confirm']);
         $GLOBALS['_old'] = $post;
-        $data['status'] = 422;
+        $data['status'] = $status;
         return View::page($template, $data, $layout);
     }
 

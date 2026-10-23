@@ -23,7 +23,7 @@ Public site, written for property managers:
 
 - Home, services, how it works, schedule and set-out rules, who we serve, pricing, FAQ, about, privacy, and terms
 - Revenue-share calculator (units × opt-in % × monthly price × property share)
-- Proposal, walkthrough, event-cleanup, and move-out requests, a resident missed-pickup report, and review submission
+- Proposal, walkthrough, event-cleanup, and move-out requests, a resident missed-pickup report, review submission, and a porter application at /apply
 - Reviews appear only after an owner or manager approves them. A new install has none
 - Phone, email, address, and insurance text render only when an owner has saved them
 
@@ -31,7 +31,7 @@ Admin, built to be usable on a phone in the field:
 
 - Owner, manager, and porter roles. A porter sees only their own route
 - Hashed passwords, authenticator-app two-factor authentication, recovery codes, login rate limits, CSRF checks, and idle session timeout
-- Lead pipeline, properties, roster, team, nightly routes, porter check-off, issues, monthly invoices, profit, review moderation, proposal inbox, settings, and an audit log
+- Lead pipeline, properties, roster, team, nightly routes, porter check-off, issues, monthly invoices, profit, review moderation, proposal inbox, porter applications, settings, and an audit log
 - Gate and access notes are visible to owners, managers, and the porter assigned to that property. They are left out of CSV exports and weekly reports
 
 ## How it works

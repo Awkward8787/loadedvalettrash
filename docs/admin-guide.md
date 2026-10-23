@@ -64,9 +64,13 @@ Profit for a site is amount due, minus porter hours × wage × 1.10 payroll, min
 
 **Inbox** is walkthrough, proposal, party and event cleanup, and move-out requests. Update the status as you contact them. The matching lead is already on the pipeline.
 
+## Applications
+
+**Applications** lists porter applications from `/apply`. Owners and managers can open the list and a person's detail page, and can set the status to new, contacted, hired, or declined. Porters and any other role get a 403. The database has no role named admin; manager is the office role on that allow-list. The form does not send email. Pay, benefits, background checks, and licence rules are not on the page unless you write them into Porter job details in Settings. Leave that box blank and the public page shows no job-details block.
+
 ## Settings and audit
 
-Settings holds the business name, owner name, phone, email, address, service area, insurance text, opt-in price, default share, bag limits, route timing, wages, cost assumptions, remittance day, and session timeout. Clearing phone, email, address, or insurance removes them from the public site.
+Settings holds the business name, owner name, phone, email, address, service area, insurance text, porter job details, opt-in price, default share, bag limits, route timing, wages, cost assumptions, remittance day, and session timeout. Clearing phone, email, address, or insurance removes them from the public site. Clearing porter job details removes that block from the apply page.
 
 Holidays are listed with a service-off flag and a short instruction. Add the next year’s dates before December.
 

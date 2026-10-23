@@ -67,6 +67,25 @@ final class Request
         return trim((string) $value);
     }
 
+    /** @return list<string> */
+    public function strings(string $key): array
+    {
+        $value = $this->post[$key] ?? $this->query[$key] ?? [];
+        if (is_string($value)) {
+            $value = $value === '' ? [] : [$value];
+        }
+        if (!is_array($value)) {
+            return [];
+        }
+        $out = [];
+        foreach ($value as $item) {
+            if (is_scalar($item)) {
+                $out[] = trim((string) $item);
+            }
+        }
+        return $out;
+    }
+
     public function int(string $key, int $default = 0): int
     {
         $value = $this->string($key, '');

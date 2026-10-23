@@ -15,8 +15,11 @@ if ($user && $user['role'] !== 'porter') {
         '/admin/employees' => 'Team',
         '/admin/reviews' => 'Reviews',
         '/admin/inquiries' => 'Inbox',
-        '/admin/audit' => 'Audit',
     ];
+    if (in_array($user['role'], application_review_roles(), true)) {
+        $items['/admin/applications'] = 'Applications';
+    }
+    $items['/admin/audit'] = 'Audit';
     if ($user['role'] === 'owner') {
         $items['/admin/settings'] = 'Settings';
     }

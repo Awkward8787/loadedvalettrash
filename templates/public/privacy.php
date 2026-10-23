@@ -11,6 +11,7 @@
       <li>Missed-pickup reports: property, unit, your name, a way to reach you, and a description.</li>
       <li>Review submissions: your name, property, role, rating, and review text. A review is not shown publicly until it is approved.</li>
       <li>A session cookie used to protect forms from cross-site submissions. Staff sign-in uses a separate session cookie. We do not run advertising trackers on this site.</li>
+      <li>Porter applications: your name, phone, email, the weeknights you mark, whether you have reliable transportation, whether you are 18 or older, and any past work experience or other note you choose to write. We use that only to consider you for porter work. We keep it only for hiring. [retention period: needs Jaamal]</li>
     </ul>
     <h2>What the service uses</h2>
     <p>When a property hires us, the leasing office gives us the opted-in roster: unit, resident name, and start or cancel dates. We use that list to know which doors to stop at and to build the monthly billing roster we send back to the office. Porters may photograph a bag and a door number when they leave a violation notice, or when they document a missed door. Those photos are for the property and for our own record. They are not published on this website.</p>
@@ -30,6 +31,6 @@
     <?php else: ?>
       <p>Use the <a href="/contact">contact form</a>. The message goes to the owner.</p>
     <?php endif; ?>
-    <p class="muted">Updated October 22, 2026.</p>
+    <p class="muted">Updated October 23, 2026.</p>
   </div>
 </section>

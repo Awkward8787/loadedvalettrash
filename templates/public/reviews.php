@@ -13,7 +13,7 @@
       <div class="grid-2">
         <?php foreach ($reviews as $review): ?>
           <blockquote class="card">
-            <p class="stars" aria-label="<?= (int) $review['rating'] ?> out of 5"><?= str_repeat('★', (int) $review['rating']) ?><?= str_repeat('☆', 5 - (int) $review['rating']) ?></p>
+            <p class="stars"><?= (int) $review['rating'] ?> out of 5</p>
             <p><?= nl((string) $review['body']) ?></p>
             <footer><strong><?= e((string) $review['reviewer_name']) ?></strong>, <?= e((string) $review['role_title']) ?><br><?= e((string) $review['property_name']) ?></footer>
           </blockquote>

@@ -1,4 +1,18 @@
 (function () {
+  document.querySelectorAll("form").forEach(function (form) {
+    form.addEventListener("submit", function () {
+      var button = form.querySelector("button[type='submit'], input[type='submit']");
+      if (!button || button.getAttribute("aria-busy") === "true") {
+        return;
+      }
+      button.setAttribute("aria-busy", "true");
+      var label = button.getAttribute("data-busy-label");
+      if (label) {
+        button.textContent = label;
+      }
+    });
+  });
+
   document.querySelectorAll("[data-print]").forEach(function (button) {
     button.addEventListener("click", function () { window.print(); });
   });

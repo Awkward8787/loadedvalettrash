@@ -307,7 +307,7 @@ final class PublicController extends Controller
 
     public function sitemap(): Response
     {
-        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'];
+        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/apply', '/missed-pickup', '/privacy', '/terms'];
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         foreach ($paths as $path) {
             $xml .= '<url><loc>' . e(base_url($path === '/' ? '/' : ltrim($path, '/'))) . '</loc></url>';

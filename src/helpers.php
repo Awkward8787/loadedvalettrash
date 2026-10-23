@@ -281,6 +281,94 @@ function inquiry_kind_label(string $kind): string
     return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);
 }
 
+/** @return array<string,string> */
+function weeknights(): array
+{
+    return [
+        'mon' => 'Monday',
+        'tue' => 'Tuesday',
+        'wed' => 'Wednesday',
+        'thu' => 'Thursday',
+        'fri' => 'Friday',
+    ];
+}
+
+function format_weeknights(string $stored): string
+{
+    $labels = weeknights();
+    $names = [];
+    foreach (explode(',', $stored) as $code) {
+        $code = trim($code);
+        if (isset($labels[$code])) {
+            $names[] = $labels[$code];
+        }
+    }
+    return $names === [] ? 'None' : implode(', ', $names);
+}
+
+/** @return array<string,string> */
+function application_statuses(): array
+{
+    return [
+        'new' => 'New',
+        'contacted' => 'Contacted',
+        'hired' => 'Hired',
+        'declined' => 'Declined',
+    ];
+}
+
+function application_status_label(string $status): string
+{
+    return application_statuses()[$status] ?? $status;
+}
+
+/**
+ * Office roles that may read porter applications.
+ * The users table has no role named admin. Manager is the office admin role.
+ *
+ * @return list<string>
+ */
+function application_review_roles(): array
+{
+    return ['owner', 'manager'];
+}
+
+function yes_no_label(mixed $value): string
+{
+    return (int) $value === 1 ? 'Yes' : 'No';
+}
+
+function format_stamp(string $value): string
+{
+    $dt = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $value);
+    return $dt ? $dt->format('M j, Y g:i A') : $value;
+}
+
+/** @return list<string> */
+function old_list(string $key): array
+{
+    $value = $GLOBALS['_old'][$key] ?? [];
+    if (is_string($value)) {
+        return $value === '' ? [] : [$value];
+    }
+    if (!is_array($value)) {
+        return [];
+    }
+    $out = [];
+    foreach ($value as $item) {
+        if (is_scalar($item)) {
+            $out[] = (string) $item;
+        }
+    }
+    return $out;
+}
+
+function old_is(string $key, string $expect): bool
+{
+    $value = $GLOBALS['_old'][$key] ?? null;
+    return is_scalar($value) && (string) $value === $expect;
+}
+
 function property_address(array $property): string
 {
     $stateZip = trim(((string) ($property['state'] ?? '')) . ' ' . ((string) ($property['postal_code'] ?? '')));

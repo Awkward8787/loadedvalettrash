@@ -44,6 +44,11 @@ final class SettingsController extends Controller
             Session::flash('error', 'The default property share must be between 0 and 100.');
             return Response::redirect('/admin/settings');
         }
+        $jobDetails = $req->string('porter_job_details');
+        if (mb_strlen($jobDetails) > 8000) {
+            Session::flash('error', 'Porter job details must be 8,000 characters or fewer. Shorten the text and save again.');
+            return Response::redirect('/admin/settings');
+        }
         $multiplier = (float) $req->string('payroll_multiplier', '1.10');
         if ($multiplier < 1 || $multiplier > 3) {
             Session::flash('error', 'Payroll multiplier should be at least 1.00. 1.10 means wages plus 10%.');
@@ -57,6 +62,7 @@ final class SettingsController extends Controller
             'address' => blank_to_null($req->string('address')),
             'service_area' => blank_to_null($req->string('service_area')),
             'insurance_text' => blank_to_null($req->string('insurance_text')),
+            'porter_job_details' => blank_to_null($jobDetails),
             'opt_in_price_cents' => $price,
             'default_property_share_percent' => number_format($share, 2, '.', ''),
             'minutes_per_door' => max(0, (float) $req->string('minutes_per_door', '1')),

@@ -196,7 +196,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
       <div class="grid-2">
         <?php foreach ($reviews as $review): ?>
           <blockquote class="card">
-            <p class="stars" aria-label="<?= (int) $review['rating'] ?> out of 5"><?= str_repeat('★', (int) $review['rating']) ?><?= str_repeat('☆', 5 - (int) $review['rating']) ?></p>
+            <p class="stars"><?= (int) $review['rating'] ?> out of 5</p>
             <p><?= nl((string) $review['body']) ?></p>
             <footer><strong><?= e((string) $review['reviewer_name']) ?></strong>, <?= e((string) $review['role_title']) ?> · <?= e((string) $review['property_name']) ?></footer>
           </blockquote>
@@ -223,6 +223,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
   <div class="wrap">
     <h2>Walk the property with us.</h2>
     <p>Ten minutes on site is enough to set the route, the compactor stop, and which buildings to start with. The 30-day trial is free on the buildings you pick.</p>
+    <p>Now hiring porters. <a href="/apply">Apply now</a>.</p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/contact?intent=walkthrough">Book a walkthrough</a>
       <a class="btn btn-ghost" href="/contact">Request a proposal</a>

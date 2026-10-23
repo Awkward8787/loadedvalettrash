@@ -14,7 +14,7 @@ Money columns are integer cents. Shares and payroll multipliers are decimals. Cl
 
 ## Settings
 
-- `settings` — one row, `id = 1`, inserted by the migration. Contact fields and `insurance_text` start null. Operating defaults match the service: opt-in 3500 cents, share 10%, 1 minute per door, 45 minutes per site, 120-minute window, set-out 18:00–20:00, pickup 20:00–22:00, 2 bags (4 after a holiday), 25 lb, wage 1500 cents, payroll 1.10, supplies 4000, gas 9000, vehicle reserve 2500, fixed costs 34900, remittance day 10, session timeout 30 minutes.
+- `settings` — one row, `id = 1`, inserted by the migration. Contact fields, `insurance_text`, and `porter_job_details` start null. `porter_job_details` is the only job-details copy on `/apply`; blank means that block is omitted. Operating defaults match the service: opt-in 3500 cents, share 10%, 1 minute per door, 45 minutes per site, 120-minute window, set-out 18:00 to 20:00, pickup 20:00 to 22:00, 2 bags (4 after a holiday), 25 lb, wage 1500 cents, payroll 1.10, supplies 4000, gas 9000, vehicle reserve 2500, fixed costs 34900, remittance day 10, session timeout 30 minutes.
 - `holidays` — `service_off = 1` means no route. The 2026–2027 list from the operating calendar is inserted here, including Martin Luther King Jr. Day 2027 with `service_off = 0`.
 
 ## Pipeline and properties
@@ -38,6 +38,7 @@ Route minutes for a property are `doors × minutes_per_door + minutes_fixed`. Do
 - `issues` — `missed_pickup`, `violation`, or `other`. `source` is `public`, `porter`, or `staff`. `photo_path` is a filename under `storage/uploads`, not a public URL. `external_property_name` keeps the name a resident typed when it did not match a property.
 - `reviews` — default `pending`. Public pages read `approved` only.
 - `inquiries` — public proposal, walkthrough, event cleanup, or move-out requests (`kind` is `proposal`, `walkthrough`, `event_cleanup`, `move_out`, or legacy `other`), linked to a property when one was created or matched.
+- `applications` — public porter applications (`migrations/004_applications.sql`). `nights` is a comma list of `mon` through `fri`. `status` is `new`, `contacted`, `hired`, or `declined`. No foreign keys. `form_attempts` counts public apply posts for the same 15-minute caps as login, and is not the login table.
 - `invoices` — one per property per month. Unique on `(property_id, period_year, period_month)`. Status `draft`, `sent`, `paid`, or `void`. Late is not a stored status. A draft or sent invoice with `due_on` before today is late. `due_on` is the remittance day of that month, clamped to 1–28.
 
 ### Invoice math

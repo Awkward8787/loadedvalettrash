@@ -110,6 +110,7 @@ $nav = [
       <p><a href="/how-it-works">Bag rules</a></p>
       <p><a href="/privacy">Privacy</a></p>
       <p><a href="/terms">Terms</a></p>
+      <p><a href="/apply">Apply now</a></p>
     </div>
   </div>
   <div class="wrap fine footer-copy">© <?= date('Y') ?> Anthony Jaamal Jones / Loaded Valet Trash. All rights reserved.</div>

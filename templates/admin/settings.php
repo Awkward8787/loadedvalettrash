@@ -9,6 +9,8 @@
   <label>Address <textarea name="address"><?= e((string) ($record['address'] ?? '')) ?></textarea></label>
   <label>Service area <input name="service_area" value="<?= e((string) ($record['service_area'] ?? '')) ?>"></label>
   <label>Insurance text <textarea name="insurance_text"><?= e((string) ($record['insurance_text'] ?? '')) ?></textarea></label>
+  <label>Porter job details <textarea name="porter_job_details"><?= e((string) ($record['porter_job_details'] ?? '')) ?></textarea></label>
+  <p class="muted">Shown on the apply page under the heading Job details when this has text. Leave it blank and that heading is omitted. Pay, benefits, background checks, and licence rules stay out of this box until you decide them.</p>
   <label>Opt-in price <input name="opt_in_price" value="<?= e(cents_to_dollars((int) $record['opt_in_price_cents'])) ?>"></label>
   <label>Default property share % <input name="default_property_share_percent" value="<?= e((string) $record['default_property_share_percent']) ?>"></label>
   <label>Minutes per door <input name="minutes_per_door" value="<?= e((string) $record['minutes_per_door']) ?>"></label>

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Public porter application at /apply, stored in MySQL, with an owner and manager review page at /admin/applications
 - Stylesheet and script links carry the file modification time so a returning browser does not keep a stale app.css
 - Home hero shows the 16:9 commercial from the poster frame, with English captions along the bottom and no autoplay. The video width is capped from a 60vh frame, and the hero section grows with its copy.
 - Home: lime buttons use near-black text, cards and the set-out note drop the one-sided lime bar, and the hero mark stays within 60vh
