@@ -127,7 +127,7 @@ The repository does not contain a phone number, public email, street address, or
 
 ## Status
 
-Version 0.1.1 (see [CHANGELOG.md](CHANGELOG.md)). The site and backend are built and covered by the test suite, but not deployed yet. The planned domain is loadedvalet.com, which is not connected to this app yet.
+Version 0.1.1 (see [CHANGELOG.md](CHANGELOG.md)). Live at [https://loadedvalet.com](https://loadedvalet.com) (deployed about 9:22 PM ET on Oct 22, 2026).
 
 ## Documentation
 
