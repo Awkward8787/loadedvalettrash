@@ -2,7 +2,7 @@
 <p><?= e((string) ($issue['property_name'] ?: $issue['external_property_name'] ?: 'No property linked')) ?> · unit <?= e((string) ($issue['unit_label'] ?: 'n/a')) ?></p>
 <p>Reported by <?= e((string) ($issue['reporter_name'] ?? '')) ?> <?= e((string) ($issue['reporter_contact'] ?? '')) ?> · <?= e((string) ($issue['reporter_role'] ?? '')) ?></p>
 <?php if (filled($issue['photo_path'] ?? null)): ?>
-  <p><img src="/admin/issues/<?= (int) $issue['id'] ?>/photo" alt="Photo attached to this issue"></p>
+  <p><img src="/admin/issues/<?= (int) $issue['id'] ?>/photo" alt="Photo attached to this issue" width="1200" height="900" loading="lazy"></p>
 <?php endif; ?>
 <form class="form card" method="post" action="/admin/issues/<?= (int) $issue['id'] ?>">
   <?= csrf_field() ?>

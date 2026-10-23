@@ -1,7 +1,7 @@
 <?php
 $price = money_plain((int) $settings['opt_in_price_cents']);
-$setout = clock_label((string) $settings['setout_start']) . ' to ' . clock_label((string) $settings['setout_end']);
-$pickup = clock_label((string) $settings['pickup_start']) . ' to ' . clock_label((string) $settings['pickup_end']);
+$setout = clock_range((string) $settings['setout_start'], (string) $settings['setout_end']);
+$pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pickup_end']);
 ?>
 <section class="section">
   <div class="wrap">

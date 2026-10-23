@@ -359,8 +359,8 @@ final class PublicController extends Controller
         $bags = (int) $s['max_bags_per_night'];
         $holidayBags = (int) $s['holiday_bags'];
         $weight = (int) $s['max_bag_weight_lb'];
-        $setout = clock_label((string) $s['setout_start']) . '–' . clock_label((string) $s['setout_end']);
-        $pickup = clock_label((string) $s['pickup_start']) . '–' . clock_label((string) $s['pickup_end']);
+        $setout = clock_range((string) $s['setout_start'], (string) $s['setout_end']);
+        $pickup = clock_range((string) $s['pickup_start'], (string) $s['pickup_end']);
         $report = (string) $s['missed_report_by'];
         $share = rtrim(rtrim(number_format((float) $s['default_property_share_percent'], 2), '0'), '.');
         $items = [
@@ -436,7 +436,7 @@ final class PublicController extends Controller
     private function defaultDescription(): string
     {
         $price = $this->priceWhole();
-        return 'Doorstep valet trash for apartment communities in Valdosta and Lowndes County. Residents opt in for ' . $price . ' a month. Monday–Friday evening pickup. Request a proposal.';
+        return 'Doorstep valet trash for apartment communities in Valdosta and Lowndes County. Residents opt in for ' . $price . ' a month. Monday to Friday evening pickup. Request a proposal.';
     }
 
     private function priceWhole(): string

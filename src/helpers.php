@@ -100,6 +100,16 @@ function clock_label(string $time): string
     return $dt ? $dt->format('g:i A') : $time;
 }
 
+function clock_range(string $start, string $end): string
+{
+    $a = clock_label($start);
+    $b = clock_label($end);
+    if (preg_match('/^(.+) (AM|PM)$/', $a, $ma) && preg_match('/^(.+) (AM|PM)$/', $b, $mb) && $ma[2] === $mb[2]) {
+        return $ma[1] . ' to ' . $mb[1] . ' ' . $mb[2];
+    }
+    return $a . ' to ' . $b;
+}
+
 function csrf_field(): string
 {
     return '<input type="hidden" name="_csrf" value="' . e(\Lvt\Csrf::token()) . '">';

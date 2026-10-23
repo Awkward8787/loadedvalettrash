@@ -13,7 +13,7 @@
     <h2>Event cleanup and move-outs</h2>
     <p>Party and event cleanup is quoted per event. Move-out cleanout and trash haul-off is quoted per job. Those jobs are separate from the weekly doorstep route. This page does not set a price or a minimum for them.</p>
     <h2>Trial</h2>
-    <p>A free 30-day trial, when we offer one, covers Monday–Friday service on the buildings the manager names. The property gives porters access to the gate and compactor and joins a short check-in around day 14 and day 30. Either side can stop at the end of the trial. After a trial, service continues month to month unless a signed agreement sets a longer term.</p>
+    <p>A free 30-day trial, when we offer one, covers Monday to Friday service on the buildings the manager names. The property gives porters access to the gate and compactor and joins a short check-in around day 14 and day 30. Either side can stop at the end of the trial. After a trial, service continues month to month unless a signed agreement sets a longer term.</p>
     <h2>Missed pickups and violations</h2>
     <p>Report a can that was out on time by <?= e((string) $settings['missed_report_by']) ?> the next day. If it was our miss, we return the same day. Rule breaks get a door notice. The third notice in 30 days is for the office. Any lease fine or pause is the property’s decision.</p>
     <h2>Certificate</h2>

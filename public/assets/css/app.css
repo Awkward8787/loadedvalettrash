@@ -68,8 +68,8 @@ body {
   line-height: 1.6;
 }
 img { max-width: 100%; height: auto; }
-a { color: var(--black); }
-a:hover { color: var(--black); }
+a { color: var(--ink); }
+a:hover { color: var(--ink); }
 h1, h2, h3, h4 {
   font-family: var(--display);
   font-weight: 400;
@@ -87,7 +87,7 @@ p { margin: 0 0 1rem; }
   left: 0.5rem;
   top: -4rem;
   background: var(--lime);
-  color: var(--black);
+  color: var(--ink);
   padding: 0.5rem 0.8rem;
   z-index: 10;
 }
@@ -108,7 +108,7 @@ p { margin: 0 0 1rem; }
   gap: 1rem;
   min-height: 88px;
 }
-.brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--black); flex: 0 0 auto; }
+.brand { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: var(--ink); flex: 0 0 auto; }
 .brand img { height: 72px; width: auto; max-width: 80px; object-fit: contain; }
 .nav-desktop, .nav-links { display: none; align-items: center; gap: 0.85rem; }
 .nav-desktop a, .nav-links a { text-decoration: none; font-weight: 600; font-size: 0.95rem; }
@@ -146,18 +146,19 @@ p { margin: 0 0 1rem; }
   text-decoration: none;
   cursor: pointer;
 }
-.btn-primary { background: var(--lime); color: var(--black); border-color: var(--black); }
+.btn-primary { background: var(--lime); color: var(--ink); border-color: var(--black); }
 .btn-primary:hover { background: var(--black); color: var(--white); border-color: var(--black); }
-.btn-ghost { background: transparent; color: var(--black); }
+.btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--black); color: var(--white); }
 .btn-small { min-height: 44px; padding: 0.4rem 0.85rem; font-size: 0.92rem; }
 .btn-block { width: 100%; }
 
 .hero { background: var(--white); padding: 1.25rem 0 2.5rem; }
 .hero-grid { display: grid; gap: 0.5rem; align-items: center; }
-.hero-mark { display: flex; justify-content: center; }
-.hero-mark picture { display: flex; justify-content: center; width: 100%; }
-.hero-mark img { width: min(100%, 440px); height: auto; }
+.hero-copy { order: 1; }
+.hero-mark { display: flex; justify-content: center; order: 2; max-height: 60vh; }
+.hero-mark picture { display: flex; justify-content: center; width: auto; max-width: 100%; max-height: 60vh; }
+.hero-mark img { width: auto; height: auto; max-width: min(100%, 440px); max-height: 60vh; object-fit: contain; }
 .eyebrow {
   display: inline-block;
   background: var(--black);
@@ -192,7 +193,6 @@ p { margin: 0 0 1rem; }
 .card {
   background: var(--white);
   border: 1px solid var(--line);
-  border-top: 6px solid var(--lime);
   border-radius: 16px;
   padding: 1.15rem 1.2rem;
 }
@@ -205,7 +205,7 @@ p { margin: 0 0 1rem; }
   justify-content: center;
   border-radius: 50%;
   background: var(--lime);
-  color: var(--black);
+  color: var(--ink);
   font-family: var(--display);
   font-size: 1.15rem;
   box-shadow: 0 0 0 3px var(--white), 0 0 0 5px var(--black);
@@ -213,15 +213,8 @@ p { margin: 0 0 1rem; }
 }
 .rule-list { padding-left: 1.1rem; }
 .rule-list li { margin: 0.35rem 0; }
-.price-card { position: relative; overflow: hidden; }
+.price-card { position: relative; }
 .price-card.featured { border-color: var(--black); }
-.price-card.featured:before {
-  content: "";
-  display: block;
-  height: 8px;
-  background: var(--lime);
-  margin: -1.15rem -1.2rem 1rem;
-}
 .price { font-family: var(--display); font-size: 3rem; font-weight: 400; letter-spacing: 0.02em; }
 .price small { font-size: 1rem; font-weight: 600; letter-spacing: 0; }
 .service-price {
@@ -237,7 +230,6 @@ p { margin: 0 0 1rem; }
   background: var(--black);
   color: var(--white);
   border-radius: 16px;
-  border-left: 8px solid var(--lime);
   padding: 1.15rem 1.25rem 1.2rem;
   margin: 1.1rem 0 1.3rem;
 }
@@ -273,7 +265,7 @@ p { margin: 0 0 1rem; }
   padding: 1.5rem;
   background: var(--white);
 }
-.stars { color: var(--black); letter-spacing: 0.12em; font-weight: 800; }
+.stars { color: var(--ink); letter-spacing: 0.12em; font-weight: 800; }
 .faq details {
   border-bottom: 1px solid var(--line);
   padding: 0.8rem 0;
@@ -286,8 +278,12 @@ p { margin: 0 0 1rem; }
   padding: 3rem 0;
 }
 .band a { color: var(--white); }
+.band a.btn-primary { color: var(--ink); }
+.band a.btn-primary:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+.band a.btn-primary:focus-visible { color: var(--ink); }
+.band a.btn-primary:hover:focus-visible { color: var(--white); }
 .band .btn-ghost { color: var(--white); border-color: var(--white); }
-.band .btn-ghost:hover { background: var(--lime); color: var(--black); border-color: var(--lime); }
+.band .btn-ghost:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
 .site-footer { background: var(--black); color: #f3f3f3; padding: 2.2rem 0 1.4rem; border-top: 6px solid var(--lime); }
 .footer-brand { display: flex; justify-content: center; margin-bottom: 1.5rem; }
 .footer-brand picture { display: flex; justify-content: center; }
@@ -458,8 +454,7 @@ th { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
 @media (min-width: 760px) {
   .hero { padding: 2rem 0 3.5rem; }
   .hero-grid { grid-template-columns: 0.92fr 1.08fr; gap: 1.5rem; }
-  .hero-mark { order: 2; }
-  .hero-mark img { width: min(100%, 560px); }
+  .hero-mark img { max-width: min(100%, 560px); }
   .grid-2 { grid-template-columns: 1fr 1fr; }
   .grid-3 { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(4, 1fr); }
@@ -490,7 +485,7 @@ th { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
 @media (min-width: 980px) {
   .admin-shell { display: grid; grid-template-columns: 220px 1fr; gap: 1rem; align-items: start; }
   .side-nav { display: block; position: sticky; top: 80px; }
-  .side-nav a { display: flex; align-items: center; min-height: 44px; padding: 0.55rem 0.7rem; border-radius: 10px; text-decoration: none; font-weight: 700; color: var(--black); }
+  .side-nav a { display: flex; align-items: center; min-height: 44px; padding: 0.55rem 0.7rem; border-radius: 10px; text-decoration: none; font-weight: 700; color: var(--ink); }
   .side-nav a[aria-current="page"], .side-nav a:hover { background: var(--white); }
   .mobile-nav { display: none; }
 }
