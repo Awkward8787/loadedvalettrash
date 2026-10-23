@@ -32,12 +32,12 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <track kind="captions" src="/assets/media/lvt-commercial.en.vtt" srclang="en" label="English" default>
       </video>
     </div>
-    <aside class="hero-card">
+    <div class="hero-card">
       <div class="fact"><span>Set-out</span> <?= e($setout) ?></div>
       <div class="fact"><span>Pickup</span> <?= e($pickup) ?></div>
       <div class="fact"><span>Bags</span> Up to <?= (int) $settings['max_bags_per_night'] ?> a night</div>
       <div class="fact"><span>Trial</span> 30 days, buildings you choose</div>
-    </aside>
+    </div>
   </div>
 </section>
 

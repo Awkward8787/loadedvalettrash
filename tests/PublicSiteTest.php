@@ -37,6 +37,10 @@ final class PublicSiteTest extends TestCase
         $this->assertStringContainsString('<source src="/assets/media/lvt-commercial-720p.mp4" type="video/mp4">', $home->body);
         $this->assertStringContainsString('<track kind="captions" src="/assets/media/lvt-commercial.en.vtt" srclang="en" label="English" default>', $home->body);
         $this->assertDoesNotMatchRegularExpression('/<video\b[^>]*\bautoplay\b/', $home->body);
+        $this->assertStringNotContainsString('(229) 595-8852', $home->body);
+        $this->assertStringNotContainsString('229-595-8852', $home->body);
+        $captions = (string) file_get_contents(dirname(__DIR__) . '/public/assets/media/lvt-commercial.en.vtt');
+        $this->assertStringContainsString('Loaded Valet Trash. Call (229) 595-8852.', $captions);
     }
 
     public function testRobotsAndCorePagesExist(): void

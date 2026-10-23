@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-- Home hero shows the 16:9 commercial from the poster frame, with English captions and no autoplay, and stays within 60vh on desktop
-- Home: lime buttons use near-black text, cards and the set-out note drop the one-sided lime bar, and the hero stays within 60vh
+- Home hero shows the 16:9 commercial from the poster frame, with English captions and no autoplay. The video width is capped from a 60vh frame, and the hero section grows with its copy.
+- Home: lime buttons use near-black text, cards and the set-out note drop the one-sided lime bar, and the hero mark stays within 60vh
 - Public time and day ranges use words ("6:00 to 8:00 PM", "Monday to Friday") instead of en dashes
 - Public services for doorstep valet, party and event cleanup (quoted per event), and move-outs (quoted per job)
 - Resident set-out rule: trash goes in the can at the door, and a loose bag does not go on the ground
