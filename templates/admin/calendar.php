@@ -6,6 +6,7 @@ $next = date('Y-m', strtotime($start . ' +1 month'));
 ?>
 <h1><?= e(date('F Y', strtotime($start))) ?></h1>
 <p><a href="/admin/schedule/calendar?month=<?= e($prev) ?>">Previous</a> · <a href="/admin/schedule/calendar?month=<?= e($next) ?>">Next</a> · <a href="/admin/schedule">List</a></p>
+<div class="calendar-scroll">
 <div class="calendar" aria-label="Route calendar">
   <?php foreach (['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as $label): ?><div class="muted"><?= e($label) ?></div><?php endforeach; ?>
   <?php for ($i = 1; $i < $firstDow; $i++): ?><div></div><?php endfor; ?>
@@ -18,4 +19,5 @@ $next = date('Y-m', strtotime($start . ' +1 month'));
       <?php endforeach; ?>
     </div>
   <?php endfor; ?>
+</div>
 </div>

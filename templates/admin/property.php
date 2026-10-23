@@ -114,8 +114,8 @@
   <h3>Add a building</h3>
   <form class="form" method="post" action="/admin/properties/<?= (int) $property['id'] ?>/buildings">
     <?= csrf_field() ?>
-    <input name="name" placeholder="Building or breezeway" required>
-    <input name="sort_order" type="number" value="<?= count($buildings) + 1 ?>">
+    <div class="field"><label for="building-name">Building or breezeway</label><input id="building-name" name="name" required></div>
+    <div class="field"><label for="building-order">Order</label><input id="building-order" name="sort_order" type="number" value="<?= count($buildings) + 1 ?>"></div>
     <button class="btn btn-primary" type="submit">Add building</button>
   </form>
 </section>
@@ -127,10 +127,10 @@
   <?php endforeach; ?>
   <form class="form" method="post" action="/admin/properties/<?= (int) $property['id'] ?>/contacts">
     <?= csrf_field() ?>
-    <input name="name" placeholder="Name" required>
-    <input name="role_title" placeholder="Role">
-    <input name="phone" placeholder="Phone">
-    <input name="email" placeholder="Email">
+    <div class="field"><label for="contact-name">Name</label><input id="contact-name" name="name" required></div>
+    <div class="field"><label for="contact-role">Role</label><input id="contact-role" name="role_title"></div>
+    <div class="field"><label for="contact-phone">Phone</label><input id="contact-phone" name="phone"></div>
+    <div class="field"><label for="contact-email">Email</label><input id="contact-email" name="email" type="email"></div>
     <label><input type="checkbox" name="is_primary" value="1"> Primary</label>
     <button class="btn btn-ghost" type="submit">Add contact</button>
   </form>

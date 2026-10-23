@@ -14,12 +14,14 @@
 <form class="form card" method="post" action="/admin/schedule/runs">
   <?= csrf_field() ?>
   <h2>Build one night</h2>
-  <input type="date" name="service_date" required>
-  <select name="porter_id">
-    <option value="0">Porter</option>
+  <div class="field"><label for="run-date">Service night</label><input id="run-date" type="date" name="service_date" required></div>
+  <div class="field"><label for="run-porter">Porter</label>
+  <select id="run-porter" name="porter_id">
+    <option value="0">Unassigned</option>
     <?php foreach ($porters as $porter): ?><option value="<?= (int) $porter['id'] ?>"><?= e((string) $porter['name']) ?></option><?php endforeach; ?>
   </select>
-  <input type="time" name="start_time" value="20:00">
+  </div>
+  <div class="field"><label for="run-start">Start time</label><input id="run-start" type="time" name="start_time" value="20:00"></div>
   <?php for ($i = 1; $i <= 6; $i++): ?>
     <label>Stop <?= $i ?>
       <select name="property_ids[]">
@@ -33,22 +35,28 @@
 <form class="form card" method="post" action="/admin/schedule/templates">
   <?= csrf_field() ?>
   <h2>Weekly template</h2>
-  <input name="name" placeholder="Template name" required>
-  <select name="day_of_week">
+  <div class="field"><label for="template-name">Template name</label><input id="template-name" name="name" required></div>
+  <div class="field"><label for="template-day">Day</label>
+  <select id="template-day" name="day_of_week">
     <?php foreach ([1=>'Monday',2=>'Tuesday',3=>'Wednesday',4=>'Thursday',5=>'Friday'] as $n => $label): ?>
       <option value="<?= $n ?>"><?= e($label) ?></option>
     <?php endforeach; ?>
   </select>
-  <select name="porter_id">
-    <option value="0">Porter</option>
+  </div>
+  <div class="field"><label for="template-porter">Porter</label>
+  <select id="template-porter" name="porter_id">
+    <option value="0">Unassigned</option>
     <?php foreach ($porters as $porter): ?><option value="<?= (int) $porter['id'] ?>"><?= e((string) $porter['name']) ?></option><?php endforeach; ?>
   </select>
-  <input type="time" name="start_time" value="20:00">
+  </div>
+  <div class="field"><label for="template-start">Start time</label><input id="template-start" type="time" name="start_time" value="20:00"></div>
   <?php for ($i = 1; $i <= 4; $i++): ?>
+    <label>Stop <?= $i ?>
     <select name="property_ids[]">
-      <option value="0">Stop <?= $i ?></option>
+      <option value="0">None</option>
       <?php foreach ($properties as $property): ?><option value="<?= (int) $property['id'] ?>"><?= e((string) $property['name']) ?></option><?php endforeach; ?>
     </select>
+    </label>
   <?php endfor; ?>
   <button class="btn btn-ghost" type="submit">Save weekly template</button>
 </form>

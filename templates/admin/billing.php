@@ -2,8 +2,14 @@
 <p class="muted"><?= e(sprintf('%04d-%02d', (int) $year, (int) $month)) ?> · due <?= e(money((int) $dueCents)) ?> · profit <?= e(money((int) $profitCents)) ?></p>
 <form class="form" method="get" action="/admin/billing">
   <div class="grid-2">
-    <input name="year" type="number" value="<?= (int) $year ?>">
-    <input name="month" type="number" min="1" max="12" value="<?= (int) $month ?>">
+    <div class="field">
+      <label for="billing-year">Year</label>
+      <input id="billing-year" name="year" type="number" value="<?= (int) $year ?>">
+    </div>
+    <div class="field">
+      <label for="billing-month">Month</label>
+      <input id="billing-month" name="month" type="number" min="1" max="12" value="<?= (int) $month ?>">
+    </div>
   </div>
   <button class="btn btn-ghost" type="submit">Show month</button>
 </form>
@@ -13,7 +19,8 @@
   <p class="muted">Signed and live properties. Opt-in uses billable doors times the price, minus the property share. Per-door and flat use the property’s rate. Paid invoices are left alone.</p>
   <input type="hidden" name="year" value="<?= (int) $year ?>">
   <input type="hidden" name="month" value="<?= (int) $month ?>">
-  <select name="property_id">
+  <label for="billing-property">Property</label>
+  <select id="billing-property" name="property_id">
     <option value="0">All signed and live</option>
     <?php foreach ($properties as $property): ?>
       <option value="<?= (int) $property['id'] ?>"><?= e((string) $property['name']) ?></option>
