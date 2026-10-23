@@ -56,9 +56,13 @@ final class RouteEstimateTest extends TestCase
             ['2026-11-26']
         );
         $this->assertSame(0, $thanksgiving);
+        $nextThursday = strtotime(today_date() . ' 12:00:00');
+        while ((int) date('N', $nextThursday) !== 4 || !Calendar::isServiceDay(date('Y-m-d', $nextThursday))) {
+            $nextThursday += 86400;
+        }
         $tonight = (int) Database::value(
             'SELECT COUNT(*) FROM route_runs WHERE service_date = ? AND template_id = ?',
-            ['2026-10-22', $templateId]
+            [date('Y-m-d', $nextThursday), $templateId]
         );
         $this->assertSame(1, $tonight);
     }
