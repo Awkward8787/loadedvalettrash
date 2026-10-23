@@ -29,6 +29,14 @@ final class PublicSiteTest extends TestCase
         $this->assertStringNotContainsString('$2,000,000', $home->body);
         $this->assertDoesNotMatchRegularExpression('/href="tel:/', $home->body);
         $this->assertDoesNotMatchRegularExpression('/mailto:/', $home->body);
+        $this->assertMatchesRegularExpression(
+            '/<video\b(?![^>]*\bautoplay\b)[^>]*\bcontrols\b[^>]*\bplaysinline\b[^>]*\bpreload="none"[^>]*\bposter="\/assets\/media\/lvt-commercial-poster\.jpg"/',
+            $home->body
+        );
+        $this->assertStringContainsString('aria-label="Loaded Valet Trash commercial. Porters collect bagged trash from the can outside each door, Monday through Friday."', $home->body);
+        $this->assertStringContainsString('<source src="/assets/media/lvt-commercial-720p.mp4" type="video/mp4">', $home->body);
+        $this->assertStringContainsString('<track kind="captions" src="/assets/media/lvt-commercial.en.vtt" srclang="en" label="English" default>', $home->body);
+        $this->assertDoesNotMatchRegularExpression('/<video\b[^>]*\bautoplay\b/', $home->body);
     }
 
     public function testRobotsAndCorePagesExist(): void

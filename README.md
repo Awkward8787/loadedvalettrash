@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Loaded Valet Trash homepage: the badge, the doorstep valet headline, and the Monday-through-Friday schedule card." width="100%">
+  <img src="assets/banner.png" alt="Loaded Valet Trash homepage: the doorstep valet headline, the walkthrough button, and the commercial poster." width="100%">
 </p>
 
 # Loaded Valet Trash
