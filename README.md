@@ -1,6 +1,19 @@
+<p align="center">
+  <img src="docs/banner.png" alt="Loaded Valet Trash" width="100%">
+</p>
+
 # Loaded Valet Trash
 
-Public website and owner-only operations backend for **Loaded Valet Trash**, a doorstep valet-trash service for apartment communities in Valdosta and Lowndes County, Georgia. The business is owned by Anthony Jaamal Jones (Dondon).
+**Website and owner-only operations backend for a doorstep valet-trash service serving apartment communities in Valdosta and Lowndes County, Georgia.**
+
+[![CI](https://github.com/Awkward8787/loadedvalettrash/actions/workflows/ci.yml/badge.svg)](https://github.com/Awkward8787/loadedvalettrash/actions/workflows/ci.yml)
+[![License: Proprietary](https://img.shields.io/badge/license-proprietary-black)](LICENSE)
+![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)
+![MySQL / MariaDB](https://img.shields.io/badge/MySQL%20%2F%20MariaDB-4479A1?logo=mysql&logoColor=white)
+![PHPUnit](https://img.shields.io/badge/tests-PHPUnit%2011-85e006)
+![Hostinger](https://img.shields.io/badge/hosting-Hostinger-673DE6?logo=hostinger&logoColor=white)
+
+Loaded Valet Trash is owned by Anthony Jaamal Jones (Dondon).
 
 Residents who want the service opt in for $35 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash outside each door Monday through Friday evenings and take it to the property compactor or dumpster. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site.
 
@@ -111,6 +124,10 @@ Do not run `bin/demo-seed.php` on the server. Do not commit `.env`, resident lis
 ## What you still enter
 
 The repository does not contain a phone number, public email, street address, or insurance limit. Until those are saved in Settings, the site simply omits them. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” Connect the domain in Hostinger when you are ready for it to be public.
+
+## Status
+
+Version 0.1.1 (see [CHANGELOG.md](CHANGELOG.md)). The site and backend are built and covered by the test suite, but not deployed yet. The planned domain is loadedvalet.com, which is not connected to this app yet.
 
 ## Documentation
 
