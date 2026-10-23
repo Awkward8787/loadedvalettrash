@@ -118,7 +118,7 @@ function field_error(string $key): string
     if ($msg === '') {
         return '';
     }
-    return '<p class="field-error" id="err-' . e($key) . '">' . e($msg) . '</p>';
+    return '<p class="field-error" id="err-' . e($key) . '" role="alert">' . e($msg) . '</p>';
 }
 
 function has_error(string $key): bool

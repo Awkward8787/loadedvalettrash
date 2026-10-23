@@ -49,9 +49,11 @@
           <span class="badge"><?= e(str_replace('_', ' ', (string) $door['status'])) ?></span>
           <form class="stack" method="post" action="/admin/tonight/doors/<?= (int) $door['id'] ?>" enctype="multipart/form-data">
             <?= csrf_field() ?>
-            <input name="notes" placeholder="Note" value="<?= e((string) ($door['notes'] ?? '')) ?>">
-            <select name="violation_kind">
-              <option value="">Violation type, if any</option>
+            <label for="note-<?= (int) $door['id'] ?>">Note</label>
+            <input id="note-<?= (int) $door['id'] ?>" name="notes" value="<?= e((string) ($door['notes'] ?? '')) ?>">
+            <label for="violation-<?= (int) $door['id'] ?>">Violation type, if any</label>
+            <select id="violation-<?= (int) $door['id'] ?>" name="violation_kind">
+              <option value="">None</option>
               <?php foreach (['loose','leaking','overweight','too_many','hazardous','wrong_time','other'] as $kind): ?>
                 <option value="<?= e($kind) ?>"><?= e(str_replace('_', ' ', $kind)) ?></option>
               <?php endforeach; ?>

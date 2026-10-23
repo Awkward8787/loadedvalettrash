@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Desktop navigation is outside the mobile menu so the links stay on screen at 1280px and 1440px
+- Hero schedule card no longer clips its labels, form controls meet contrast, and staff fields have visible labels
+
 ## 0.1.1 — 2026-10-22
 
 The official badge is the visual system.
