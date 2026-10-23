@@ -6,6 +6,7 @@ $description = $description ?? 'Doorstep valet trash for apartment communities i
 $path = $path ?? '/';
 $canonical = base_url($path === '/' ? '/' : ltrim($path, '/'));
 $nav = [
+    '/services' => 'Services',
     '/how-it-works' => 'How it works',
     '/pricing' => 'Pricing',
     '/who-we-serve' => 'Who we serve',
@@ -99,6 +100,7 @@ $nav = [
       <strong>For properties</strong>
       <p><a href="/contact">Request a proposal</a></p>
       <p><a href="/contact?intent=walkthrough">Book a walkthrough</a></p>
+      <p><a href="/services">Services</a></p>
       <p><a href="/pricing">Pricing</a></p>
       <p><a href="/reviews/new">Share a review</a></p>
     </div>

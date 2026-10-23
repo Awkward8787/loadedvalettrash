@@ -3,8 +3,9 @@
     <div>
       <p class="eyebrow">Residents and offices</p>
       <h1>Report a missed pickup</h1>
-      <p class="lede">If the bag was outside by the end of the set-out window and it was still there in the morning, tell us by <?= e((string) $settings['missed_report_by']) ?>. A miss that is ours is picked up the same day.</p>
-      <p>If the bag went out late, bring it back inside and set it out on the next service night.</p>
+      <p class="lede">If your trash can was outside by the end of the set-out window, with the bagged trash inside it, and it was still there in the morning, tell us by <?= e((string) $settings['missed_report_by']) ?>. A miss that is ours is picked up the same day.</p>
+      <p>If the can went out late, bring it back inside and set it out on the next service night. Put your trash can outside your door with the bagged trash inside it. Never put a loose bag on the ground.</p>
+      <?php include LVT_ROOT . '/templates/partials/setout-callout.php'; ?>
     </div>
     <form class="form card" method="post" action="/missed-pickup">
       <?= csrf_field() ?>

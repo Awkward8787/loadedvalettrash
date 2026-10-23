@@ -15,15 +15,15 @@
 
 Loaded Valet Trash is owned by Anthony Jaamal Jones (Dondon).
 
-Residents who want the service opt in for $35 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash outside each door Monday through Friday evenings and take it to the property compactor or dumpster. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site.
+Residents who want the service opt in for $35 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash from the can outside each door Monday through Friday evenings and take it to the property compactor or dumpster. A loose bag does not go on the ground. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site. Party and event cleanup is quoted per event. Move-out cleanout and haul-off is quoted per job.
 
 ## Features
 
 Public site, written for property managers:
 
-- Home, how it works, schedule and bag rules, who we serve, pricing, FAQ, about, privacy, and terms
+- Home, services, how it works, schedule and set-out rules, who we serve, pricing, FAQ, about, privacy, and terms
 - Revenue-share calculator (units × opt-in % × monthly price × property share)
-- Proposal and walkthrough request, resident missed-pickup report, and review submission
+- Proposal, walkthrough, event-cleanup, and move-out requests, a resident missed-pickup report, and review submission
 - Reviews appear only after an owner or manager approves them. A new install has none
 - Phone, email, address, and insurance text render only when an owner has saved them
 

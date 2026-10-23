@@ -17,7 +17,7 @@ $pickup = clock_label((string) $settings['pickup_start']) . '–' . clock_label(
         <p class="eyebrow"><?= e((string) $settings['service_area']) ?></p>
       <?php endif; ?>
       <h1>Doorstep valet trash for your residents, Monday through Friday.</h1>
-      <p class="lede">Residents who want it opt in for <?= e($price) ?> a month. Your office bills it like pet rent. Our porters carry bagged trash from the door to your compactor. No extra staff.</p>
+      <p class="lede">Residents who want it opt in for <?= e($price) ?> a month. Your office bills it like pet rent. Our porters take bagged trash from the can outside each door to your compactor. No extra staff.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="/contact?intent=walkthrough">Book a walkthrough</a>
         <a class="btn btn-ghost" href="/contact">Request a proposal</a>
@@ -32,6 +32,36 @@ $pickup = clock_label((string) $settings['pickup_start']) . '–' . clock_label(
   </div>
 </section>
 
+<section class="section section-alt" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Services</h2>
+      <p>Doorstep valet for apartment complexes, cleanup after parties and events, and move-out haul-off.</p>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <h3>Doorstep valet trash</h3>
+        <p class="price"><?= e($price) ?> <small>/ door / month</small></p>
+        <p>For apartment complexes. Residents opt in through the leasing office. Your office bills <?= e($price) ?> a month as a rent add-on, the same way it bills pet rent. Porters pick up outside each door Monday through Friday evenings.</p>
+        <a class="btn btn-primary" href="/contact">Request a proposal</a>
+      </article>
+      <article class="card">
+        <h3>Party and event cleanup</h3>
+        <p class="service-price">Quoted per event</p>
+        <p>Cleanup after parties and events, for residents, for properties and clubhouses, and for private events.</p>
+        <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
+      </article>
+      <article class="card">
+        <h3>Move-outs</h3>
+        <p class="service-price">Quoted per job</p>
+        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes.</p>
+        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+      </article>
+    </div>
+    <p><a href="/services">Service details</a></p>
+  </div>
+</section>
+
 <section class="section">
   <div class="wrap">
     <div class="section-head">
@@ -41,10 +71,11 @@ $pickup = clock_label((string) $settings['pickup_start']) . '–' . clock_label(
     <div class="grid-4">
       <article class="card"><div class="step-no">1</div><h3>Resident opts in</h3><p>They sign a one-page addendum at the office or in the resident portal.</p></article>
       <article class="card"><div class="step-no">2</div><h3>Office bills <?= e($price) ?></h3><p>It sits on the ledger like pet rent. Only residents who want it are charged.</p></article>
-      <article class="card"><div class="step-no">3</div><h3>We collect weeknights</h3><p>Bags go out <?= e($setout) ?>. Porters haul them <?= e($pickup) ?>. They never enter the apartment.</p></article>
+      <article class="card"><div class="step-no">3</div><h3>We collect weeknights</h3><p>The can goes out <?= e($setout) ?>, with the bagged trash inside it. Never put a loose bag on the ground. Porters haul it <?= e($pickup) ?>. They never enter the apartment.</p></article>
       <article class="card"><div class="step-no">4</div><h3>One remittance</h3><p>On the 1st we send the roster. By the 10th you remit, minus the share we agreed.</p></article>
     </div>
-    <p><a href="/how-it-works">Bag rules, holidays, and missed pickups</a></p>
+    <?php include LVT_ROOT . '/templates/partials/setout-callout.php'; ?>
+    <p><a href="/how-it-works">Set-out rules, holidays, and missed pickups</a></p>
   </div>
 </section>
 
@@ -93,15 +124,27 @@ $pickup = clock_label((string) $settings['pickup_start']) . '–' . clock_label(
   <div class="wrap">
     <div class="section-head">
       <h2>Who we serve</h2>
-      <p>The same doorstep route, sized to the community.</p>
+      <p>Weeknight doorstep routes for communities, plus cleanup after events and move-outs.</p>
     </div>
     <div class="grid-3">
-      <article class="card"><h3>Apartments</h3><p>Garden and mid-rise communities that want cleaner breezeways without staffing a trash run.</p></article>
+      <article class="card"><h3>Apartments</h3><p>Garden and mid-rise communities that want cleaner breezeways without staffing a trash run. Residents opt in through the leasing office.</p></article>
       <article class="card"><h3>Property management</h3><p>One local operator across several Valdosta communities, with a roster your offices can bill from.</p></article>
-      <article class="card"><h3>HOAs and townhomes</h3><p>Shared dumpsters, private drives, and a board that wants a written set of bag rules.</p></article>
+      <article class="card"><h3>HOAs and townhomes</h3><p>Shared dumpsters, private drives, and a board that wants a written set of can rules.</p></article>
       <article class="card"><h3>Student housing</h3><p>Weeknight pickup, including Friday, when the dumpster trip is the last thing anyone wants to do.</p></article>
-      <article class="card"><h3>Senior living</h3><p>Doorstep service for residents who should not be hauling bags across a property at night.</p></article>
+      <article class="card"><h3>Senior living</h3><p>Doorstep service for residents who should not be hauling a can across a property at night.</p></article>
       <article class="card"><h3>Short-term rentals</h3><p>Hosts with a cluster of doors who need a recurring weeknight pickup. Ask for a quote.</p></article>
+      <article class="card">
+        <h3>Party and event cleanup</h3>
+        <p>Cleanup after parties and events, for residents, for properties and clubhouses, and for private events.</p>
+        <p class="service-price">Quoted per event</p>
+        <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
+      </article>
+      <article class="card">
+        <h3>Move-outs</h3>
+        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes.</p>
+        <p class="service-price">Quoted per job</p>
+        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+      </article>
     </div>
   </div>
 </section>

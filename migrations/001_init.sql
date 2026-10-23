@@ -107,15 +107,15 @@ CREATE TABLE holidays (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO holidays (name, observed_on, service_off, instructions) VALUES
-('Thanksgiving Day', '2026-11-26', 1, 'No service. Resume Fri 11/27. Up to 4 bags that night.'),
-('Christmas Day', '2026-12-25', 1, 'No service. Resume Mon 12/28. Up to 4 bags.'),
-('New Year''s Day', '2027-01-01', 1, 'No service. Resume Mon 1/4. Up to 4 bags.'),
+('Thanksgiving Day', '2026-11-26', 1, 'No service. Resume Fri 11/27. Up to 4 bags that night. Extra bags go only on top of the can, never on the ground or beside it.'),
+('Christmas Day', '2026-12-25', 1, 'No service. Resume Mon 12/28. Up to 4 bags. Extra bags go only on top of the can, never on the ground or beside it.'),
+('New Year''s Day', '2027-01-01', 1, 'No service. Resume Mon 1/4. Up to 4 bags. Extra bags go only on top of the can, never on the ground or beside it.'),
 ('Martin Luther King Jr. Day', '2027-01-18', 0, 'Normal service.'),
-('Memorial Day', '2027-05-31', 1, 'No service. Resume Tue 6/1. Up to 4 bags.'),
-('Independence Day (observed)', '2027-07-05', 1, 'No service. Resume Tue 7/6. Up to 4 bags.'),
-('Labor Day', '2027-09-06', 1, 'No service. Resume Tue 9/7. Up to 4 bags.'),
-('Thanksgiving Day', '2027-11-25', 1, 'No service. Resume Fri 11/26. Up to 4 bags that night.'),
-('Christmas Eve (Christmas observed)', '2027-12-24', 1, 'No service. Resume Mon 12/27. Up to 4 bags.');
+('Memorial Day', '2027-05-31', 1, 'No service. Resume Tue 6/1. Up to 4 bags. Extra bags go only on top of the can, never on the ground or beside it.'),
+('Independence Day (observed)', '2027-07-05', 1, 'No service. Resume Tue 7/6. Up to 4 bags. Extra bags go only on top of the can, never on the ground or beside it.'),
+('Labor Day', '2027-09-06', 1, 'No service. Resume Tue 9/7. Up to 4 bags. Extra bags go only on top of the can, never on the ground or beside it.'),
+('Thanksgiving Day', '2027-11-25', 1, 'No service. Resume Fri 11/26. Up to 4 bags that night. Extra bags go only on top of the can, never on the ground or beside it.'),
+('Christmas Eve (Christmas observed)', '2027-12-24', 1, 'No service. Resume Mon 12/27. Up to 4 bags. Extra bags go only on top of the can, never on the ground or beside it.');
 
 CREATE TABLE management_companies (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,

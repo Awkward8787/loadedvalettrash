@@ -37,7 +37,7 @@ Route minutes for a property are `doors × minutes_per_door + minutes_fixed`. Do
 
 - `issues` — `missed_pickup`, `violation`, or `other`. `source` is `public`, `porter`, or `staff`. `photo_path` is a filename under `storage/uploads`, not a public URL. `external_property_name` keeps the name a resident typed when it did not match a property.
 - `reviews` — default `pending`. Public pages read `approved` only.
-- `inquiries` — public proposal or walkthrough requests, linked to a property when one was created or matched.
+- `inquiries` — public proposal, walkthrough, event cleanup, or move-out requests (`kind` is `proposal`, `walkthrough`, `event_cleanup`, `move_out`, or legacy `other`), linked to a property when one was created or matched.
 - `invoices` — one per property per month. Unique on `(property_id, period_year, period_month)`. Status `draft`, `sent`, `paid`, or `void`. Late is not a stored status. A draft or sent invoice with `due_on` before today is late. `due_on` is the remittance day of that month, clamped to 1–28.
 
 ### Invoice math
