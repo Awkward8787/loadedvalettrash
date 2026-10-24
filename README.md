@@ -4,7 +4,7 @@
 
 # Loaded Valet Trash
 
-**Website and owner-only operations backend for a doorstep valet-trash service serving apartment communities in Valdosta and Lowndes County, Georgia.**
+**Website and owner-only operations backend for a doorstep valet-trash service serving apartment communities in Valdosta / Lowndes County, Atlanta, and Tampa.**
 
 [![CI](https://github.com/Awkward8787/loadedvalettrash/actions/workflows/ci.yml/badge.svg)](https://github.com/Awkward8787/loadedvalettrash/actions/workflows/ci.yml)
 [![License: Proprietary](https://img.shields.io/badge/license-proprietary-black)](LICENSE)

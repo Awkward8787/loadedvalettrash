@@ -276,6 +276,11 @@ function inquiry_kinds(): array
     ];
 }
 
+function service_area_phrase(): string
+{
+    return 'Valdosta / Lowndes County, Atlanta, and Tampa';
+}
+
 function inquiry_kind_label(string $kind): string
 {
     return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);
