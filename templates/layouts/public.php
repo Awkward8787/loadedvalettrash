@@ -13,6 +13,7 @@ $nav = [
     '/reviews' => 'Reviews',
     '/faq' => 'FAQ',
     '/about' => 'About',
+    '/careers' => 'Careers',
 ];
 ?>
 <!doctype html>
@@ -86,6 +87,7 @@ $nav = [
       <?php if (filled($settings['service_area'] ?? null)): ?>
         <p class="fine"><?= e((string) $settings['service_area']) ?></p>
       <?php endif; ?>
+      <p><a href="/careers">Careers</a></p>
       <?php if (filled($settings['phone'] ?? null)): ?>
         <p><a href="tel:<?= e(preg_replace('/[^\d+]/', '', (string) $settings['phone'])) ?>"><?= e((string) $settings['phone']) ?></a></p>
       <?php endif; ?>

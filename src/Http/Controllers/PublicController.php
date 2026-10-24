@@ -6,6 +6,7 @@ namespace Lvt\Http\Controllers;
 
 use Lvt\Audit;
 use Lvt\Database;
+use Lvt\RateLimiter;
 use Lvt\Request;
 use Lvt\Response;
 use Lvt\Session;
@@ -223,6 +224,98 @@ final class PublicController extends Controller
         return Response::redirect('/contact');
     }
 
+    public function careers(): Response
+    {
+        $data = $this->careersView();
+        return $this->page('public/careers', $data['title'], $data['description'], [
+            'setout' => $data['setout'],
+            'pickup' => $data['pickup'],
+        ]);
+    }
+
+    public function careersSubmit(): Response
+    {
+        $this->csrf();
+        if ($trap = $this->honeypot('/careers')) {
+            return $trap;
+        }
+        $req = Request::current();
+        $errors = [];
+        $role = $req->string('role');
+        $name = $req->string('full_name');
+        $phone = $req->string('phone');
+        $email = $req->string('email');
+        $city = $req->string('city');
+        $experience = $req->string('experience');
+        $start = $req->string('start_date');
+        $heard = $req->string('heard_about');
+        $digits = preg_replace('/\D+/', '', $phone);
+        $isAdult = $this->yesNo($req->string('is_18'), 'is_18', 'Say whether you are 18 or older.', $errors);
+        $transport = $this->yesNo($req->string('has_transportation'), 'has_transportation', 'Say whether you have reliable transportation.', $errors);
+        $canLift = $this->yesNo($req->string('can_lift'), 'can_lift', 'Say whether you can lift about 40 lb.', $errors);
+        $days = $this->chosenDays($req->post['days'] ?? []);
+        if (!array_key_exists($role, job_roles())) {
+            $errors['role'] = 'Choose a role.';
+        }
+        if (mb_strlen($name) < 2 || mb_strlen($name) > 120) {
+            $errors['full_name'] = 'Enter your full name.';
+        }
+        if (!is_string($digits) || strlen($digits) < 7 || strlen($digits) > 15 || mb_strlen($phone) > 40) {
+            $errors['phone'] = 'Enter a phone number.';
+        }
+        if ($email !== '' && (mb_strlen($email) > 190 || filter_var($email, FILTER_VALIDATE_EMAIL) === false)) {
+            $errors['email'] = 'Enter a valid email, or leave it blank.';
+        }
+        if (mb_strlen($city) < 2 || mb_strlen($city) > 120) {
+            $errors['city'] = 'Enter your city.';
+        }
+        if ($days === []) {
+            $errors['days'] = 'Choose at least one evening, Monday through Friday.';
+        }
+        if (mb_strlen($experience) > 4000) {
+            $errors['experience'] = 'Keep experience under 4,000 characters.';
+        }
+        if (!valid_date($start)) {
+            $errors['start_date'] = 'Enter the date you can start.';
+        }
+        if (mb_strlen($heard) < 2 || mb_strlen($heard) > 190) {
+            $errors['heard_about'] = 'Tell us how you heard about us.';
+        }
+        if ($req->string('consent') !== '1') {
+            $errors['consent'] = 'Confirm we can contact you about this application.';
+        }
+        if ($errors) {
+            return $this->invalid('public/careers', $errors, $this->careersView());
+        }
+        if (RateLimiter::tooManyApplications($req->ip())) {
+            return $this->invalid('public/careers', [
+                'form' => 'Too many applications from this connection. Wait a few minutes and try again.',
+            ], $this->careersView());
+        }
+        $id = Database::insertRow('job_applications', [
+            'role' => $role,
+            'full_name' => $name,
+            'phone' => $phone,
+            'email' => blank_to_null($email),
+            'city' => $city,
+            'is_adult' => $isAdult,
+            'has_transportation' => $transport,
+            'days_available' => implode(',', $days),
+            'can_lift' => $canLift,
+            'experience' => blank_to_null($experience),
+            'start_date' => $start,
+            'heard_about' => $heard,
+            'consent' => 1,
+            'status' => 'new',
+            'notes' => null,
+            'ip' => $req->ip(),
+            'created_at' => now_dt(),
+        ]);
+        Audit::write(null, 'application.create', 'job_application', $id, 'Public careers form');
+        Session::flash('success', 'Thank you. We have your application.');
+        return Response::redirect('/careers');
+    }
+
     public function missed(): Response
     {
         return $this->page('public/missed', 'Report a missed pickup', 'Residents and leasing offices can report a missed valet trash pickup. If the bag was out by the end of the set-out window, we schedule a return the same day.');
@@ -307,7 +400,7 @@ final class PublicController extends Controller
 
     public function sitemap(): Response
     {
-        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/missed-pickup', '/privacy', '/terms'];
+        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/careers', '/missed-pickup', '/privacy', '/terms'];
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         foreach ($paths as $path) {
             $xml .= '<url><loc>' . e(base_url($path === '/' ? '/' : ltrim($path, '/'))) . '</loc></url>';
@@ -423,6 +516,49 @@ final class PublicController extends Controller
             ];
         }
         return $items;
+    }
+
+    /** @return array{title:string,description:string,setout:string,pickup:string} */
+    private function careersView(): array
+    {
+        $s = Settings::get();
+        return [
+            'title' => 'Careers',
+            'description' => 'Laborer starts at $18 an hour. Supervisor starts at $20 an hour. Monday through Friday evening routes in Valdosta and Lowndes County.',
+            'setout' => clock_range((string) $s['setout_start'], (string) $s['setout_end']),
+            'pickup' => clock_range((string) $s['pickup_start'], (string) $s['pickup_end']),
+        ];
+    }
+
+    /** @param array<string,string> $errors */
+    private function yesNo(string $value, string $key, string $message, array &$errors): ?int
+    {
+        if ($value !== 'yes' && $value !== 'no') {
+            $errors[$key] = $message;
+            return null;
+        }
+        return $value === 'yes' ? 1 : 0;
+    }
+
+    /** @param mixed $raw */
+    private function chosenDays(mixed $raw): array
+    {
+        if (!is_array($raw)) {
+            return [];
+        }
+        $picked = [];
+        foreach ($raw as $day) {
+            if (is_string($day) && array_key_exists($day, job_days())) {
+                $picked[$day] = true;
+            }
+        }
+        $days = [];
+        foreach (array_keys(job_days()) as $day) {
+            if (isset($picked[$day])) {
+                $days[] = $day;
+            }
+        }
+        return $days;
     }
 
     private function page(string $template, string $title, string $description, array $extra = []): Response

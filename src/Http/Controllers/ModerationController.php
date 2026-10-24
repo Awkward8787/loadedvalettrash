@@ -85,4 +85,91 @@ final class ModerationController extends Controller
         Session::flash('success', 'Request updated.');
         return Response::redirect('/admin/inquiries');
     }
+
+    public function applications(): Response
+    {
+        $role = Request::current()->string('role', 'all');
+        $status = Request::current()->string('status', 'all');
+        if (!array_key_exists($role, job_roles())) {
+            $role = 'all';
+        }
+        if (!in_array($status, job_statuses(), true)) {
+            $status = 'all';
+        }
+        $where = [];
+        $params = [];
+        if ($role !== 'all') {
+            $where[] = 'role = ?';
+            $params[] = $role;
+        }
+        if ($status !== 'all') {
+            $where[] = 'status = ?';
+            $params[] = $status;
+        }
+        $sql = 'SELECT id, role, full_name, phone, city, status, created_at FROM job_applications';
+        if ($where !== []) {
+            $sql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        $sql .= ' ORDER BY created_at DESC LIMIT 200';
+        return View::page('admin/applications', [
+            'title' => 'Applications',
+            'description' => 'Job applications',
+            'applications' => Database::all($sql, $params),
+            'filterRole' => $role,
+            'filterStatus' => $status,
+        ], 'layouts/admin');
+    }
+
+    public function application(array $params): Response
+    {
+        $row = $this->applicationRow((int) $params['id']);
+        return View::page('admin/application', [
+            'title' => 'Application',
+            'description' => 'Job application',
+            'application' => $row,
+        ], 'layouts/admin');
+    }
+
+    public function applicationUpdate(array $params): Response
+    {
+        $this->csrf();
+        $row = $this->applicationRow((int) $params['id']);
+        $req = Request::current();
+        $status = $req->string('status');
+        $notes = $req->string('notes');
+        $errors = [];
+        if (!in_array($status, job_statuses(), true)) {
+            $errors['status'] = 'Choose a status.';
+        }
+        if (mb_strlen($notes) > 4000) {
+            $errors['notes'] = 'Keep notes under 4,000 characters.';
+        }
+        if ($errors) {
+            return $this->invalid('admin/application', $errors, [
+                'title' => 'Application',
+                'description' => 'Job application',
+                'application' => $row,
+            ], 'layouts/admin');
+        }
+        Database::updateRow('job_applications', [
+            'status' => $status,
+            'notes' => blank_to_null($notes),
+        ], 'id = ?', [(int) $row['id']]);
+        Audit::write((int) (Auth::user()['id'] ?? 0), 'application.update', 'job_application', (int) $row['id'], 'Status ' . $status);
+        Session::flash('success', 'Application updated.');
+        return Response::redirect('/admin/applications/' . (int) $row['id']);
+    }
+
+    /** @return array<string,mixed> */
+    private function applicationRow(int $id): array
+    {
+        $row = Database::one(
+            'SELECT id, role, full_name, phone, email, city, is_adult, has_transportation, days_available, can_lift, experience, start_date, heard_about, consent, status, notes, created_at FROM job_applications WHERE id = ?',
+            [$id]
+        );
+        if (!$row) {
+            throw new HttpException(404, 'That application does not exist.');
+        }
+        return $row;
+    }
 }
