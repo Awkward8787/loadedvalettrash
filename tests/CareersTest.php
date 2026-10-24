@@ -14,7 +14,27 @@ final class CareersTest extends TestCase
         $page = $client->get('/careers');
         $this->assertSame(200, $page->status);
         $this->assertStringContainsString('<h3>Laborer</h3>', $page->body);
-        $this->assertStringContainsString('<option value="laborer">Laborer</option>', $page->body);
+        $this->assertStringContainsString('id="role-laborer"', $page->body);
+        $this->assertStringContainsString('type="radio"', $page->body);
+        $this->assertStringContainsString('name="role"', $page->body);
+        $this->assertStringContainsString('value="laborer"', $page->body);
+        $this->assertStringContainsString('value="supervisor"', $page->body);
+        $this->assertStringContainsString('>Laborer</span>', $page->body);
+        $this->assertStringContainsString('required', $page->body);
+        $this->assertStringNotContainsString('<select', $page->body);
+        $this->assertStringNotContainsString('<option', $page->body);
+        $applyAt = strpos($page->body, 'href="#apply"');
+        $videoAt = strpos($page->body, 'lvt-hiring-720p.mp4');
+        $this->assertNotFalse($applyAt);
+        $this->assertNotFalse($videoAt);
+        $this->assertLessThan($videoAt, $applyAt);
+        $this->assertMatchesRegularExpression(
+            '/<video\b(?![^>]*\b(?:autoplay|muted|loop)\b)[^>]*\bcontrols\b[^>]*\bplaysinline\b[^>]*\bpreload="metadata"[^>]*\bposter="\/assets\/media\/lvt-hiring-poster\.jpg\?v=\d+"[^>]*\bwidth="1280"[^>]*\bheight="720"/',
+            $page->body
+        );
+        $this->assertMatchesRegularExpression('#<source src="/assets/media/lvt-hiring-720p\.mp4\?v=\d+" type="video/mp4">#', $page->body);
+        $this->assertMatchesRegularExpression('#<track kind="captions" src="/assets/media/lvt-hiring\.vtt\?v=\d+" srclang="en" label="English" default>#', $page->body);
+        $this->assertDoesNotMatchRegularExpression('/<video\b[^>]*\b(?:autoplay|muted|loop)\b/', $page->body);
         $this->assertStringNotContainsString('Laborer / Porter', $page->body);
         $this->assertStringContainsString('Starting at $18 an hour.', $page->body);
         $this->assertStringContainsString('Supervisor', $page->body);
@@ -109,6 +129,7 @@ final class CareersTest extends TestCase
         ]));
         $this->assertSame(422, $bad->status);
         $this->assertStringContainsString('Choose a role.', $bad->body);
+        $this->assertStringContainsString('aria-invalid="true" aria-describedby="err-role"', $bad->body);
         $this->assertStringContainsString('Enter a valid email', $bad->body);
         $this->assertStringContainsString('Confirm we can contact you', $bad->body);
         $this->assertSame(0, (int) Database::value('SELECT COUNT(*) FROM job_applications'));
@@ -186,25 +207,41 @@ final class CareersTest extends TestCase
         $list = $ownerClient->get('/admin/applications');
         $this->assertSame(200, $list->status);
         $this->assertStringContainsString('Riley Porter', $list->body);
-        $this->assertStringContainsString('>Laborer</option>', $list->body);
+        $this->assertStringContainsString('id="filter-role-laborer"', $list->body);
+        $this->assertStringContainsString('value="laborer"', $list->body);
+        $this->assertStringContainsString('>Laborer</span>', $list->body);
+        $this->assertStringContainsString('id="filter-role-all"', $list->body);
+        $this->assertStringContainsString('>All</span>', $list->body);
+        $this->assertStringContainsString('value="all" checked', $list->body);
+        $this->assertStringNotContainsString('<select', $list->body);
+        $this->assertStringNotContainsString('<option', $list->body);
         $this->assertStringNotContainsString('Laborer / Porter', $list->body);
         $this->assertStringContainsString('href="/admin/applications"', $list->body);
 
         $byRole = $ownerClient->get('/admin/applications?role=supervisor&status=all');
         $this->assertSame(200, $byRole->status);
         $this->assertStringNotContainsString('Riley Porter', $byRole->body);
+        $this->assertStringContainsString('value="supervisor" checked', $byRole->body);
+        $this->assertStringContainsString('name="status" value="all" checked', $byRole->body);
         $byStatus = $ownerClient->get('/admin/applications?role=laborer&status=new');
         $this->assertStringContainsString('Riley Porter', $byStatus->body);
+        $this->assertStringContainsString('value="laborer" checked', $byStatus->body);
+        $this->assertStringContainsString('value="new" checked', $byStatus->body);
 
         $detail = $ownerClient->get('/admin/applications/' . $id);
         $this->assertSame(200, $detail->status);
         $this->assertStringContainsString('18 or older: No', $detail->body);
+        $this->assertStringContainsString('id="status-new"', $detail->body);
+        $this->assertStringContainsString('value="new" checked', $detail->body);
+        $this->assertStringNotContainsString('<select', $detail->body);
         $saved = $ownerClient->follow($ownerClient->post('/admin/applications/' . $id, [
             '_csrf' => $ownerClient->csrf(),
             'status' => 'interview',
             'notes' => 'Call after 5.',
         ]));
         $this->assertStringContainsString('Application updated.', $saved->body);
+        $this->assertStringContainsString('value="interview" checked', $saved->body);
+        $this->assertStringNotContainsString('<select', $saved->body);
         $this->assertStringContainsString('Call after 5.', $saved->body);
         $updated = Database::one('SELECT status, notes FROM job_applications WHERE id = ?', [$id]);
         $this->assertSame('interview', $updated['status']);
@@ -222,6 +259,26 @@ final class CareersTest extends TestCase
         ]);
         $this->assertSame(422, $invalid->status);
         $this->assertSame('interview', Database::one('SELECT status FROM job_applications WHERE id = ?', [$id])['status']);
+    }
+
+    public function testPrivacyExplainsHowJobApplicationsAreKept(): void
+    {
+        $page = $this->client()->get('/privacy');
+        $this->assertSame(200, $page->status);
+        $this->assertStringContainsString('Job applications', $page->body);
+        $this->assertStringContainsString('Email is optional.', $page->body);
+        $this->assertStringContainsString('whether you are 18 or older', $page->body);
+        $this->assertStringContainsString('your availability', $page->body);
+        $this->assertStringContainsString('the date you can start', $page->body);
+        $this->assertStringContainsString('IP address of the submission for spam protection', $page->body);
+        $this->assertStringContainsString('review applications and to contact applicants about jobs', $page->body);
+        $this->assertStringContainsString('Only the owner and managers of Loaded Valet Trash can see applications.', $page->body);
+        $this->assertStringContainsString('We do not sell them and we do not share them.', $page->body);
+        $this->assertStringContainsString('We keep applications for 1 year and then delete them.', $page->body);
+        $this->assertStringContainsString('href="tel:+12295958852"', $page->body);
+        $this->assertStringContainsString('(229) 595-8852', $page->body);
+        $this->assertStringNotContainsString('–', $page->body);
+        $this->assertStringNotContainsString('—', $page->body);
     }
 
     /** @param array<string,mixed> $override */

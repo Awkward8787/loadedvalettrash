@@ -31,15 +31,13 @@ $tel = preg_replace('/[^\d+]/', '', (string) $application['phone']);
 <p class="muted">Submitted <?= e((string) $application['created_at']) ?></p>
 <form class="form card" method="post" action="/admin/applications/<?= (int) $application['id'] ?>">
   <?= csrf_field() ?>
-  <div class="field">
-    <label for="status">Status</label>
-    <select id="status" name="status" <?= has_error('status') ? 'aria-invalid="true" aria-describedby="err-status"' : '' ?>>
-      <?php foreach (job_statuses() as $value): ?>
-        <option value="<?= e($value) ?>"<?= $selectedStatus === $value ? ' selected' : '' ?>><?= e(job_status_label($value)) ?></option>
-      <?php endforeach; ?>
-    </select>
+  <fieldset class="field"<?= has_error('status') ? ' aria-invalid="true" aria-describedby="err-status"' : '' ?>>
+    <legend>Status</legend>
+    <?php foreach (job_statuses() as $value): ?>
+      <label for="status-<?= e($value) ?>"><input id="status-<?= e($value) ?>" type="radio" name="status" value="<?= e($value) ?>"<?= $selectedStatus === $value ? ' checked' : '' ?>> <span><?= e(job_status_label($value)) ?></span></label>
+    <?php endforeach; ?>
     <?= field_error('status') ?>
-  </div>
+  </fieldset>
   <div class="field">
     <label for="notes">Notes</label>
     <textarea id="notes" name="notes" maxlength="4000" <?= has_error('notes') ? 'aria-invalid="true" aria-describedby="err-notes"' : '' ?>><?= e($notesValue) ?></textarea>

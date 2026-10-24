@@ -6,24 +6,20 @@
 <h1>Applications</h1>
 <form class="form" method="get" action="/admin/applications">
   <div class="grid-2">
-    <div class="field">
-      <label for="filter-role">Role</label>
-      <select id="filter-role" name="role">
-        <option value="all"<?= $filterRole === 'all' ? ' selected' : '' ?>>All roles</option>
-        <?php foreach (job_roles() as $value => $label): ?>
-          <option value="<?= e($value) ?>"<?= $filterRole === $value ? ' selected' : '' ?>><?= e($label) ?></option>
-        <?php endforeach; ?>
-      </select>
-    </div>
-    <div class="field">
-      <label for="filter-status">Status</label>
-      <select id="filter-status" name="status">
-        <option value="all"<?= $filterStatus === 'all' ? ' selected' : '' ?>>All statuses</option>
-        <?php foreach (job_statuses() as $value): ?>
-          <option value="<?= e($value) ?>"<?= $filterStatus === $value ? ' selected' : '' ?>><?= e(job_status_label($value)) ?></option>
-        <?php endforeach; ?>
-      </select>
-    </div>
+    <fieldset class="field" id="filter-role">
+      <legend>Role</legend>
+      <label for="filter-role-all"><input id="filter-role-all" type="radio" name="role" value="all"<?= $filterRole === 'all' ? ' checked' : '' ?>> <span>All</span></label>
+      <?php foreach (job_roles() as $value => $label): ?>
+        <label for="filter-role-<?= e($value) ?>"><input id="filter-role-<?= e($value) ?>" type="radio" name="role" value="<?= e($value) ?>"<?= $filterRole === $value ? ' checked' : '' ?>> <span><?= e($label) ?></span></label>
+      <?php endforeach; ?>
+    </fieldset>
+    <fieldset class="field" id="filter-status">
+      <legend>Status</legend>
+      <label for="filter-status-all"><input id="filter-status-all" type="radio" name="status" value="all"<?= $filterStatus === 'all' ? ' checked' : '' ?>> <span>All</span></label>
+      <?php foreach (job_statuses() as $value): ?>
+        <label for="filter-status-<?= e($value) ?>"><input id="filter-status-<?= e($value) ?>" type="radio" name="status" value="<?= e($value) ?>"<?= $filterStatus === $value ? ' checked' : '' ?>> <span><?= e(job_status_label($value)) ?></span></label>
+      <?php endforeach; ?>
+    </fieldset>
   </div>
   <button class="btn btn-ghost btn-small" type="submit">Filter</button>
 </form>

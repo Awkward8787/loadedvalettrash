@@ -7,13 +7,38 @@ if (!is_array($postedDays)) {
 }
 $roles = job_roles();
 $days = job_days();
+$roleError = has_error('role') ? ' aria-invalid="true" aria-describedby="err-role"' : '';
 ?>
-<section class="section">
-  <div class="wrap grid-2">
-    <div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
       <p class="eyebrow">Careers</p>
       <h1>Weeknight routes.</h1>
       <p class="lede">Loaded Valet Trash is hiring in Valdosta and Lowndes County. Routes run Monday through Friday evenings. The work is collecting bagged trash from the can outside each apartment door and taking it to the property compactor or dumpster. Porters do not go inside apartments.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#apply">Apply</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <video
+        class="hero-video"
+        controls
+        playsinline
+        preload="metadata"
+        poster="<?= e(asset_href('/assets/media/lvt-hiring-poster.jpg')) ?>"
+        width="1280"
+        height="720"
+        aria-label="Loaded Valet Trash hiring video. Weeknight routes in Valdosta and Lowndes County."
+      >
+        <source src="<?= e(asset_href('/assets/media/lvt-hiring-720p.mp4')) ?>" type="video/mp4">
+        <track kind="captions" src="<?= e(asset_href('/assets/media/lvt-hiring.vtt')) ?>" srclang="en" label="English" default>
+      </video>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap grid-2">
+    <div>
       <h2>Two roles</h2>
       <div class="stack">
         <article class="card">
@@ -30,22 +55,21 @@ $days = job_days();
       <p><a class="btn btn-ghost" href="tel:+12295958852">Call (229) 595-8852</a></p>
     </div>
     <div>
-      <h2>Apply</h2>
+      <h2 id="apply">Apply</h2>
       <p class="lede">Phone is required. Email is optional.</p>
       <form class="form card" method="post" action="/careers">
         <?= csrf_field() ?>
         <p class="hp"><label>Company website <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></p>
         <?= field_error('form') ?>
-        <div class="field">
-          <label for="role">Role</label>
-          <select id="role" name="role" required <?= has_error('role') ? 'aria-invalid="true" aria-describedby="err-role"' : '' ?>>
-            <option value="">Choose a role</option>
-            <?php foreach ($roles as $value => $label): ?>
-              <option value="<?= e($value) ?>"<?= old('role') === $value ? ' selected' : '' ?>><?= e($label) ?></option>
-            <?php endforeach; ?>
-          </select>
+        <fieldset class="field"<?= $roleError ?>>
+          <legend>Role</legend>
+          <?php $firstRole = true; ?>
+          <?php foreach ($roles as $value => $label): ?>
+            <label for="role-<?= e($value) ?>"><input id="role-<?= e($value) ?>" type="radio" name="role" value="<?= e($value) ?>"<?= $firstRole ? ' required' : '' ?><?= old('role') === $value ? ' checked' : '' ?>> <span><?= e($label) ?></span></label>
+            <?php $firstRole = false; ?>
+          <?php endforeach; ?>
           <?= field_error('role') ?>
-        </div>
+        </fieldset>
         <div class="field">
           <label for="full_name">Full name</label>
           <input id="full_name" name="full_name" required maxlength="120" autocomplete="name" value="<?= old('full_name') ?>" <?= has_error('full_name') ? 'aria-invalid="true" aria-describedby="err-full_name"' : '' ?>>
