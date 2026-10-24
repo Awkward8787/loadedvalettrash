@@ -98,7 +98,7 @@ vendor/bin/phpunit
 
 PHPUnit uses `.env.testing` and the `loaded_valet_test` database. Create that database and grant the user in `.env.testing`, or export `DB_HOST`, `DB_NAME`, `DB_USER`, and `DB_PASS` before `vendor/bin/phpunit`. Those four variables are not forced by `phpunit.xml`, so a CI service account wins when it is already set. `APP_KEY` in the test config is a disposable 32-byte value for the test database only.
 
-The suite covers sign-in, two-factor recovery codes, CSRF, rate limiting, session timeout, role checks, billing math, route time estimates, holiday skipping, review moderation, the proposal, event-cleanup, move-out, and missed-pickup forms, and the public pages.
+The suite covers sign-in, two-factor recovery codes, CSRF, rate limiting, session timeout, role checks, billing math, route time estimates, holiday skipping, review moderation, the proposal, event-cleanup, move-out, and missed-pickup forms, application retention, and the public pages.
 
 ## Environment variables
 
@@ -134,6 +134,13 @@ php bin/seed.php
 ```
 
 7. Sign in, turn on the authenticator, and fill Settings with the phone, email, mailing address, and insurance text you actually want published. Turn on the free SSL certificate in hPanel and confirm `APP_URL` uses `https://` so the session cookie is marked Secure.
+8. In hPanel, open Cron Jobs and schedule this once a day. The privacy policy says applications are kept for 1 year and then deleted. `bin/purge-applications.php` removes `job_applications` rows whose `created_at` is older than 1 year. Running it again the same day deletes nothing further. Hostinger limits a cron command to 255 characters, so keep the path short. Replace `/path` with the project directory (the folder that contains `bin/`):
+
+```text
+php /path/bin/purge-applications.php
+```
+
+The root `.htaccess` already refuses web requests for `bin/`. The script also exits if it is not started from the command line.
 
 Do not run `bin/demo-seed.php` on the server. Do not commit `.env`, resident lists, or gate codes. Step-by-step notes, including what to do when there is no SSH, are in [docs/deployment.md](docs/deployment.md).
 

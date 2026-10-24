@@ -41,6 +41,11 @@ final class PublicSiteTest extends TestCase
         $this->assertStringNotContainsString('229-595-8852', $home->body);
         $captions = (string) file_get_contents(dirname(__DIR__) . '/public/assets/media/lvt-commercial.en.vtt');
         $this->assertStringContainsString('Loaded Valet Trash. Call (229) 595-8852.', $captions);
+        $htaccess = (string) file_get_contents(dirname(__DIR__) . '/public/.htaccess');
+        $this->assertStringContainsString("AddType text/vtt .vtt", $htaccess);
+        $this->assertStringContainsString('RewriteRule ^ index.php [L]', $htaccess);
+        $root = (string) file_get_contents(dirname(__DIR__) . '/.htaccess');
+        $this->assertStringContainsString('bin|templates|bootstrap|docs|vendor', $root);
     }
 
     public function testRobotsAndCorePagesExist(): void
