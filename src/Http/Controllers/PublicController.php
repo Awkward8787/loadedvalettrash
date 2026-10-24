@@ -17,8 +17,8 @@ final class PublicController extends Controller
 {
     public function home(): Response
     {
-        return $this->page('public/home', 'Valet trash in Valdosta', $this->defaultDescription(), [
-            'documentTitle' => 'Valet Trash in Valdosta, GA | Loaded Valet Trash',
+        return $this->page('public/home', 'Valet trash in ' . $this->areaName(), $this->defaultDescription(), [
+            'documentTitle' => 'Valet Trash in ' . $this->areaName() . ' | Loaded Valet Trash',
             'reviews' => $this->approvedReviews(),
             'holidays' => $this->upcomingHolidays(),
             'faqs' => array_slice($this->faqs(), 0, 5),
@@ -31,13 +31,13 @@ final class PublicController extends Controller
         return $this->page(
             'public/services',
             'Services',
-            'Doorstep valet trash for apartment complexes, party and event cleanup quoted per event, and move-out cleanout quoted per job in Valdosta and Lowndes County, Georgia.'
+            'Doorstep valet trash for apartment complexes, party and event cleanup quoted per event, and move-out cleanout quoted per job. Serving apartment communities in ' . $this->areaName() . '.'
         );
     }
 
     public function how(): Response
     {
-        return $this->page('public/how', 'How valet trash works', 'Monday through Friday doorstep pickup for Valdosta apartment communities. Set-out window, bag rules, and what the leasing office does.', [
+        return $this->page('public/how', 'How valet trash works', 'Monday through Friday doorstep pickup for apartment communities in ' . $this->areaName() . '. Set-out window, bag rules, and what the leasing office does.', [
             'holidays' => $this->upcomingHolidays(),
         ]);
     }
@@ -51,7 +51,7 @@ final class PublicController extends Controller
 
     public function who(): Response
     {
-        return $this->page('public/who', 'Who we serve', 'Valet trash for apartments, property management companies, HOAs, student housing, senior living, and short-term rentals in Valdosta and Lowndes County.');
+        return $this->page('public/who', 'Who we serve', 'Valet trash for apartments, property management companies, HOAs, student housing, senior living, and short-term rentals in ' . $this->areaName() . '.');
     }
 
     public function reviews(): Response
@@ -118,19 +118,19 @@ final class PublicController extends Controller
 
     public function faq(): Response
     {
-        return $this->page('public/faq', 'FAQ', 'Answers for property managers about valet trash billing, bag rules, missed pickups, and the free 30-day trial in Valdosta.', [
+        return $this->page('public/faq', 'FAQ', 'Answers for property managers about valet trash billing, bag rules, missed pickups, and the free 30-day trial in Valdosta. Serving apartment communities in ' . $this->areaName() . '.', [
             'faqs' => $this->faqs(),
         ]);
     }
 
     public function about(): Response
     {
-        return $this->page('public/about', 'About', 'Loaded Valet Trash is owned by Anthony Jaamal Jones (Dondon) and serves apartment communities in Valdosta and Lowndes County, Georgia.');
+        return $this->page('public/about', 'About', 'Loaded Valet Trash is owned by Anthony Jaamal Jones (Dondon) and serves apartment communities in ' . $this->areaName() . '.');
     }
 
     public function contact(): Response
     {
-        return $this->page('public/contact', 'Request a quote', 'Ask Loaded Valet Trash for a proposal, a walkthrough, party and event cleanup, or a move-out cleanout.');
+        return $this->page('public/contact', 'Request a quote', 'Ask Loaded Valet Trash for a proposal, a walkthrough, party and event cleanup, or a move-out cleanout. Serving apartment communities in ' . $this->areaName() . '.');
     }
 
     public function contactSubmit(): Response
@@ -395,7 +395,7 @@ final class PublicController extends Controller
 
     public function terms(): Response
     {
-        return $this->page('public/terms', 'Terms', 'Service terms for Loaded Valet Trash doorstep pickup in Valdosta and Lowndes County.');
+        return $this->page('public/terms', 'Terms', 'Service terms for Loaded Valet Trash doorstep pickup in ' . $this->areaName() . '.');
     }
 
     public function sitemap(): Response
@@ -524,7 +524,7 @@ final class PublicController extends Controller
         $s = Settings::get();
         return [
             'title' => 'Careers',
-            'description' => 'Laborer starts at $18 an hour. Supervisor starts at $20 an hour. Monday through Friday evening routes in Valdosta and Lowndes County.',
+            'description' => 'Laborer starts at $18 an hour. Supervisor starts at $20 an hour. Monday through Friday evening routes in Valdosta / Lowndes County.',
             'setout' => clock_range((string) $s['setout_start'], (string) $s['setout_end']),
             'pickup' => clock_range((string) $s['pickup_start'], (string) $s['pickup_end']),
         ];
@@ -572,7 +572,13 @@ final class PublicController extends Controller
     private function defaultDescription(): string
     {
         $price = $this->priceWhole();
-        return 'Doorstep valet trash for apartment communities in Valdosta and Lowndes County. Residents opt in for ' . $price . ' a month. Monday to Friday evening pickup. Request a proposal.';
+        return 'Serving apartment communities in ' . $this->areaName() . '. Residents opt in for ' . $price . ' a month. Monday to Friday evening pickup. Request a proposal.';
+    }
+
+    private function areaName(): string
+    {
+        $area = trim((string) (Settings::get()['service_area'] ?? ''));
+        return $area !== '' ? $area : service_area_phrase();
     }
 
     private function priceWhole(): string
@@ -638,7 +644,7 @@ final class PublicController extends Controller
                 '@type' => 'Person',
                 'name' => 'Anthony Jaamal Jones',
             ],
-            'areaServed' => ['Valdosta', 'Lowndes County', 'Hahira', 'Remerton'],
+            'areaServed' => ['Valdosta', 'Lowndes County', 'Atlanta, GA', 'Tampa, FL'],
         ];
         if (filled($s['phone'] ?? null)) {
             $data['telephone'] = (string) $s['phone'];

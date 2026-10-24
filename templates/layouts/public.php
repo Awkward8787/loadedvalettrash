@@ -2,7 +2,7 @@
 /** @var string $content */
 /** @var array $settings */
 $documentTitle = $documentTitle ?? (($title ?? 'Loaded Valet Trash') . ' | Loaded Valet Trash');
-$description = $description ?? 'Doorstep valet trash for apartment communities in Valdosta and Lowndes County, Georgia.';
+$description = $description ?? ('Serving apartment communities in ' . service_area_phrase() . '.');
 $path = $path ?? '/';
 $canonical = base_url($path === '/' ? '/' : ltrim($path, '/'));
 $nav = [

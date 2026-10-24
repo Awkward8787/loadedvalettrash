@@ -2,7 +2,7 @@
   <div class="wrap">
     <p class="eyebrow">Communities</p>
     <h1>Who we serve</h1>
-    <p class="lede">Loaded Valet Trash is built for multifamily and community living in the Valdosta area. If your layout is a set of doors and a dumpster, we can usually build a route.</p>
+    <p class="lede">Loaded Valet Trash is built for multifamily and community living in <?= e((string) ($settings['service_area'] ?? service_area_phrase())) ?>. If your layout is a set of doors and a dumpster, we can usually build a route.</p>
     <div class="grid-2">
       <article class="card"><h2>Apartment communities</h2><p>The core route. Opt-in residents, or every door if you would rather buy it community-wide. We walk the buildings in daylight before the first night so the order ends at the compactor.</p></article>
       <article class="card"><h2>Property management companies</h2><p>Group communities under one management company in our office records. Each property still gets its own roster, invoice, and weekly issue report.</p></article>

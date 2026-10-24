@@ -11,7 +11,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <p class="eyebrow"><?= e((string) $settings['service_area']) ?></p>
       <?php endif; ?>
       <h1>Doorstep valet trash for your residents, Monday through Friday.</h1>
-      <p class="lede">Residents who want it opt in for <?= e($price) ?> a month. Your office bills it like pet rent. Our porters take bagged trash from the can outside each door to your compactor. No extra staff.</p>
+      <p class="lede"><?php if (filled($settings['service_area'] ?? null)): ?>Serving apartment communities in <?= e((string) $settings['service_area']) ?>. <?php endif; ?>Residents who want it opt in for <?= e($price) ?> a month. Your office bills it like pet rent. Our porters take bagged trash from the can outside each door to your compactor. No extra staff.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="/contact?intent=walkthrough">Book a walkthrough</a>
         <a class="btn btn-ghost" href="/contact">Request a proposal</a>
@@ -137,7 +137,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
     </div>
     <div class="grid-3">
       <article class="card"><h3>Apartments</h3><p>Garden and mid-rise communities that want cleaner breezeways without staffing a trash run. Residents opt in through the leasing office.</p></article>
-      <article class="card"><h3>Property management</h3><p>One local operator across several Valdosta communities, with a roster your offices can bill from.</p></article>
+      <article class="card"><h3>Property management</h3><p>One operator across communities in <?= e((string) ($settings['service_area'] ?? service_area_phrase())) ?>, with a roster your offices can bill from.</p></article>
       <article class="card"><h3>HOAs and townhomes</h3><p>Shared dumpsters, private drives, and a board that wants a written set of can rules.</p></article>
       <article class="card"><h3>Student housing</h3><p>Weeknight pickup, including Friday, when the dumpster trip is the last thing anyone wants to do.</p></article>
       <article class="card"><h3>Senior living</h3><p>Doorstep service for residents who should not be hauling a can across a property at night.</p></article>

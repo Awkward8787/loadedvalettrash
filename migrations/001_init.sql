@@ -89,7 +89,7 @@ INSERT INTO settings (
   remittance_due_day, session_timeout_minutes, missed_report_by, updated_at
 ) VALUES (
   1, 'Loaded Valet Trash', 'Anthony Jaamal Jones', NULL, NULL, NULL,
-  'Valdosta, Lowndes County, Hahira, and Remerton, Georgia', NULL,
+  'Valdosta / Lowndes County, Atlanta, and Tampa', NULL,
   3500, 10.00, 1.00, 45,
   120, '18:00:00', '20:00:00', '20:00:00', '22:00:00',
   2, 4, 25, 1500, 1.10,
