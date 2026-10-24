@@ -100,11 +100,21 @@ Then open **Settings** and enter only the contact details and insurance wording 
 - Do not import a real roster CSV until the property record is the live one, and do not put gate codes in that CSV. The importer has no column for them.
 - Do not commit a copy of the server `.env` back to GitHub. This repository is public.
 
-## 8. Updates
+## 8. Daily application cleanup
+
+The privacy policy keeps each job application for 1 year. Add a daily cron job in hPanel. The command field holds at most 255 characters. Replace `/path` with the project directory:
+
+```text
+php /path/bin/purge-applications.php
+```
+
+The script deletes `job_applications` rows whose `created_at` is older than 1 year and prints how many it removed. A second run on the same day is safe. Web requests cannot run it: `bin/` is blocked, and the script refuses anything other than the command line.
+
+## 9. Updates
 
 Upload the new files, then run `php bin/migrate.php` again. Migrations that are already recorded in `schema_migrations` are skipped. Sign-in sessions survive a file update. Changing `APP_KEY` makes existing authenticator secrets unreadable, so every staff member would have to enroll again. Keep the same key.
 
-## 9. Still yours to decide
+## 10. Still yours to decide
 
 - The domain name and DNS (Hostinger, or an outside registrar pointed at Hostinger)
 - The public phone, email, and mailing address

@@ -8,3 +8,5 @@ RewriteRule ^ index.php [L]
 <FilesMatch "^\.">
   Require all denied
 </FilesMatch>
+
+AddType text/vtt .vtt

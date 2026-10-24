@@ -35,6 +35,6 @@
     <?php else: ?>
       <p>Use the <a href="/contact">contact form</a>. The message goes to the owner.</p>
     <?php endif; ?>
-    <p class="muted">Updated October 24, 2026.</p>
+    <p class="muted">Updated October 23, 2026.</p>
   </div>
 </section>

@@ -275,6 +275,7 @@ final class CareersTest extends TestCase
         $this->assertStringContainsString('Only the owner and managers of Loaded Valet Trash can see applications.', $page->body);
         $this->assertStringContainsString('We do not sell them and we do not share them.', $page->body);
         $this->assertStringContainsString('We keep applications for 1 year and then delete them.', $page->body);
+        $this->assertStringContainsString('Updated October 23, 2026.', $page->body);
         $this->assertStringContainsString('href="tel:+12295958852"', $page->body);
         $this->assertStringContainsString('(229) 595-8852', $page->body);
         $this->assertStringNotContainsString('–', $page->body);
