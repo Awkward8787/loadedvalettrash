@@ -43,7 +43,8 @@ final class CareersTest extends TestCase
         $this->assertStringContainsString('6:00 to 8:00 PM', $page->body);
         $this->assertStringContainsString('8:00 to 10:00 PM', $page->body);
         $this->assertStringContainsString('compactor or dumpster', $page->body);
-        $this->assertStringContainsString('Valdosta and Lowndes County', $page->body);
+        $this->assertStringContainsString('Loaded Valet Trash is hiring in Valdosta / Lowndes County.', $page->body);
+        $this->assertStringContainsString('evening routes in Valdosta / Lowndes County.', $page->body);
         $this->assertStringContainsString('href="tel:+12295958852"', $page->body);
         $this->assertStringContainsString('(229) 595-8852', $page->body);
         $this->assertStringContainsString('href="/careers"', $page->body);

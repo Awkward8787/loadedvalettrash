@@ -11,7 +11,14 @@ final class PublicSiteTest extends TestCase
         $client = $this->client();
         $home = $client->get('/');
         $this->assertSame(200, $home->status);
-        $this->assertStringContainsString('Valet Trash in Valdosta, GA', $home->body);
+        $this->assertStringContainsString('Valet Trash in Valdosta / Lowndes County, Atlanta, and Tampa', $home->body);
+        $this->assertStringContainsString('Serving apartment communities in Valdosta / Lowndes County, Atlanta, and Tampa.', $home->body);
+        $this->assertStringContainsString('Atlanta, GA', $home->body);
+        $this->assertStringContainsString('Tampa, FL', $home->body);
+        $this->assertStringNotContainsString('Hahira', $home->body);
+        $this->assertStringNotContainsString('Remerton', $home->body);
+        $this->assertStringContainsString('$35', $home->body);
+        $this->assertStringContainsString('The 30-day trial is free on the buildings you pick.', $home->body);
         $this->assertStringContainsString('Book a walkthrough', $home->body);
         $this->assertStringContainsString('Request a proposal', $home->body);
         $this->assertStringContainsString('Quoted per event', $home->body);
@@ -58,6 +65,7 @@ final class PublicSiteTest extends TestCase
             $this->assertStringNotContainsString('$1,000,000', $response->body, $path);
             $this->assertStringNotContainsString('$2,000,000', $response->body, $path);
             $this->assertStringNotContainsString('Place bags at the door', $response->body, $path);
+            $this->assertStringContainsString('Valdosta / Lowndes County, Atlanta, and Tampa', $response->body, $path);
         }
         $how = $client->get('/how-it-works');
         $this->assertStringContainsString('On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.', $how->body);

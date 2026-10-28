@@ -11,7 +11,7 @@ if (!array_key_exists($intent, $kinds)) {
     <div>
       <p class="eyebrow">Request</p>
       <h1>Tell us what you need.</h1>
-      <p class="lede">Ask for a proposal, a 10-minute walkthrough, party and event cleanup, or a move-out cleanout. The note lands in our office queue. We reply with the contact details you give us.</p>
+      <p class="lede">Ask for a proposal, a 10-minute walkthrough, party and event cleanup, or a move-out cleanout. Serving apartment communities in <?= e((string) ($settings['service_area'] ?? service_area_phrase())) ?>. The note lands in our office queue. We reply with the contact details you give us.</p>
       <?php if (filled($settings['phone'] ?? null) || filled($settings['email'] ?? null) || filled($settings['address'] ?? null)): ?>
         <div class="card">
           <?php if (filled($settings['phone'] ?? null)): ?><p><?= e((string) $settings['phone']) ?></p><?php endif; ?>

@@ -14,7 +14,7 @@ $roleError = has_error('role') ? ' aria-invalid="true" aria-describedby="err-rol
     <div class="hero-copy">
       <p class="eyebrow">Careers</p>
       <h1>Weeknight routes.</h1>
-      <p class="lede">Loaded Valet Trash is hiring in Valdosta and Lowndes County. Routes run Monday through Friday evenings. The work is collecting bagged trash from the can outside each apartment door and taking it to the property compactor or dumpster. Porters do not go inside apartments.</p>
+      <p class="lede">Loaded Valet Trash is hiring in Valdosta / Lowndes County. Routes run Monday through Friday evenings. The work is collecting bagged trash from the can outside each apartment door and taking it to the property compactor or dumpster. Porters do not go inside apartments.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#apply">Apply</a>
       </div>
@@ -28,7 +28,7 @@ $roleError = has_error('role') ? ' aria-invalid="true" aria-describedby="err-rol
         poster="<?= e(asset_href('/assets/media/lvt-hiring-poster.jpg')) ?>"
         width="1280"
         height="720"
-        aria-label="Loaded Valet Trash hiring video. Weeknight routes in Valdosta and Lowndes County."
+        aria-label="Loaded Valet Trash hiring video. Weeknight routes in Valdosta / Lowndes County."
       >
         <source src="<?= e(asset_href('/assets/media/lvt-hiring-720p.mp4')) ?>" type="video/mp4">
         <track kind="captions" src="<?= e(asset_href('/assets/media/lvt-hiring.vtt')) ?>" srclang="en" label="English" default>
@@ -49,7 +49,7 @@ $roleError = has_error('role') ? ' aria-invalid="true" aria-describedby="err-rol
         <article class="card">
           <h3>Supervisor</h3>
           <p><strong>Starting at $20 an hour.</strong></p>
-          <p>Supervise those Monday through Friday evening routes in Valdosta and Lowndes County. Pickup is the same doorstep work: bagged trash from the can outside the door, then to the compactor or dumpster.</p>
+          <p>Supervise those Monday through Friday evening routes in Valdosta / Lowndes County. Pickup is the same doorstep work: bagged trash from the can outside the door, then to the compactor or dumpster.</p>
         </article>
       </div>
       <p><a class="btn btn-ghost" href="tel:+12295958852">Call (229) 595-8852</a></p>
