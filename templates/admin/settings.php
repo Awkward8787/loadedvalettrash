@@ -32,6 +32,7 @@
   <label>Missed pickup report-by <input name="missed_report_by" value="<?= e((string) $record['missed_report_by']) ?>"></label>
   <button class="btn btn-primary" type="submit">Save settings</button>
 </form>
+<p><a href="/admin/junk-rates">Junk pickup rates</a></p>
 <section class="card">
   <h2>Holidays</h2>
   <ul>

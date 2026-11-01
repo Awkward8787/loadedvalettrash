@@ -28,10 +28,9 @@
         <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
       </article>
       <article class="card">
-        <h2>Move-outs</h2>
-        <p class="service-price">Quoted per job</p>
-        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes. There is no published move-out price on this site.</p>
-        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+        <h2>Junk pickup</h2>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items. There is no published junk pickup price on this site.</p>
+        <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
     <div class="card">

@@ -10,8 +10,8 @@
     <p>The default resident price is <?= e($price) ?> per opted-in door each month, billed by the leasing office as a rent add-on. The property remits collections, minus any property share written into the agreement, by the 10th. Billing is not prorated for the holiday nights or weather cancellations built into the schedule.</p>
     <h2>Community-wide service</h2>
     <p>A community-wide price is whatever written quote we send for that property. It may be a per-door rate or a flat monthly amount. The public site does not lock in a community-wide number.</p>
-    <h2>Event cleanup and move-outs</h2>
-    <p>Party and event cleanup is quoted per event. Move-out cleanout and trash haul-off is quoted per job. Those jobs are separate from the weekly doorstep route. This page does not set a price or a minimum for them.</p>
+    <h2>Event cleanup and junk pickup</h2>
+    <p>Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, is a separate request. This page does not set a junk pickup price. Those jobs are separate from the weekly doorstep route.</p>
     <h2>Trial</h2>
     <p>A free 30-day trial, when we offer one, covers Monday to Friday service on the buildings the manager names. The property gives porters access to the gate and compactor and joins a short check-in around day 14 and day 30. Either side can stop at the end of the trial. After a trial, service continues month to month unless a signed agreement sets a longer term.</p>
     <h2>Missed pickups and violations</h2>
@@ -27,6 +27,6 @@
     <p>To the extent the law allows, we are responsible for our own negligence on the route. The property is responsible for the compactor, the premises, and its lease enforcement. Neither side is responsible for indirect or consequential losses. Nothing here limits liability that cannot legally be limited.</p>
     <h2>Georgia</h2>
     <p>These terms are governed by the laws of the State of Georgia, without regard to conflict-of-law rules. If a court finds one sentence unenforceable, the rest still applies.</p>
-    <p class="muted">Updated October 23, 2026.</p>
+    <p class="muted">Updated November 1, 2026.</p>
   </div>
 </section>

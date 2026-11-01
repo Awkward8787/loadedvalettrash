@@ -14,7 +14,7 @@ Money columns are integer cents. Shares and payroll multipliers are decimals. Cl
 
 ## Settings
 
-- `settings` — one row, `id = 1`, inserted by the migration. Contact fields and `insurance_text` start null. Operating defaults match the service: opt-in 3500 cents, share 10%, 1 minute per door, 45 minutes per site, 120-minute window, set-out 18:00–20:00, pickup 20:00–22:00, 2 bags (4 after a holiday), 25 lb, wage 1500 cents, payroll 1.10, supplies 4000, gas 9000, vehicle reserve 2500, fixed costs 34900, remittance day 10, session timeout 30 minutes.
+- `settings` — one row, `id = 1`, inserted by the migration. Contact fields and `insurance_text` start null. Operating defaults match the service: opt-in 2000 cents, share 10%, 1 minute per door, 45 minutes per site, 120-minute window, set-out 18:00–20:00, pickup 20:00–22:00, 2 bags (4 after a holiday), 25 lb, wage 1500 cents, payroll 1.10, supplies 4000, gas 9000, vehicle reserve 2500, fixed costs 34900, remittance day 10, session timeout 30 minutes.
 - `holidays` — `service_off = 1` means no route. The 2026–2027 list from the operating calendar is inserted here, including Martin Luther King Jr. Day 2027 with `service_off = 0`.
 
 ## Pipeline and properties
@@ -37,7 +37,10 @@ Route minutes for a property are `doors × minutes_per_door + minutes_fixed`. Do
 
 - `issues` — `missed_pickup`, `violation`, or `other`. `source` is `public`, `porter`, or `staff`. `photo_path` is a filename under `storage/uploads`, not a public URL. `external_property_name` keeps the name a resident typed when it did not match a property.
 - `reviews` — default `pending`. Public pages read `approved` only.
-- `inquiries` — public proposal, walkthrough, event cleanup, or move-out requests (`kind` is `proposal`, `walkthrough`, `event_cleanup`, `move_out`, or legacy `other`), linked to a property when one was created or matched.
+- `inquiries` — public proposal, walkthrough, event cleanup, or older move-out requests (`kind` is `proposal`, `walkthrough`, `event_cleanup`, `move_out`, or legacy `other`), linked to a property when one was created or matched. New junk pickup requests do not use this table.
+- `contact_inquiries` — public messages. `role` is `property_manager`, `resident`, or `other`. `need` is `valet_trash`, `junk_pickup`, or `other`. `status` is `new`, `contacted`, or `closed`. `notes` is internal. `ip` is stored for the rate limit.
+- `junk_rates` — one row, `id = 1`. Low and high cents for each item and load size. Null means no rate.
+- `junk_estimates` — junk pickup calculator submissions. `status` is `new`, `quoted`, `booked`, or `closed`. `estimate_low_cents` and `estimate_high_cents` are the range shown at submit time, or null when a chosen line had no rate. `items_json` lists item codes and quantities. `photo_path` is an optional filename under `storage/uploads`.
 - `invoices` — one per property per month. Unique on `(property_id, period_year, period_month)`. Status `draft`, `sent`, `paid`, or `void`. Late is not a stored status. A draft or sent invoice with `due_on` before today is late. `due_on` is the remittance day of that month, clamped to 1–28.
 
 ### Invoice math
@@ -52,7 +55,7 @@ Route minutes for a property are `doors × minutes_per_door + minutes_fixed`. Do
 
 Labor is closed `time_entries` in that month. Each entry’s hours are multiplied by the porter’s pay rate and `payroll_multiplier` (1.10). If the entry is tied to a route, hours are split across that route’s properties by estimated minutes. Fixed share is `monthly_fixed_costs_cents / count of non-void invoices that month`.
 
-The planning example used to check the formula, with hours supplied explicitly rather than invented by the app: 60 doors, $35, 10% share → gross $2,100, share $210, due $1,890. At 1.75 hours × 21.67 nights, $15/hour, and 1.10 payroll, labor is $625.72. Supplies $40, gas $90, reserve $25, and fixed $349 bring other costs to $504. Profit is $760.28. The application records profit from clocked hours, so a month with no clock records shows labor at zero.
+The planning example used to check the formula, with hours supplied explicitly rather than invented by the app: 60 doors, $20, 10% share → gross $1,200, share $120, due $1,080. At 1.75 hours × 21.67 nights, $15/hour, and 1.10 payroll, labor is $625.72. Supplies $40, gas $90, reserve $25, and fixed $349 bring other costs to $504. Profit is -$49.72. The application records profit from clocked hours, so a month with no clock records shows labor at zero.
 
 ## What is intentionally absent
 

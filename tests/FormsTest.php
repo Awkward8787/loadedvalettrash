@@ -33,7 +33,7 @@ final class FormsTest extends TestCase
         $this->assertSame((int) $property['id'], (int) $inquiry['property_id']);
     }
 
-    public function testEventAndMoveOutRequestsKeepTheirKind(): void
+    public function testEventCleanupKeepsItsKind(): void
     {
         $client = $this->client();
         $client->ip = '10.6.1.2';
@@ -53,22 +53,6 @@ final class FormsTest extends TestCase
         $this->assertStringContainsString('we have your request', strtolower($done->body));
         $event = Database::one('SELECT kind FROM inquiries WHERE property_name = ?', ['Clubhouse Party']);
         $this->assertSame('event_cleanup', $event['kind']);
-
-        $client->get('/contact?intent=move_out');
-        $done = $client->follow($client->post('/contact', [
-            '_csrf' => $client->csrf(),
-            'kind' => 'move_out',
-            'property_name' => 'Unit 12 Move Out',
-            'units' => '1',
-            'contact_name' => 'Riley Office',
-            'contact_email' => 'riley@example.test',
-            'contact_phone' => '',
-            'message' => 'Move-out cleanout for one apartment.',
-            'company_website' => '',
-        ]));
-        $this->assertStringContainsString('we have your request', strtolower($done->body));
-        $move = Database::one('SELECT kind FROM inquiries WHERE property_name = ?', ['Unit 12 Move Out']);
-        $this->assertSame('move_out', $move['kind']);
     }
 
     public function testIncompleteProposalIsRejected(): void

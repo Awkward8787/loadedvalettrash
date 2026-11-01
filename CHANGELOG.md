@@ -2,9 +2,12 @@
 
 ## Unreleased
 
+- Resident opt-in price is $20 a month (2,000 cents). The settings default moves from 3,500 cents only when the current settings row is still 3,500. Invoices and property-specific prices are left as stored
+- Public contact messages, with an Inquiries desk, status, internal notes, and a new-count badge
+- Junk pickup replaces the separate move-out service listing. Estimates use a calculator whose rates start empty. A dollar range appears only after rates are saved, labeled estimate only
 - Service area now includes Valdosta / Lowndes County, Atlanta, and Tampa
 - Daily command `php bin/purge-applications.php` deletes job applications whose `created_at` is older than 1 year
-- Privacy policy date reads October 23, 2026
+- Privacy policy date reads November 1, 2026
 - Apache serves `.vtt` caption files as `text/vtt`
 - Careers page and application form for a laborer starting at $18 an hour and a supervisor starting at $20 an hour, with an owner and manager review queue. Hiring copy stays Valdosta / Lowndes County
 - Stylesheet and script links carry the file modification time so a returning browser does not keep a stale app.css

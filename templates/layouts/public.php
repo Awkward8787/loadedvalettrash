@@ -102,6 +102,8 @@ $nav = [
       <strong>For properties</strong>
       <p><a href="/contact">Request a proposal</a></p>
       <p><a href="/contact?intent=walkthrough">Book a walkthrough</a></p>
+      <p><a href="/junk-pickup">Junk pickup</a></p>
+      <p><a href="/contact#inquiry">Send a message</a></p>
       <p><a href="/services">Services</a></p>
       <p><a href="/pricing">Pricing</a></p>
       <p><a href="/reviews/new">Share a review</a></p>
@@ -109,6 +111,8 @@ $nav = [
     <div>
       <strong>For residents</strong>
       <p><a href="/missed-pickup">Report a missed pickup</a></p>
+      <p><a href="/junk-pickup">Junk pickup</a></p>
+      <p><a href="/contact#inquiry">Send a message</a></p>
       <p><a href="/how-it-works">Bag rules</a></p>
       <p><a href="/privacy">Privacy</a></p>
       <p><a href="/terms">Terms</a></p>

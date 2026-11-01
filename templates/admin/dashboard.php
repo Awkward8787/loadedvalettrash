@@ -31,6 +31,7 @@
   <section class="card">
     <h2>Needs a look</h2>
     <p><a href="/admin/inquiries"><?= (int) $newInquiries ?> new proposal requests</a></p>
+    <p><a href="/admin/outreach"><?= (int) $newOutreach ?> new inquiries</a></p>
     <p><a href="/admin/reviews"><?= (int) $pendingReviews ?> reviews waiting</a></p>
     <?php if ($followUps === []): ?>
       <p class="muted">No follow-ups due.</p>

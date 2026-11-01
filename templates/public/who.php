@@ -17,15 +17,15 @@
         <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
       </article>
       <article class="card">
-        <h2>Move-outs</h2>
-        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes.</p>
-        <p class="service-price">Quoted per job</p>
-        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+        <h2>Junk pickup</h2>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
     <?php if (filled($settings['service_area'] ?? null)): ?>
       <p>Service area: <?= e((string) $settings['service_area']) ?></p>
     <?php endif; ?>
     <a class="btn btn-primary" href="/contact">Tell us about the property</a>
+    <a class="btn btn-ghost" href="/contact#inquiry">Send a message</a>
   </div>
 </section>

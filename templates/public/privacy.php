@@ -4,10 +4,12 @@
     <h1>Privacy policy</h1>
     <p>This policy covers the Loaded Valet Trash website and the doorstep pickup service operated by Anthony Jaamal Jones. It is written in plain language. It is not a substitute for advice from your own lawyer.</p>
     <h2>Who we are</h2>
-    <p>Loaded Valet Trash picks up bagged household trash from the can outside the door and carries it to the property’s compactor or dumpster. Residents put the trash can outside the door with the bagged trash inside it. The public site is for property managers, and the missed-pickup form is also for residents. Party cleanup and move-out requests use the same contact form.</p>
+    <p>Loaded Valet Trash picks up bagged household trash from the can outside the door and carries it to the property’s compactor or dumpster. Residents put the trash can outside the door with the bagged trash inside it. The public site is for property managers, and the missed-pickup form is also for residents. Party cleanup uses the contact form. Junk pickup, including move-out items, uses the estimate form. A message form on the contact page is for property managers, residents, and anyone else.</p>
     <h2>What the website collects</h2>
     <ul class="rule-list">
-      <li>Proposal, walkthrough, event-cleanup, and move-out requests: property or location name, unit count, your name, email or phone, and whatever you write in the message.</li>
+      <li>Proposal, walkthrough, and event-cleanup requests: property or location name, unit count, your name, email or phone, and whatever you write in the message.</li>
+      <li>Messages from the contact page: your name, email, an optional phone number, whether you are a property manager, a resident, or someone else, an optional property or company name, the service area you choose, what you need, your message, and the IP address of the submission for spam protection.</li>
+      <li>Junk pickup estimates: your name, email, an optional phone number, an address or city, the service area you choose, a preferred date, the items or load size you choose, an optional note, an optional photo, and the IP address of the submission for spam protection. A photo, when you attach one, is a JPEG, PNG, or WebP file up to 5 MB.</li>
       <li>Missed-pickup reports: property, unit, your name, a way to reach you, and a description.</li>
       <li>Review submissions: your name, property, role, rating, and review text. A review is not shown publicly until it is approved.</li>
       <li>A session cookie used to protect forms from cross-site submissions. Staff sign-in uses a separate session cookie. We do not run advertising trackers on this site.</li>
@@ -35,6 +37,7 @@
     <?php else: ?>
       <p>Use the <a href="/contact">contact form</a>. The message goes to the owner.</p>
     <?php endif; ?>
-    <p class="muted">Updated October 23, 2026.</p>
+    <p>Only the owner and managers can see messages and junk pickup estimates. We use them to reply. We do not sell them and we do not share them.</p>
+    <p class="muted">Updated November 1, 2026.</p>
   </div>
 </section>

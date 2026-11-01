@@ -2,12 +2,12 @@
   <div class="wrap">
     <p class="eyebrow">The company</p>
     <h1>Locally owned in Valdosta.</h1>
-    <p class="lede">Loaded Valet Trash is owned by Anthony Jaamal Jones, who goes by Dondon. The weeknight work is doorstep valet: put your trash can outside your door with the bagged trash inside it, and porters take it to the property’s compactor. Never put a loose bag on the ground. We also clean up after parties and events, quoted per event, and we do move-out cleanout and trash haul-off, quoted per job.</p>
+    <p class="lede">Loaded Valet Trash is owned by Anthony Jaamal Jones, who goes by Dondon. The weeknight work is doorstep valet: put your trash can outside your door with the bagged trash inside it, and porters take it to the property’s compactor. Never put a loose bag on the ground. We also clean up after parties and events, quoted per event, and we pick up junk, including furniture and move-out items.</p>
     <div class="grid-2">
       <article class="card">
         <h2>What we do</h2>
         <p>Doorstep valet runs Monday through Friday, including Friday night. Residents opt in through the leasing office, and the office bills it as a rent add-on. Porters wear a vest, stay outside the apartment, and leave a written notice when a set-out does not meet the rules. The office gets a roster for billing and a record of misses and violations.</p>
-        <p>Party and event cleanup is for residents, properties and clubhouses, and private events. Move-out cleanout and trash haul-off is for leasing offices, apartment complexes, and homes. <a href="/services">See the three services</a>.</p>
+        <p>Party and event cleanup is for residents, properties and clubhouses, and private events. Junk pickup is bulk item removal for apartment communities and residents, including furniture and move-out items. <a href="/services">See the three services</a>.</p>
       </article>
       <article class="card">
         <h2>What we will not pretend</h2>
