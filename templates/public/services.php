@@ -6,8 +6,8 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
 <section class="section">
   <div class="wrap">
     <p class="eyebrow">Services</p>
-    <h1>Doorstep valet, event cleanup, and move-outs.</h1>
-    <p class="lede">Three jobs. Doorstep valet is the weeknight route for apartment complexes. Party and event cleanup, and move-out haul-off, are quoted one job at a time.</p>
+    <h1>Doorstep valet, event cleanup, and junk pickup.</h1>
+    <p class="lede">Three jobs. Doorstep valet is the weeknight route for apartment complexes. Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, has no price on this page.</p>
     <div class="grid-3 services">
       <article class="card">
         <h2>Doorstep valet trash</h2>
@@ -23,10 +23,9 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
       </article>
       <article class="card">
-        <h2>Move-outs</h2>
-        <p class="service-price">Quoted per job</p>
-        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes.</p>
-        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+        <h2>Junk pickup</h2>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
   </div>
@@ -34,7 +33,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
 <section class="section section-alt">
   <div class="wrap">
     <h2>How residents set trash out</h2>
-    <p>This rule is for the doorstep route. Party cleanup and move-outs are arranged through the quote form.</p>
+    <p>This rule is for the doorstep route. Party cleanup is arranged through the quote form. Junk pickup uses the estimate form.</p>
     <?php include LVT_ROOT . '/templates/partials/setout-callout.php'; ?>
     <p><a href="/how-it-works">Bag rules, holidays, and missed pickups</a></p>
   </div>

@@ -22,7 +22,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <h2>What is included</h2>
         <ul class="rule-list">
           <li>Doorstep collection from the can outside opted-in homes, or from every door on a community-wide plan. Bagged trash stays inside the can. Any bag that does not fit inside the can sits on top of it. On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.</li>
-          <li>On this route, haul is to the property’s own compactor or dumpster. We are not the property’s waste hauler. Move-out haul-off is a separate job, quoted per job.</li>
+          <li>On this route, haul is to the property’s own compactor or dumpster. We are not the property’s waste hauler. Junk pickup, including furniture and move-out items, is a separate request.</li>
           <li>Uniformed porters. They do not enter apartments.</li>
           <li>A door notice and a photo when a set-out breaks the rules.</li>
           <li>A monthly roster the office uses to bill <?= e($price) ?>.</li>

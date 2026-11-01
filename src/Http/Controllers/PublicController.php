@@ -6,11 +6,14 @@ namespace Lvt\Http\Controllers;
 
 use Lvt\Audit;
 use Lvt\Database;
+use Lvt\HttpException;
+use Lvt\Junk\Quote;
 use Lvt\RateLimiter;
 use Lvt\Request;
 use Lvt\Response;
 use Lvt\Session;
 use Lvt\Settings;
+use Lvt\Uploader;
 use Lvt\View;
 
 final class PublicController extends Controller
@@ -31,7 +34,7 @@ final class PublicController extends Controller
         return $this->page(
             'public/services',
             'Services',
-            'Doorstep valet trash for apartment complexes, party and event cleanup quoted per event, and move-out cleanout quoted per job. Serving apartment communities in ' . $this->areaName() . '.'
+            'Doorstep valet trash for apartment complexes, party and event cleanup quoted per event, and junk pickup for furniture and move-out items. Serving apartment communities in ' . $this->areaName() . '.'
         );
     }
 
@@ -130,7 +133,11 @@ final class PublicController extends Controller
 
     public function contact(): Response
     {
-        return $this->page('public/contact', 'Request a quote', 'Ask Loaded Valet Trash for a proposal, a walkthrough, party and event cleanup, or a move-out cleanout. Serving apartment communities in ' . $this->areaName() . '.');
+        $intent = Request::current()->string('intent');
+        if ($intent === 'move_out' || $intent === 'junk_estimate') {
+            return Response::redirect('/junk-pickup');
+        }
+        return $this->page('public/contact', 'Request a quote', 'Ask Loaded Valet Trash for a proposal, a walkthrough, or party and event cleanup. Send a message, or request a junk pickup estimate. Serving apartment communities in ' . $this->areaName() . '.');
     }
 
     public function contactSubmit(): Response
@@ -148,6 +155,9 @@ final class PublicController extends Controller
         $phone = $req->string('contact_phone');
         $message = $req->string('message');
         $kind = $req->string('kind', 'proposal');
+        if ($kind === 'junk_estimate' || $kind === 'move_out') {
+            return Response::redirect('/junk-pickup');
+        }
         if (!array_key_exists($kind, inquiry_kinds())) {
             $kind = 'proposal';
         }
@@ -222,6 +232,204 @@ final class PublicController extends Controller
         Audit::write(null, 'inquiry.create', 'inquiry', $inquiryId, 'Public ' . $kind . ' form');
         Session::flash('success', 'Thank you. We have your request and will follow up using the contact details you sent.');
         return Response::redirect('/contact');
+    }
+
+    public function inquirySubmit(): Response
+    {
+        $this->csrf();
+        if ($trap = $this->honeypot('/contact')) {
+            return $trap;
+        }
+        $req = Request::current();
+        if ($req->string('inq_need') === 'junk_estimate') {
+            return Response::redirect('/junk-pickup');
+        }
+        $errors = [];
+        $name = $req->string('inq_name');
+        $email = $req->string('inq_email');
+        $phone = $req->string('inq_phone');
+        $role = $req->string('inq_role');
+        $organization = $req->string('inq_organization');
+        $area = $req->string('inq_service_area');
+        $need = $req->string('inq_need');
+        $message = $req->string('inq_message');
+        if (mb_strlen($name) < 2 || mb_strlen($name) > 120) {
+            $errors['inq_name'] = 'Enter your name.';
+        }
+        if ($email === '' || mb_strlen($email) > 190 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            $errors['inq_email'] = 'Enter a valid email.';
+        }
+        $digits = preg_replace('/\D+/', '', $phone);
+        if ($phone !== '' && (!is_string($digits) || strlen($digits) < 7 || strlen($digits) > 15 || mb_strlen($phone) > 40)) {
+            $errors['inq_phone'] = 'Enter a phone number, or leave it blank.';
+        }
+        if (!array_key_exists($role, outreach_roles())) {
+            $errors['inq_role'] = 'Choose a role.';
+        }
+        if (mb_strlen($organization) > 180) {
+            $errors['inq_organization'] = 'Keep the property or company name under 180 characters.';
+        }
+        if (!array_key_exists($area, service_area_options())) {
+            $errors['inq_service_area'] = 'Choose a service area.';
+        }
+        if (!array_key_exists($need, outreach_needs())) {
+            $errors['inq_need'] = 'Choose what you need.';
+        }
+        if (mb_strlen($message) < 2 || mb_strlen($message) > 4000) {
+            $errors['inq_message'] = 'Enter a message (up to 4,000 characters).';
+        }
+        $view = [
+            'title' => 'Request a quote',
+            'description' => 'Ask Loaded Valet Trash for a proposal or send a message.',
+        ];
+        if ($errors) {
+            return $this->invalid('public/contact', $errors, $view);
+        }
+        if (RateLimiter::tooManyContactInquiries($req->ip())) {
+            return $this->invalid('public/contact', [
+                'form' => 'Too many messages from this connection. Wait a few minutes and try again.',
+            ], $view);
+        }
+        $id = Database::insertRow('contact_inquiries', [
+            'name' => $name,
+            'email' => $email,
+            'phone' => blank_to_null($phone),
+            'role' => $role,
+            'organization' => blank_to_null($organization),
+            'service_area' => $area,
+            'need' => $need,
+            'message' => $message,
+            'status' => 'new',
+            'notes' => null,
+            'ip' => $req->ip(),
+            'created_at' => now_dt(),
+        ]);
+        Audit::write(null, 'outreach.create', 'contact_inquiry', $id, 'Public contact form');
+        Session::flash('success', 'Thank you. We have your message and will follow up using the contact details you sent.');
+        return Response::redirect('/contact#inquiry');
+    }
+
+    public function junk(): Response
+    {
+        return $this->page('public/junk', 'Junk pickup', $this->junkDescription(), $this->junkExtra());
+    }
+
+    public function junkSubmit(): Response
+    {
+        $this->csrf();
+        if ($trap = $this->honeypot('/junk-pickup')) {
+            return $trap;
+        }
+        $req = Request::current();
+        $errors = [];
+        $name = $req->string('name');
+        $email = $req->string('email');
+        $phone = $req->string('phone');
+        $address = $req->string('address');
+        $area = $req->string('service_area');
+        $when = $req->string('preferred_on');
+        $mode = $req->string('mode', 'items');
+        $load = $req->string('load_size');
+        $note = $req->string('note');
+        $qty = [];
+        foreach (Quote::items() as $code => $label) {
+            $qty[$code] = $req->int('qty_' . $code, 0);
+        }
+        if (mb_strlen($name) < 2 || mb_strlen($name) > 120) {
+            $errors['name'] = 'Enter your name.';
+        }
+        if ($email === '' || mb_strlen($email) > 190 || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            $errors['email'] = 'Enter a valid email.';
+        }
+        $digits = preg_replace('/\D+/', '', $phone);
+        if ($phone !== '' && (!is_string($digits) || strlen($digits) < 7 || strlen($digits) > 15 || mb_strlen($phone) > 40)) {
+            $errors['phone'] = 'Enter a phone number, or leave it blank.';
+        }
+        if (mb_strlen($address) < 2 || mb_strlen($address) > 255) {
+            $errors['address'] = 'Enter the address or city.';
+        }
+        if (!array_key_exists($area, service_area_options())) {
+            $errors['service_area'] = 'Choose a service area.';
+        }
+        if (!valid_date($when) || $when < today_date()) {
+            $errors['preferred_on'] = 'Choose today or a later date.';
+        }
+        if ($mode !== 'items' && $mode !== 'load') {
+            $errors['mode'] = 'Choose item counts or a load size.';
+        } elseif ($mode === 'load') {
+            if (!array_key_exists($load, Quote::loads())) {
+                $errors['load_size'] = 'Choose a load size.';
+            }
+        } else {
+            $chosen = false;
+            foreach (Quote::items() as $code => $label) {
+                $n = $qty[$code];
+                if ($n < 0 || $n > 50) {
+                    $errors['qty_' . $code] = 'Enter a quantity from 0 to 50.';
+                } elseif ($n > 0) {
+                    $chosen = true;
+                }
+            }
+            if (!$chosen && !isset($errors['qty_couch'])) {
+                $errors['mode'] = 'Enter at least one item.';
+            }
+        }
+        if (mb_strlen($note) > 4000) {
+            $errors['note'] = 'Keep the note under 4,000 characters.';
+        }
+        if ($errors) {
+            return $this->invalid('public/junk', $errors, $this->junkPageData());
+        }
+        if (RateLimiter::tooManyJunkEstimates($req->ip())) {
+            return $this->invalid('public/junk', [
+                'form' => 'Too many estimates from this connection. Wait a few minutes and try again.',
+            ], $this->junkPageData());
+        }
+        $photo = null;
+        $file = $req->file('photo');
+        if ($file) {
+            try {
+                $photo = Uploader::storeImage($file);
+            } catch (HttpException $e) {
+                return $this->invalid('public/junk', ['photo' => $e->getMessage()], $this->junkPageData());
+            }
+        }
+        $book = Quote::book(Database::one('SELECT * FROM junk_rates WHERE id = 1'));
+        $quote = $mode === 'load'
+            ? Quote::total('load', [], $load, $book)
+            : Quote::total('items', $qty, null, $book);
+        $lines = [];
+        if ($mode === 'items') {
+            foreach (Quote::items() as $code => $label) {
+                if ($qty[$code] > 0) {
+                    $lines[] = ['code' => $code, 'qty' => $qty[$code]];
+                }
+            }
+        }
+        $id = Database::insertRow('junk_estimates', [
+            'name' => $name,
+            'email' => $email,
+            'phone' => blank_to_null($phone),
+            'address' => $address,
+            'service_area' => $area,
+            'preferred_on' => $when,
+            'mode' => $mode,
+            'load_size' => $mode === 'load' ? $load : null,
+            'items_json' => $mode === 'items' ? json_encode($lines, JSON_UNESCAPED_SLASHES) : null,
+            'note' => blank_to_null($note),
+            'estimate_low_cents' => $quote === null ? null : $quote['low'],
+            'estimate_high_cents' => $quote === null ? null : $quote['high'],
+            'photo_path' => $photo,
+            'status' => 'new',
+            'notes' => null,
+            'ip' => $req->ip(),
+            'created_at' => now_dt(),
+        ]);
+        Audit::write(null, 'junk_estimate.create', 'junk_estimate', $id, 'Public junk pickup form');
+        $thanks = 'Thank you. We have your junk pickup request. ';
+        $thanks .= $quote === null ? Quote::FOLLOW_UP : Quote::ESTIMATE_LABEL . ' ' . Quote::moneyRange($quote) . '.';
+        Session::flash('success', $thanks);
+        return Response::redirect('/junk-pickup');
     }
 
     public function careers(): Response
@@ -400,7 +608,7 @@ final class PublicController extends Controller
 
     public function sitemap(): Response
     {
-        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/careers', '/missed-pickup', '/privacy', '/terms'];
+        $paths = ['/', '/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/reviews/new', '/faq', '/about', '/contact', '/junk-pickup', '/careers', '/missed-pickup', '/privacy', '/terms'];
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         foreach ($paths as $path) {
             $xml .= '<url><loc>' . e(base_url($path === '/' ? '/' : ltrim($path, '/'))) . '</loc></url>';
@@ -430,6 +638,43 @@ final class PublicController extends Controller
             ],
         ], JSON_UNESCAPED_SLASHES);
         return Response::text((string) $json, 200, 'application/manifest+json');
+    }
+
+    private function junkDescription(): string
+    {
+        return 'Junk pickup for apartment communities and residents in ' . $this->areaName() . ', including furniture and move-out items. Request an estimate.';
+    }
+
+    /** @return array<string,mixed> */
+    private function junkExtra(): array
+    {
+        $row = Database::one('SELECT * FROM junk_rates WHERE id = 1');
+        $name = (string) (Settings::get()['business_name'] ?? 'Loaded Valet Trash');
+        return [
+            'rateBook' => Quote::book($row),
+            'jsonLd' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => 'Junk pickup',
+                'serviceType' => 'Junk pickup',
+                'provider' => [
+                    '@type' => 'ProfessionalService',
+                    'name' => $name,
+                    'url' => base_url('/'),
+                ],
+                'areaServed' => ['Valdosta', 'Lowndes County', 'Atlanta, GA', 'Tampa, FL'],
+                'description' => 'Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.',
+            ],
+        ];
+    }
+
+    /** @return array<string,mixed> */
+    private function junkPageData(): array
+    {
+        return array_merge([
+            'title' => 'Junk pickup',
+            'description' => $this->junkDescription(),
+        ], $this->junkExtra());
     }
 
     /** @return list<array<string,mixed>> */
@@ -474,8 +719,8 @@ final class PublicController extends Controller
                 'a' => 'Tie the trash in a bag and put it inside your can. Tied, leak-proof bags, kitchen size (13 gallon) up to 30 gallon, ' . $weight . ' pounds max, up to ' . $bags . ' bags a night (' . $holidayBags . ' the night after a holiday). On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it. Put your trash can outside your door with the bagged trash inside it. Never put a loose bag on the ground. Set the can right outside your door during the set-out window, not on stairs or walkways. A second bag goes on top of the can, never on the ground or beside it. Loose bags scatter garbage. No loose trash, no open boxes, no leaking bags. Flatten and tie cardboard into a small bundle of up to 2 boxes, or take it to the compactor. We do not take furniture, mattresses, electronics, paint, chemicals, batteries, needles or medical waste, construction debris, hot ashes, or unbagged pet waste.',
             ],
             [
-                'q' => 'Do you clean up after events or move-outs?',
-                'a' => 'Yes. Party and event cleanup is for residents, properties and clubhouses, and private events. Pricing is quoted per event. Move-out cleanout and trash haul-off is for leasing offices, apartment complexes, and homes. Pricing is quoted per job. Use the contact form and choose the job.',
+                'q' => 'Do you clean up after events or pick up junk?',
+                'a' => 'Yes. Party and event cleanup is for residents, properties and clubhouses, and private events. Pricing is quoted per event. Junk pickup is bulk item removal for apartment communities and residents, including furniture and move-out items. There is no published junk pickup price. Use the junk pickup form to request an estimate.',
             ],
             [
                 'q' => 'What if a pickup is missed?',
@@ -645,6 +890,15 @@ final class PublicController extends Controller
                 'name' => 'Anthony Jaamal Jones',
             ],
             'areaServed' => ['Valdosta', 'Lowndes County', 'Atlanta, GA', 'Tampa, FL'],
+            'hasOfferCatalog' => [
+                '@type' => 'OfferCatalog',
+                'name' => 'Services',
+                'itemListElement' => [
+                    ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Doorstep valet trash']],
+                    ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Party and event cleanup']],
+                    ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => 'Junk pickup']],
+                ],
+            ],
         ];
         if (filled($s['phone'] ?? null)) {
             $data['telephone'] = (string) $s['phone'];

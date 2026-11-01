@@ -36,7 +36,7 @@ final class SettingsController extends Controller
         $reserve = dollars_to_cents($req->string('per_site_vehicle_reserve'));
         $fixed = dollars_to_cents($req->string('monthly_fixed_costs'));
         if ($price === null || $wage === null || $supplies === null || $gas === null || $reserve === null || $fixed === null) {
-            Session::flash('error', 'Prices and costs need to be dollar amounts, like 35.00.');
+            Session::flash('error', 'Prices and costs need to be dollar amounts, like 20.00.');
             return Response::redirect('/admin/settings');
         }
         $share = (float) $req->string('default_property_share_percent', '10');

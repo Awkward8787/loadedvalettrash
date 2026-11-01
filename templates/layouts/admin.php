@@ -15,6 +15,8 @@ if ($user && $user['role'] !== 'porter') {
         '/admin/employees' => 'Team',
         '/admin/reviews' => 'Reviews',
         '/admin/inquiries' => 'Inbox',
+        '/admin/outreach' => 'Inquiries',
+        '/admin/junk-rates' => 'Junk rates',
         '/admin/applications' => 'Applications',
         '/admin/audit' => 'Audit',
     ];
@@ -27,6 +29,7 @@ if ($user && $user['role'] !== 'porter') {
         '/account/security' => 'Security',
     ];
 }
+$newOutreach = ($user && ($user['role'] ?? '') !== 'porter') ? outreach_new_count() : 0;
 ?>
 <!doctype html>
 <html lang="en">
@@ -52,7 +55,7 @@ if ($user && $user['role'] !== 'porter') {
       <summary class="menu-button">Menu</summary>
       <nav aria-label="Admin">
         <?php foreach ($items as $href => $label): ?>
-          <a href="<?= e($href) ?>"<?= ($path ?? '') === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?></a>
+          <a href="<?= e($href) ?>"<?= ($path ?? '') === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?><?php if ($href === '/admin/outreach' && $newOutreach > 0): ?> <span class="nav-badge"><?= (int) $newOutreach ?></span><?php endif; ?></a>
         <?php endforeach; ?>
         <form method="post" action="/logout"><?= csrf_field() ?><button class="btn btn-primary btn-block" type="submit">Sign out</button></form>
       </nav>
@@ -62,7 +65,7 @@ if ($user && $user['role'] !== 'porter') {
 <div class="wrap admin-shell">
   <nav class="side-nav" aria-label="Admin">
     <?php foreach ($items as $href => $label): ?>
-      <a href="<?= e($href) ?>"<?= ($path ?? '') === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?></a>
+      <a href="<?= e($href) ?>"<?= ($path ?? '') === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?><?php if ($href === '/admin/outreach' && $newOutreach > 0): ?> <span class="nav-badge"><?= (int) $newOutreach ?></span><?php endif; ?></a>
     <?php endforeach; ?>
     <form method="post" action="/logout"><?= csrf_field() ?><button class="btn btn-ghost btn-small" type="submit">Sign out</button></form>
   </nav>

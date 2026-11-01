@@ -10,6 +10,8 @@ final class RateLimiter
     public const IP_LIMIT = 8;
     public const WINDOW_SECONDS = 900;
     public const APPLICATION_LIMIT = 5;
+    public const CONTACT_LIMIT = 5;
+    public const JUNK_LIMIT = 5;
 
     public static function tooMany(string $email, string $ip): bool
     {
@@ -34,6 +36,27 @@ final class RateLimiter
             [$ip, $cutoff]
         );
         return $count >= self::APPLICATION_LIMIT;
+    }
+
+    public static function tooManyContactInquiries(string $ip): bool
+    {
+        return self::tooManyFromTable('contact_inquiries', $ip, self::CONTACT_LIMIT);
+    }
+
+    public static function tooManyJunkEstimates(string $ip): bool
+    {
+        return self::tooManyFromTable('junk_estimates', $ip, self::JUNK_LIMIT);
+    }
+
+    private static function tooManyFromTable(string $table, string $ip, int $limit): bool
+    {
+        Database::guardIdent($table);
+        $cutoff = date('Y-m-d H:i:s', time() - self::WINDOW_SECONDS);
+        $count = (int) Database::value(
+            'SELECT COUNT(*) FROM ' . $table . ' WHERE ip = ? AND created_at >= ?',
+            [$ip, $cutoff]
+        );
+        return $count >= $limit;
     }
 
     public static function hit(string $email, string $ip, bool $success): void

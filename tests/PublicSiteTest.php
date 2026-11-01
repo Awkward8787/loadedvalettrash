@@ -17,12 +17,16 @@ final class PublicSiteTest extends TestCase
         $this->assertStringContainsString('Tampa, FL', $home->body);
         $this->assertStringNotContainsString('Hahira', $home->body);
         $this->assertStringNotContainsString('Remerton', $home->body);
-        $this->assertStringContainsString('$35', $home->body);
+        $this->assertStringContainsString('$20', $home->body);
+        $this->assertStringNotContainsString('$35', $home->body);
+        $this->assertStringContainsString('Junk pickup', $home->body);
+        $this->assertStringContainsString('Send a message', $home->body);
+        $this->assertStringContainsString('href="/junk-pickup"', $home->body);
         $this->assertStringContainsString('The 30-day trial is free on the buildings you pick.', $home->body);
         $this->assertStringContainsString('Book a walkthrough', $home->body);
         $this->assertStringContainsString('Request a proposal', $home->body);
         $this->assertStringContainsString('Quoted per event', $home->body);
-        $this->assertStringContainsString('Quoted per job', $home->body);
+        $this->assertStringNotContainsString('Quoted per job', $home->body);
         $this->assertStringContainsString('Never put a loose bag on the ground', $home->body);
         $this->assertStringContainsString('No published reviews yet', $home->body);
         $this->assertStringContainsString('6:00 to 8:00 PM', $home->body);
@@ -58,7 +62,7 @@ final class PublicSiteTest extends TestCase
     public function testRobotsAndCorePagesExist(): void
     {
         $client = $this->client();
-        foreach (['/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/faq', '/about', '/contact', '/careers', '/missed-pickup', '/privacy', '/terms'] as $path) {
+        foreach (['/services', '/how-it-works', '/pricing', '/who-we-serve', '/reviews', '/faq', '/about', '/contact', '/junk-pickup', '/careers', '/missed-pickup', '/privacy', '/terms'] as $path) {
             $response = $client->get($path);
             $this->assertSame(200, $response->status, $path);
             $this->assertStringNotContainsString('[ADD', $response->body, $path);

@@ -460,6 +460,28 @@ th { font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase; }
   letter-spacing: 0.04em;
 }
 .badge-live { background: var(--lime); border-color: var(--lime); }
+.nav-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  margin-left: 0.45rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--lime);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+.estimate-note {
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  font-weight: 700;
+}
 .badge-late { background: #fde8e8; color: var(--danger); border-color: #f3c2c2; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
 .stat { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 0.9rem; }

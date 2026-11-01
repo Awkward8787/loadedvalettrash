@@ -54,7 +54,7 @@ final class View
                 'address' => null,
                 'service_area' => null,
                 'insurance_text' => null,
-                'opt_in_price_cents' => 3500,
+                'opt_in_price_cents' => 2000,
                 'default_property_share_percent' => '10.00',
                 'max_bags_per_night' => 2,
                 'holiday_bags' => 4,

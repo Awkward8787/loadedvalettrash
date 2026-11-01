@@ -286,6 +286,74 @@ function inquiry_kind_label(string $kind): string
     return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);
 }
 
+/** Kinds shown on the public proposal form. Junk pickup estimate opens the calculator. */
+function public_inquiry_kinds(): array
+{
+    return [
+        'proposal' => 'Request a proposal',
+        'walkthrough' => 'Book a walkthrough',
+        'event_cleanup' => 'Party and event cleanup',
+        'junk_estimate' => 'Junk pickup estimate',
+    ];
+}
+
+/** @return array<string,string> */
+function outreach_roles(): array
+{
+    return [
+        'property_manager' => 'Property manager',
+        'resident' => 'Resident',
+        'other' => 'Other',
+    ];
+}
+
+function outreach_role_label(string $role): string
+{
+    return outreach_roles()[$role] ?? $role;
+}
+
+/** @return array<string,string> */
+function outreach_needs(): array
+{
+    return [
+        'valet_trash' => 'Valet trash',
+        'junk_pickup' => 'Junk pickup',
+        'other' => 'Other',
+    ];
+}
+
+function outreach_need_label(string $need): string
+{
+    return outreach_needs()[$need] ?? $need;
+}
+
+/** @return array<string,string> */
+function service_area_options(): array
+{
+    return [
+        'valdosta_lowndes' => 'Valdosta-Lowndes',
+        'atlanta' => 'Atlanta',
+        'tampa' => 'Tampa',
+        'other' => 'Other',
+    ];
+}
+
+function service_area_label(string $value): string
+{
+    return service_area_options()[$value] ?? $value;
+}
+
+function outreach_new_count(): int
+{
+    try {
+        return (int) \Lvt\Database::value(
+            'SELECT (SELECT COUNT(*) FROM contact_inquiries WHERE status = "new") + (SELECT COUNT(*) FROM junk_estimates WHERE status = "new")'
+        );
+    } catch (\Throwable) {
+        return 0;
+    }
+}
+
 /** @return array<string,string> */
 function job_roles(): array
 {

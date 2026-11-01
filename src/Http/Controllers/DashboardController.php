@@ -76,6 +76,7 @@ final class DashboardController extends Controller
             'lateInvoices' => $late,
             'followUps' => $followUps,
             'newInquiries' => $newInquiries,
+            'newOutreach' => outreach_new_count(),
             'pendingReviews' => $pendingReviews,
             'monthLabel' => date('F Y'),
         ], 'layouts/admin');

@@ -8,6 +8,7 @@ use Lvt\Audit;
 use Lvt\Auth;
 use Lvt\Database;
 use Lvt\HttpException;
+use Lvt\Junk\Quote;
 use Lvt\Request;
 use Lvt\Response;
 use Lvt\Session;
@@ -160,6 +161,179 @@ final class ModerationController extends Controller
         return Response::redirect('/admin/applications/' . (int) $row['id']);
     }
 
+    public function outreach(): Response
+    {
+        $messages = Database::all('SELECT * FROM contact_inquiries ORDER BY created_at DESC, id DESC LIMIT 200');
+        $estimates = Database::all('SELECT * FROM junk_estimates ORDER BY created_at DESC, id DESC LIMIT 200');
+        $rows = [];
+        foreach ($messages as $row) {
+            $rows[] = $this->outreachListRow(
+                '/admin/outreach/' . (int) $row['id'],
+                outreach_need_label((string) $row['need']),
+                (string) $row['status'],
+                (string) $row['name'],
+                service_area_label((string) $row['service_area']),
+                (string) $row['created_at'],
+                (int) $row['id']
+            );
+        }
+        foreach ($estimates as $row) {
+            $rows[] = $this->outreachListRow(
+                '/admin/junk-estimates/' . (int) $row['id'],
+                'Junk pickup estimate',
+                (string) $row['status'],
+                (string) $row['name'],
+                Quote::selectionLabel(
+                    (string) $row['mode'],
+                    $row['items_json'] !== null ? (string) $row['items_json'] : null,
+                    $row['load_size'] !== null ? (string) $row['load_size'] : null
+                ),
+                (string) $row['created_at'],
+                (int) $row['id']
+            );
+        }
+        usort($rows, static fn (array $a, array $b): int => strcmp((string) $b['sort'], (string) $a['sort']));
+        $rows = array_slice($rows, 0, 200);
+        return View::page('admin/outreach', [
+            'title' => 'Inquiries',
+            'description' => 'Contact inquiries and junk pickup estimates',
+            'rows' => $rows,
+            'newCount' => outreach_new_count(),
+        ], 'layouts/admin');
+    }
+
+    public function outreachShow(array $params): Response
+    {
+        $row = $this->outreachRow((int) $params['id']);
+        return View::page('admin/outreach-inquiry', [
+            'title' => 'Inquiry',
+            'description' => 'Contact inquiry',
+            'inquiry' => $row,
+        ], 'layouts/admin');
+    }
+
+    public function outreachUpdate(array $params): Response
+    {
+        $this->csrf();
+        $row = $this->outreachRow((int) $params['id']);
+        $req = Request::current();
+        $status = $req->string('status');
+        $notes = $req->string('notes');
+        $errors = [];
+        if (!in_array($status, ['new', 'contacted', 'closed'], true)) {
+            $errors['status'] = 'Choose a status.';
+        }
+        if (mb_strlen($notes) > 4000) {
+            $errors['notes'] = 'Keep notes under 4,000 characters.';
+        }
+        if ($errors) {
+            return $this->invalid('admin/outreach-inquiry', $errors, [
+                'title' => 'Inquiry',
+                'description' => 'Contact inquiry',
+                'inquiry' => $row,
+            ], 'layouts/admin');
+        }
+        Database::updateRow('contact_inquiries', [
+            'status' => $status,
+            'notes' => blank_to_null($notes),
+        ], 'id = ?', [(int) $row['id']]);
+        Audit::write((int) (Auth::user()['id'] ?? 0), 'outreach.update', 'contact_inquiry', (int) $row['id'], 'Status ' . $status);
+        Session::flash('success', 'Inquiry updated.');
+        return Response::redirect('/admin/outreach/' . (int) $row['id']);
+    }
+
+    public function junkShow(array $params): Response
+    {
+        $row = $this->junkRow((int) $params['id']);
+        return View::page('admin/junk-estimate', [
+            'title' => 'Junk pickup estimate',
+            'description' => 'Junk pickup estimate',
+            'estimate' => $row,
+        ], 'layouts/admin');
+    }
+
+    public function junkUpdate(array $params): Response
+    {
+        $this->csrf();
+        $row = $this->junkRow((int) $params['id']);
+        $req = Request::current();
+        $status = $req->string('status');
+        $notes = $req->string('notes');
+        $errors = [];
+        if (!in_array($status, ['new', 'quoted', 'booked', 'closed'], true)) {
+            $errors['status'] = 'Choose a status.';
+        }
+        if (mb_strlen($notes) > 4000) {
+            $errors['notes'] = 'Keep notes under 4,000 characters.';
+        }
+        if ($errors) {
+            return $this->invalid('admin/junk-estimate', $errors, [
+                'title' => 'Junk pickup estimate',
+                'description' => 'Junk pickup estimate',
+                'estimate' => $row,
+            ], 'layouts/admin');
+        }
+        Database::updateRow('junk_estimates', [
+            'status' => $status,
+            'notes' => blank_to_null($notes),
+        ], 'id = ?', [(int) $row['id']]);
+        Audit::write((int) (Auth::user()['id'] ?? 0), 'junk_estimate.update', 'junk_estimate', (int) $row['id'], 'Status ' . $status);
+        Session::flash('success', 'Estimate updated.');
+        return Response::redirect('/admin/junk-estimates/' . (int) $row['id']);
+    }
+
+    public function junkPhoto(array $params): Response
+    {
+        $row = $this->junkRow((int) $params['id']);
+        $name = (string) ($row['photo_path'] ?? '');
+        if ($name === '' || str_contains($name, '/') || str_contains($name, '\\') || str_contains($name, '..')) {
+            throw new HttpException(404, 'No photo is attached.');
+        }
+        $path = LVT_ROOT . '/storage/uploads/' . $name;
+        if (!is_file($path)) {
+            throw new HttpException(404, 'That photo file is missing.');
+        }
+        $mime = (new \finfo(FILEINFO_MIME_TYPE))->file($path) ?: 'application/octet-stream';
+        return Response::text((string) file_get_contents($path), 200, $mime);
+    }
+
+    public function junkRates(): Response
+    {
+        return View::page('admin/junk-rates', [
+            'title' => 'Junk pickup rates',
+            'description' => 'Junk pickup rates',
+            'rates' => $this->junkRateRow(),
+        ], 'layouts/admin');
+    }
+
+    public function junkRatesSave(): Response
+    {
+        $this->csrf();
+        $req = Request::current();
+        $errors = [];
+        $updates = ['updated_at' => now_dt()];
+        foreach (Quote::codes() as $code) {
+            $low = $this->rateCents($req->string($code . '_low'), $code . '_low', $errors);
+            $high = $this->rateCents($req->string($code . '_high'), $code . '_high', $errors);
+            if ($low !== null && $high !== null && $high < $low) {
+                $errors[$code . '_high'] = 'The high amount cannot be less than the low amount.';
+            }
+            $updates[$code . '_low_cents'] = $low;
+            $updates[$code . '_high_cents'] = $high;
+        }
+        if ($errors) {
+            return $this->invalid('admin/junk-rates', $errors, [
+                'title' => 'Junk pickup rates',
+                'description' => 'Junk pickup rates',
+                'rates' => $this->junkRateRow(),
+            ], 'layouts/admin');
+        }
+        Database::updateRow('junk_rates', $updates, 'id = ?', [1]);
+        Audit::write((int) (Auth::user()['id'] ?? 0), 'junk_rates.update', 'junk_rates', 1, 'Updated junk pickup rates');
+        Session::flash('success', 'Junk pickup rates saved.');
+        return Response::redirect('/admin/junk-rates');
+    }
+
     /** @return array<string,mixed> */
     private function applicationRow(int $id): array
     {
@@ -171,5 +345,63 @@ final class ModerationController extends Controller
             throw new HttpException(404, 'That application does not exist.');
         }
         return $row;
+    }
+
+    /** @return array{href:string,type:string,status:string,title:string,meta:string,created_at:string,sort:string} */
+    private function outreachListRow(string $href, string $type, string $status, string $title, string $meta, string $createdAt, int $id): array
+    {
+        return [
+            'href' => $href,
+            'type' => $type,
+            'status' => $status,
+            'title' => $title,
+            'meta' => $meta,
+            'created_at' => $createdAt,
+            'sort' => $createdAt . '-' . str_pad((string) $id, 8, '0', STR_PAD_LEFT),
+        ];
+    }
+
+    /** @return array<string,mixed> */
+    private function outreachRow(int $id): array
+    {
+        $row = Database::one('SELECT * FROM contact_inquiries WHERE id = ?', [$id]);
+        if (!$row) {
+            throw new HttpException(404, 'That inquiry does not exist.');
+        }
+        return $row;
+    }
+
+    /** @return array<string,mixed> */
+    private function junkRow(int $id): array
+    {
+        $row = Database::one('SELECT * FROM junk_estimates WHERE id = ?', [$id]);
+        if (!$row) {
+            throw new HttpException(404, 'That estimate does not exist.');
+        }
+        return $row;
+    }
+
+    /** @return array<string,mixed> */
+    private function junkRateRow(): array
+    {
+        $row = Database::one('SELECT * FROM junk_rates WHERE id = ?', [1]);
+        if (!$row) {
+            throw new HttpException(500, 'Junk pickup rates are not set up.');
+        }
+        return $row;
+    }
+
+    /** @param array<string,string> $errors */
+    private function rateCents(string $raw, string $key, array &$errors): ?int
+    {
+        if (trim($raw) === '') {
+            return null;
+        }
+        $cents = dollars_to_cents($raw);
+        if ($cents === null) {
+            $errors[$key] = 'Enter a dollar amount, or leave it blank.';
+            return null;
+        }
+        return $cents;
     }
 }

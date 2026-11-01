@@ -7,6 +7,7 @@ namespace Lvt\Tests;
 use Lvt\Auth;
 use Lvt\Crypto;
 use Lvt\Database;
+use Lvt\Junk\Quote;
 use Lvt\Settings;
 use Lvt\Totp;
 use PHPUnit\Framework\TestCase as PhpUnitTestCase;
@@ -24,6 +25,8 @@ abstract class TestCase extends PhpUnitTestCase
             'audit_log',
             'invoices',
             'inquiries',
+            'junk_estimates',
+            'contact_inquiries',
             'job_applications',
             'reviews',
             'issues',
@@ -49,7 +52,7 @@ abstract class TestCase extends PhpUnitTestCase
         $pdo->exec('SET FOREIGN_KEY_CHECKS=1');
         Database::exec(
             'UPDATE settings SET phone = NULL, email = NULL, address = NULL, insurance_text = NULL,
-             opt_in_price_cents = 3500, default_property_share_percent = 10.00,
+             opt_in_price_cents = 2000, default_property_share_percent = 10.00,
              minutes_per_door = 1.00, minutes_per_site = 45, pickup_window_minutes = 120,
              default_wage_cents = 1500, payroll_multiplier = 1.10,
              per_site_supplies_cents = 4000, per_site_gas_cents = 9000,
@@ -57,6 +60,12 @@ abstract class TestCase extends PhpUnitTestCase
              remittance_due_day = 10, session_timeout_minutes = 30
              WHERE id = 1'
         );
+        $rateSets = [];
+        foreach (Quote::codes() as $code) {
+            $rateSets[] = $code . '_low_cents = NULL';
+            $rateSets[] = $code . '_high_cents = NULL';
+        }
+        Database::exec('UPDATE junk_rates SET ' . implode(', ', $rateSets) . ' WHERE id = 1');
         Settings::flush();
     }
 

@@ -15,6 +15,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
       <div class="cta-row">
         <a class="btn btn-primary" href="/contact?intent=walkthrough">Book a walkthrough</a>
         <a class="btn btn-ghost" href="/contact">Request a proposal</a>
+        <a class="btn btn-ghost" href="/contact#inquiry">Send a message</a>
       </div>
     </div>
     <div class="hero-media">
@@ -45,7 +46,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
   <div class="wrap">
     <div class="section-head">
       <h2>Services</h2>
-      <p>Doorstep valet for apartment complexes, cleanup after parties and events, and move-out haul-off.</p>
+      <p>Doorstep valet for apartment complexes, cleanup after parties and events, and junk pickup.</p>
     </div>
     <div class="grid-3">
       <article class="card">
@@ -61,10 +62,9 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
       </article>
       <article class="card">
-        <h3>Move-outs</h3>
-        <p class="service-price">Quoted per job</p>
-        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes.</p>
-        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+        <h3>Junk pickup</h3>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
     <p><a href="/services">Service details</a></p>
@@ -133,7 +133,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
   <div class="wrap">
     <div class="section-head">
       <h2>Who we serve</h2>
-      <p>Weeknight doorstep routes for communities, plus cleanup after events and move-outs.</p>
+      <p>Weeknight doorstep routes for communities, plus cleanup after events and junk pickup.</p>
     </div>
     <div class="grid-3">
       <article class="card"><h3>Apartments</h3><p>Garden and mid-rise communities that want cleaner breezeways without staffing a trash run. Residents opt in through the leasing office.</p></article>
@@ -149,10 +149,9 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
         <a class="btn btn-ghost" href="/contact?intent=event_cleanup">Request a quote</a>
       </article>
       <article class="card">
-        <h3>Move-outs</h3>
-        <p>Move-out cleanout and trash haul-off for leasing offices, apartment complexes, and homes.</p>
-        <p class="service-price">Quoted per job</p>
-        <a class="btn btn-ghost" href="/contact?intent=move_out">Request a quote</a>
+        <h3>Junk pickup</h3>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
   </div>

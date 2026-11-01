@@ -52,7 +52,7 @@ The operating rule, also on the public site: a bag that was out by 8:00 PM and w
 
 ## Billing
 
-Generate a month for every signed or live property, or for one property. An opt-in invoice is billable doors × $35, minus the property share. A per-door community price is units × that rate, with no share. A flat community price is the flat amount, with no share. Drafts and sent invoices refresh if you generate again. Paid and void invoices are left alone.
+Generate a month for every signed or live property, or for one property. An opt-in invoice is billable doors × $20, minus the property share. A per-door community price is units × that rate, with no share. A flat community price is the flat amount, with no share. Drafts and sent invoices refresh if you generate again. Paid and void invoices are left alone.
 
 Due date is the remittance day (default the 10th) of that service month. A draft or sent invoice past that date shows as late. Mark an invoice sent, paid, or void.
 
@@ -62,7 +62,11 @@ Profit for a site is amount due, minus porter hours × wage × 1.10 payroll, min
 
 **Reviews** holds submissions from the public form. Approve to publish. Reject to keep it off the site. Nothing is published by default, and the software does not ship with sample quotes.
 
-**Inbox** is walkthrough, proposal, party and event cleanup, and move-out requests. Update the status as you contact them. The matching lead is already on the pipeline.
+**Inbox** is walkthrough, proposal, and party and event cleanup requests. Older move-out requests stay in this list. Update the status as you contact them. The matching lead is already on the pipeline.
+
+**Inquiries** is the public message form and junk pickup estimates, newest first. A badge counts rows still marked new. Message status is new, contacted, or closed. Junk pickup estimate status is new, quoted, booked, or closed. Internal notes stay on the detail page.
+
+**Junk rates** holds the optional low and high amount for each item and load size. Blank means there is no rate. The public calculator then shows no dollar figure. When every chosen line has a rate, the visitor sees a range labeled estimate only, with the final price confirmed on site.
 
 ## Settings and audit
 

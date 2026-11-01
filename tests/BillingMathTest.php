@@ -13,10 +13,10 @@ final class BillingMathTest extends TestCase
 {
     public function testOptInInvoiceMatchesThePlanningExample(): void
     {
-        $quote = Calculator::optIn(60, 3500, 10.0);
-        $this->assertSame(210000, $quote['gross_cents']);
-        $this->assertSame(21000, $quote['share_cents']);
-        $this->assertSame(189000, $quote['due_cents']);
+        $quote = Calculator::optIn(60, 2000, 10.0);
+        $this->assertSame(120000, $quote['gross_cents']);
+        $this->assertSame(12000, $quote['share_cents']);
+        $this->assertSame(108000, $quote['due_cents']);
     }
 
     public function testLaborAndProfitUsePayrollTaxSuppliesGasReserveAndFixedCosts(): void
@@ -24,8 +24,8 @@ final class BillingMathTest extends TestCase
         $hours = round(1.75 * 21.67, 4);
         $labor = Calculator::laborCents($hours, 1500, 1.10);
         $this->assertSame(62572, $labor);
-        $profit = Calculator::profitCents(189000, $labor, 4000, 9000, 2500, 34900);
-        $this->assertSame(76028, $profit);
+        $profit = Calculator::profitCents(108000, $labor, 4000, 9000, 2500, 34900);
+        $this->assertSame(-4972, $profit);
     }
 
     public function testPerDoorAndFlatHaveNoShare(): void
@@ -78,7 +78,8 @@ final class BillingMathTest extends TestCase
         $property = Database::one('SELECT * FROM properties WHERE id = ?', [$propertyId]);
         $quote = Ledger::quote($property, 2026, 10);
         $this->assertSame(60, $quote['door_count']);
-        $this->assertSame(189000, $quote['due_cents']);
+        $this->assertSame(2000, $quote['rate_cents']);
+        $this->assertSame(108000, $quote['due_cents']);
 
         $invoiceId = Database::insertRow('invoices', [
             'property_id' => $propertyId,
@@ -113,6 +114,40 @@ final class BillingMathTest extends TestCase
         $profit = Ledger::profitForInvoice($invoice);
         $this->assertSame(2.0, $profit['hours']);
         $this->assertSame(3300, $profit['labor_cents']);
-        $this->assertSame(189000 - 3300 - 4000 - 9000 - 2500 - 34900, $profit['profit_cents']);
+        $this->assertSame(108000 - 3300 - 4000 - 9000 - 2500 - 34900, $profit['profit_cents']);
+    }
+
+    public function testDefaultPriceChangeLeavesInvoicesAndPropertyRatesAlone(): void
+    {
+        $sql = strtolower((string) file_get_contents(dirname(__DIR__) . '/migrations/006_resident_price.sql'));
+        $this->assertDoesNotMatchRegularExpression('/\b(update|from|into|table|join)\s+invoices\b/', $sql);
+        $this->assertDoesNotMatchRegularExpression('/\b(update|from|into|table|join)\s+properties\b/', $sql);
+        $propertyId = $this->insertProperty('Kept Rate', ['opt_in_price_cents' => 3500]);
+        $now = now_dt();
+        $invoiceId = Database::insertRow('invoices', [
+            'property_id' => $propertyId,
+            'period_year' => 2026,
+            'period_month' => 9,
+            'pricing_model' => 'opt_in',
+            'door_count' => 1,
+            'rate_cents' => 3500,
+            'gross_cents' => 3500,
+            'share_percent' => 10,
+            'share_cents' => 350,
+            'due_cents' => 3150,
+            'status' => 'paid',
+            'due_on' => '2026-09-10',
+            'paid_at' => $now,
+            'notes' => null,
+            'created_at' => $now,
+        ]);
+        Database::exec('UPDATE settings SET opt_in_price_cents = 3500 WHERE id = 1');
+        Database::exec('UPDATE settings SET opt_in_price_cents = 2000 WHERE id = 1 AND opt_in_price_cents = 3500');
+        $this->assertSame(2000, (int) Database::value('SELECT opt_in_price_cents FROM settings WHERE id = 1'));
+        $this->assertSame(3500, (int) Database::value('SELECT opt_in_price_cents FROM properties WHERE id = ?', [$propertyId]));
+        $this->assertSame(3500, (int) Database::value('SELECT rate_cents FROM invoices WHERE id = ?', [$invoiceId]));
+        Database::exec('UPDATE settings SET opt_in_price_cents = 4000 WHERE id = 1');
+        Database::exec('UPDATE settings SET opt_in_price_cents = 2000 WHERE id = 1 AND opt_in_price_cents = 3500');
+        $this->assertSame(4000, (int) Database::value('SELECT opt_in_price_cents FROM settings WHERE id = 1'));
     }
 }

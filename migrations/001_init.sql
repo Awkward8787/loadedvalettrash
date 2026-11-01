@@ -56,7 +56,7 @@ CREATE TABLE settings (
   address TEXT NULL,
   service_area VARCHAR(255) NULL,
   insurance_text TEXT NULL,
-  opt_in_price_cents INT UNSIGNED NOT NULL DEFAULT 3500,
+  opt_in_price_cents INT UNSIGNED NOT NULL DEFAULT 2000,
   default_property_share_percent DECIMAL(5,2) NOT NULL DEFAULT 10.00,
   minutes_per_door DECIMAL(4,2) NOT NULL DEFAULT 1.00,
   minutes_per_site INT UNSIGNED NOT NULL DEFAULT 45,
@@ -90,7 +90,7 @@ INSERT INTO settings (
 ) VALUES (
   1, 'Loaded Valet Trash', 'Anthony Jaamal Jones', NULL, NULL, NULL,
   'Valdosta / Lowndes County, Atlanta, and Tampa', NULL,
-  3500, 10.00, 1.00, 45,
+  2000, 10.00, 1.00, 45,
   120, '18:00:00', '20:00:00', '20:00:00', '22:00:00',
   2, 4, 25, 1500, 1.10,
   4000, 9000, 2500, 34900,
