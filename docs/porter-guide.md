@@ -26,7 +26,7 @@ Clock in when you start the route and clock out when the last bags are in the co
 - Bag was out on time and you could not get it: mark the door missed and say why (locked gate, dog, truck full). The office schedules the return.
 - Bag was late, or a loose bag is not in or on the can: mark a violation, choose "loose bag (not in/on can)" for a bag on the ground, photo if you can, leave it. Loose bags on the ground: report to the office. Do not pick a loose bag up as a normal stop.
 - Weather: if the owner cancels or delays the night, you will see the route status. Do not decide a cancellation yourself.
-- You are hurt or the truck is down: call the owner from the number they gave you. The website hides the public phone until the owner types it into Settings, so use the number you were given in person if the site does not show one.
+- You are hurt or the truck is down: call the owner. The public site lists (229) 595-8852. Use the number you were given in person if that line does not reach them.
 
 ## What you cannot open
 

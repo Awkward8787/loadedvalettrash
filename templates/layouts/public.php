@@ -64,6 +64,10 @@ $nav = [
       </nav>
     </details>
   </div>
+  <div class="wrap header-nap">
+    <a href="<?= e(published_phone_href()) ?>"><?= e(published_phone()) ?></a>
+    <a href="mailto:<?= e(published_email()) ?>"><?= e(published_email()) ?></a>
+  </div>
 </header>
 <main id="main">
   <div class="wrap">
@@ -88,12 +92,8 @@ $nav = [
         <p class="fine"><?= e((string) $settings['service_area']) ?></p>
       <?php endif; ?>
       <p><a href="/careers">Careers</a></p>
-      <?php if (filled($settings['phone'] ?? null)): ?>
-        <p><a href="tel:<?= e(preg_replace('/[^\d+]/', '', (string) $settings['phone'])) ?>"><?= e((string) $settings['phone']) ?></a></p>
-      <?php endif; ?>
-      <?php if (filled($settings['email'] ?? null)): ?>
-        <p><a href="mailto:<?= e((string) $settings['email']) ?>"><?= e((string) $settings['email']) ?></a></p>
-      <?php endif; ?>
+      <p><a href="<?= e(published_phone_href()) ?>"><?= e(published_phone()) ?></a></p>
+      <p><a href="mailto:<?= e(published_email()) ?>"><?= e(published_email()) ?></a></p>
       <?php if (filled($settings['address'] ?? null)): ?>
         <p class="fine"><?= nl((string) $settings['address']) ?></p>
       <?php endif; ?>

@@ -13,6 +13,7 @@ $mode = old('mode') === 'load' ? 'load' : 'items';
       <p class="eyebrow">Junk pickup</p>
       <h1>Junk pickup.</h1>
       <p class="lede">Bulk and junk item removal for apartment communities and residents in <?= e($area) ?>, including furniture and move-out items.</p>
+      <?php include LVT_ROOT . '/templates/partials/junk-ranges.php'; ?>
       <p>Tell us the items or the load size, where they are, and a date that works. <?= e(\Lvt\Junk\Quote::FOLLOW_UP) ?></p>
       <p><a href="/contact#inquiry">Send a message instead</a></p>
     </div>

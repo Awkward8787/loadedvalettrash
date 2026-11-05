@@ -66,11 +66,11 @@ Profit for a site is amount due, minus porter hours × wage × 1.10 payroll, min
 
 **Inquiries** is the public message form and junk pickup estimates, newest first. A badge counts rows still marked new. Message status is new, contacted, or closed. Junk pickup estimate status is new, quoted, booked, or closed. Internal notes stay on the detail page.
 
-**Junk rates** holds the optional low and high amount for each item and load size. Blank means there is no rate. The public calculator then shows no dollar figure. When every chosen line has a rate, the visitor sees a range labeled estimate only, with the final price confirmed on site.
+**Junk rates** holds the low and high amount for each item and load size. A blank pair is left off the public rate list. Each saved range is printed on the junk pickup page, labeled estimate only. The calculator shows no dollar total until every chosen line has a rate. The final price is confirmed with the team.
 
 ## Settings and audit
 
-Settings holds the business name, owner name, phone, email, address, service area, insurance text, opt-in price, default share, bag limits, route timing, wages, cost assumptions, remittance day, and session timeout. Clearing phone, email, address, or insurance removes them from the public site.
+Settings holds the business name, owner name, phone, email, address, service area, insurance text, opt-in price, default share, bag limits, route timing, wages, cost assumptions, remittance day, and session timeout. A blank phone or email falls back to (229) 595-8852 and info@loadedvalet.com. Clearing address or insurance removes them from the public site.
 
 Holidays are listed with a service-off flag and a short instruction. Add the next year’s dates before December.
 

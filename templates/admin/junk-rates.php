@@ -17,7 +17,7 @@ $amount = static function (string $key) use ($rates, $oldBag): string {
 };
 ?>
 <h1>Junk pickup rates</h1>
-<p class="muted">Leave a row blank when you have not set a rate. The public calculator shows no dollar amount until every chosen item or the chosen load has a rate. Visitors then see an estimate labeled "Estimate only, final price confirmed on site."</p>
+<p class="muted">Leave a row blank when you have not set a rate. Each saved range is printed on the public junk page, labeled estimate only. The calculator shows no dollar total until every chosen item or the chosen load has a rate.</p>
 <form class="form card" method="post" action="/admin/junk-rates">
   <?= csrf_field() ?>
   <?php $group = ''; ?>

@@ -38,8 +38,17 @@ final class PublicSiteTest extends TestCase
         $this->assertStringNotContainsString('lorem', strtolower($home->body));
         $this->assertStringNotContainsString('$1,000,000', $home->body);
         $this->assertStringNotContainsString('$2,000,000', $home->body);
-        $this->assertDoesNotMatchRegularExpression('/href="tel:/', $home->body);
-        $this->assertDoesNotMatchRegularExpression('/mailto:/', $home->body);
+        $this->assertStringNotContainsString('no published junk pickup price', strtolower($home->body));
+        $this->assertStringContainsString('Estimate-only ranges are on the junk pickup page.', $home->body);
+        $this->assertStringContainsString('The final price is confirmed with the team.', $home->body);
+        $this->assertStringContainsString('quoted per job', $home->body);
+        $this->assertStringNotContainsString('Quoted per job', $home->body);
+        $this->assertStringContainsString('href="tel:+12295958852"', $home->body);
+        $this->assertStringContainsString('href="mailto:info@loadedvalet.com"', $home->body);
+        $this->assertStringContainsString('(229) 595-8852', $home->body);
+        $this->assertStringContainsString('"telephone":"(229) 595-8852"', $home->body);
+        $this->assertStringContainsString('"email":"info@loadedvalet.com"', $home->body);
+        $this->assertStringNotContainsString('streetAddress', $home->body);
         $this->assertMatchesRegularExpression(
             '/<video\b(?![^>]*\bautoplay\b)[^>]*\bcontrols\b[^>]*\bplaysinline\b[^>]*\bpreload="none"[^>]*\bposter="\/assets\/media\/lvt-commercial-poster\.jpg"/',
             $home->body
@@ -48,8 +57,7 @@ final class PublicSiteTest extends TestCase
         $this->assertStringContainsString('<source src="/assets/media/lvt-commercial-720p.mp4" type="video/mp4">', $home->body);
         $this->assertStringContainsString('<track kind="captions" src="/assets/media/lvt-commercial.en.vtt" srclang="en" label="English" default>', $home->body);
         $this->assertDoesNotMatchRegularExpression('/<video\b[^>]*\bautoplay\b/', $home->body);
-        $this->assertStringNotContainsString('(229) 595-8852', $home->body);
-        $this->assertStringNotContainsString('229-595-8852', $home->body);
+        $this->assertStringContainsString('Valet Trash in Valdosta / Lowndes County, Atlanta, and Tampa | $20 a Month', $home->body);
         $captions = (string) file_get_contents(dirname(__DIR__) . '/public/assets/media/lvt-commercial.en.vtt');
         $this->assertStringContainsString('Loaded Valet Trash. Call (229) 595-8852.', $captions);
         $htaccess = (string) file_get_contents(dirname(__DIR__) . '/public/.htaccess');
@@ -77,6 +85,21 @@ final class PublicSiteTest extends TestCase
         $faq = $client->get('/faq');
         $this->assertStringContainsString('On extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.', $faq->body);
         $this->assertStringContainsString('On those extra-bag nights, extra bags go only on top of the can, never on the ground or beside it.', $faq->body);
+        $this->assertStringNotContainsString('no published junk pickup price', strtolower($faq->body));
+        $this->assertStringContainsString('Estimate-only ranges are on the junk pickup page.', $faq->body);
+        $this->assertStringContainsString('The final price is confirmed with the team.', $faq->body);
+        $this->assertStringContainsString('Valet Trash FAQ for Valdosta, Atlanta, and Tampa', $faq->body);
+        $this->assertStringContainsString('Valet trash is $20 a month', $faq->body);
+        $pricing = $client->get('/pricing');
+        $this->assertStringNotContainsString('$$20', $pricing->body);
+        $this->assertStringNotContainsString('no published junk pickup price', strtolower($pricing->body));
+        $this->assertStringContainsString('name="description" content="Opt-in valet trash is $20 a month in Valdosta / Lowndes County, Atlanta, and Tampa', $pricing->body);
+        $this->assertStringContainsString('Valet Trash Pricing in Valdosta, Atlanta, and Tampa', $pricing->body);
+        $this->assertStringContainsString('junk pickup', strtolower($pricing->body));
+        $services = $client->get('/services');
+        $this->assertStringNotContainsString('has no price on this page', $services->body);
+        $terms = $client->get('/terms');
+        $this->assertStringNotContainsString('does not set a junk pickup price', $terms->body);
         $robots = $client->get('/robots.txt');
         $this->assertStringContainsString('Disallow: /admin', $robots->body);
         $this->assertStringContainsString('Disallow: /login', $robots->body);

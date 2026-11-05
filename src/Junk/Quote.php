@@ -136,6 +136,53 @@ final class Quote
         return money($pair['low']) . ' to ' . money($pair['high']);
     }
 
+    /** Whole-dollar public range. Empty when the rate was not saved. */
+    public static function plainRange(?array $pair): string
+    {
+        if ($pair === null) {
+            return '';
+        }
+        $low = money_plain((int) $pair['low']);
+        $high = money_plain((int) $pair['high']);
+        if ($low === $high) {
+            return $low;
+        }
+        return $low . ' to ' . $high;
+    }
+
+    public static function publicName(string $code): string
+    {
+        return match ($code) {
+            'quarter' => '1/4 truck, quarter load',
+            'half' => '1/2 truck, half load',
+            'full' => 'Full truck, full load',
+            default => self::items()[$code] ?? self::loads()[$code] ?? $code,
+        };
+    }
+
+    /**
+     * Saved rates only. The public page prints these lines so crawlers see the dollars.
+     *
+     * @param array{items:array<string,array{low:int,high:int}|null>,loads:array<string,array{low:int,high:int}|null>} $book
+     * @return list<array{label:string,range:string}>
+     */
+    public static function publishedLines(array $book): array
+    {
+        $lines = [];
+        foreach (['items', 'loads'] as $group) {
+            foreach ($book[$group] as $code => $pair) {
+                if (!is_array($pair)) {
+                    continue;
+                }
+                $lines[] = [
+                    'label' => self::publicName((string) $code),
+                    'range' => self::plainRange($pair),
+                ];
+            }
+        }
+        return $lines;
+    }
+
     public static function selectionLabel(string $mode, ?string $itemsJson, ?string $load): string
     {
         if ($mode === 'load') {

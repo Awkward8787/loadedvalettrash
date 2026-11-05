@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Junk pickup estimate ranges are printed in the page HTML from `junk_rates`, labeled estimate only. Empty rate pairs are filled once with the published ranges. FAQ, pricing, and the other public pages no longer say there is no published junk pickup price. Move-out cleanout stays quoted per job
+- Public phone (229) 595-8852 and info@loadedvalet.com are in the header, footer, and JSON-LD. A saved Settings phone or email replaces them. No street address is added
+- Pricing meta description uses a single dollar sign on the $20 opt-in price. Titles mention Valdosta, Atlanta, and Tampa where that fits the page
 - Resident opt-in price is $20 a month (2,000 cents). The settings default moves from 3,500 cents only when the current settings row is still 3,500. Invoices and property-specific prices are left as stored
 - Public contact messages, with an Inquiries desk, status, internal notes, and a new-count badge
 - Junk pickup replaces the separate move-out service listing. Estimates use a calculator whose rates start empty. A dollar range appears only after rates are saved, labeled estimate only

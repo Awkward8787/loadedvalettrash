@@ -63,7 +63,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
       </article>
       <article class="card">
         <h3>Junk pickup</h3>
-        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items. Estimate-only ranges are on the junk pickup page. The final price is confirmed with the team.</p>
         <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
@@ -150,7 +150,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
       </article>
       <article class="card">
         <h3>Junk pickup</h3>
-        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items. Estimate-only ranges are on the junk pickup page. The final price is confirmed with the team.</p>
         <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>

@@ -7,7 +7,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
   <div class="wrap">
     <p class="eyebrow">Services</p>
     <h1>Doorstep valet, event cleanup, and junk pickup.</h1>
-    <p class="lede">Three jobs. Doorstep valet is the weeknight route for apartment complexes. Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, has no price on this page.</p>
+    <p class="lede">Three jobs. Doorstep valet is the weeknight route for apartment complexes. Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, uses the estimate-only ranges on the <a href="/junk-pickup">junk pickup</a> page. The final price is confirmed with the team.</p>
     <div class="grid-3 services">
       <article class="card">
         <h2>Doorstep valet trash</h2>
@@ -24,7 +24,7 @@ $pickup = clock_range((string) $settings['pickup_start'], (string) $settings['pi
       </article>
       <article class="card">
         <h2>Junk pickup</h2>
-        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items. Estimate-only ranges are on the junk pickup page. The final price is confirmed with the team. Move-out cleanout is quoted per job.</p>
         <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>
