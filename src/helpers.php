@@ -281,6 +281,37 @@ function service_area_phrase(): string
     return 'Valdosta / Lowndes County, Atlanta, and Tampa';
 }
 
+function published_setting(string $key): string
+{
+    try {
+        return trim((string) (\Lvt\Settings::get()[$key] ?? ''));
+    } catch (\Throwable) {
+        return '';
+    }
+}
+
+function published_phone(): string
+{
+    $saved = published_setting('phone');
+    return $saved !== '' ? $saved : '(229) 595-8852';
+}
+
+function published_email(): string
+{
+    $saved = published_setting('email');
+    return $saved !== '' ? $saved : 'info@loadedvalet.com';
+}
+
+function published_phone_href(): string
+{
+    $phone = published_phone();
+    if ($phone === '(229) 595-8852') {
+        return 'tel:+12295958852';
+    }
+    $digits = preg_replace('/[^\d+]/', '', $phone);
+    return 'tel:' . (is_string($digits) ? $digits : '');
+}
+
 function inquiry_kind_label(string $kind): string
 {
     return inquiry_kinds()[$kind] ?? str_replace('_', ' ', $kind);

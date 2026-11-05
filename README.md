@@ -15,7 +15,7 @@
 
 Loaded Valet Trash is owned by Anthony Jaamal Jones (Dondon).
 
-Residents who want the service opt in for $20 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash from the can outside each door Monday through Friday evenings and take it to the property compactor or dumpster. A loose bag does not go on the ground. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site. Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, has no published price.
+Residents who want the service opt in for $20 a month. The leasing office bills that amount as a rent add-on and keeps an agreed share (the starting point is 10%). Porters pick up bagged trash from the can outside each door Monday through Friday evenings and take it to the property compactor or dumpster. A loose bag does not go on the ground. Smaller sites can take a community-wide price instead. That price is quoted per property and is not published on the site. Party and event cleanup is quoted per event. Junk pickup publishes estimate-only ranges. The final price is confirmed with the team. Move-out cleanout is quoted per job.
 
 ## Features
 
@@ -25,7 +25,7 @@ Public site, written for property managers:
 - Revenue-share calculator (units × opt-in % × monthly price × property share)
 - Proposal, walkthrough, and event-cleanup requests, a contact message form, junk pickup estimates, a resident missed-pickup report, and review submission
 - Reviews appear only after an owner or manager approves them. A new install has none
-- Phone, email, address, and insurance text render only when an owner has saved them
+- Public phone (229) 595-8852 and info@loadedvalet.com. A phone or email saved in Settings replaces those. Address and insurance text render only when an owner has saved them. There is no public street address.
 
 Admin, built to be usable on a phone in the field:
 
@@ -146,7 +146,7 @@ Do not run `bin/demo-seed.php` on the server. Do not commit `.env`, resident lis
 
 ## What you still enter
 
-The repository does not contain a phone number, public email, street address, or insurance limit. Until those are saved in Settings, the site simply omits them. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” The public site is [https://loadedvalet.com](https://loadedvalet.com).
+The public phone is (229) 595-8852 and the public email is info@loadedvalet.com, unless Settings replaces them. The repository does not contain a street address or an insurance limit. It also does not claim a license, a year founded, or a coverage amount. Community-wide pricing stays “contact for a quote.” Move-out cleanout stays quoted per job. The public site is [https://loadedvalet.com](https://loadedvalet.com).
 
 ## Status
 

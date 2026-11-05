@@ -85,6 +85,8 @@ final class JunkPickupTest extends TestCase
         $public = $this->client();
         $public->ip = '10.7.2.2';
         $page = $public->get('/junk-pickup');
+        $this->assertStringContainsString('<li>Couch: $40 to $60. Estimate only.</li>', $page->body);
+        $this->assertStringNotContainsString('<li>Mattress:', $page->body);
         $this->assertStringNotContainsString(Quote::ESTIMATE_LABEL, $page->body);
         $public->get('/junk-pickup');
         $done = $public->follow($public->post('/junk-pickup', $this->payload($public, [
@@ -160,6 +162,59 @@ final class JunkPickupTest extends TestCase
         ]));
         $this->assertSame(422, $limited->status);
         $this->assertStringContainsString('Too many estimates', $limited->body);
+    }
+
+    public function testPublishedRangesAreCrawlableHtml(): void
+    {
+        Database::exec(
+            'UPDATE junk_rates SET
+                couch_low_cents = 9900, couch_high_cents = 17900,
+                mattress_low_cents = 7900, mattress_high_cents = 14900,
+                appliance_low_cents = 9900, appliance_high_cents = 19900,
+                table_low_cents = 6900, table_high_cents = 12900,
+                bags_low_cents = 4900, bags_high_cents = 8900,
+                quarter_low_cents = 14900, quarter_high_cents = 24900,
+                half_low_cents = 29900, half_high_cents = 44900,
+                full_low_cents = 54900, full_high_cents = 79900
+             WHERE id = 1'
+        );
+        $page = $this->client()->get('/junk-pickup');
+        $this->assertSame(200, $page->status);
+        foreach ([
+            'Couch: $99 to $179. Estimate only.',
+            'Mattress: $79 to $149. Estimate only.',
+            'Appliance: $99 to $199. Estimate only.',
+            'Table: $69 to $129. Estimate only.',
+            'Bags or boxes: $49 to $89. Estimate only.',
+            '1/4 truck, quarter load: $149 to $249. Estimate only.',
+            '1/2 truck, half load: $299 to $449. Estimate only.',
+            'Full truck, full load: $549 to $799. Estimate only.',
+        ] as $line) {
+            $this->assertStringContainsString('<li>' . $line . '</li>', $page->body, $line);
+        }
+        $this->assertStringContainsString('The final price is confirmed with the team.', $page->body);
+        $this->assertStringContainsString('quoted per job', $page->body);
+        $this->assertStringNotContainsString('Move-out: $', $page->body);
+        $this->assertStringContainsString('&quot;low&quot;:9900', $page->body);
+        $this->assertDoesNotMatchRegularExpression('/data-rates="[^"]*\$99/', $page->body);
+        $this->assertStringContainsString('Junk Pickup Estimates in Valdosta, Atlanta, and Tampa', $page->body);
+        $this->assertStringContainsString('"telephone":"(229) 595-8852"', $page->body);
+        $this->assertStringContainsString('"email":"info@loadedvalet.com"', $page->body);
+        $this->assertStringNotContainsString('streetAddress', $page->body);
+
+        $faq = $this->client()->get('/faq');
+        $this->assertStringContainsString('Published estimate-only ranges: Couch $99 to $179, Mattress $79 to $149', $faq->body);
+        $this->assertStringContainsString('1/4 truck, quarter load $149 to $249', $faq->body);
+        $this->assertStringContainsString('Full truck, full load $549 to $799', $faq->body);
+        $this->assertStringNotContainsString('no published junk pickup price', strtolower($faq->body));
+
+        $pricing = $this->client()->get('/pricing');
+        $this->assertStringContainsString('<li>Couch: $99 to $179. Estimate only.</li>', $pricing->body);
+        $this->assertStringNotContainsString('no published junk pickup price', strtolower($pricing->body));
+
+        $home = $this->client()->get('/');
+        $this->assertStringContainsString('Couch $99 to $179', $home->body);
+        $this->assertStringNotContainsString('no published junk pickup price', strtolower($home->body));
     }
 
     public function testPorterCannotOpenEstimatesOrRates(): void

@@ -1,5 +1,5 @@
 <h1>Settings</h1>
-<p class="muted">Phone, email, address, and insurance text are hidden on the public site when they are blank. Do not type a placeholder.</p>
+<p class="muted">A blank phone or email falls back to (229) 595-8852 and info@loadedvalet.com. Address and insurance text stay off the public site when they are blank. Do not type a placeholder address.</p>
 <form class="form card" method="post" action="/admin/settings">
   <?= csrf_field() ?>
   <label>Business name <input name="business_name" value="<?= e((string) $record['business_name']) ?>"></label>

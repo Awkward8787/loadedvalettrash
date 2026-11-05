@@ -18,7 +18,7 @@
       </article>
       <article class="card">
         <h2>Junk pickup</h2>
-        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.</p>
+        <p>Bulk and junk item removal for apartment communities and residents, including furniture and move-out items. Estimate-only ranges are on the junk pickup page. The final price is confirmed with the team. Move-out cleanout is quoted per job.</p>
         <a class="btn btn-ghost" href="/junk-pickup">Request an estimate</a>
       </article>
     </div>

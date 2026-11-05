@@ -8,7 +8,7 @@ use Lvt\Database;
 
 final class CareersTest extends TestCase
 {
-    public function testCareersPageListsTheRolesPayAndPhoneOnlyThere(): void
+    public function testCareersPageListsTheRolesAndPay(): void
     {
         $client = $this->client();
         $page = $client->get('/careers');
@@ -47,9 +47,9 @@ final class CareersTest extends TestCase
         $this->assertStringContainsString('evening routes in Valdosta / Lowndes County.', $page->body);
         $this->assertStringContainsString('href="tel:+12295958852"', $page->body);
         $this->assertStringContainsString('(229) 595-8852', $page->body);
+        $this->assertStringContainsString('href="mailto:info@loadedvalet.com"', $page->body);
         $this->assertStringContainsString('href="/careers"', $page->body);
         $this->assertStringContainsString('>Careers<', $page->body);
-        $this->assertDoesNotMatchRegularExpression('/mailto:/', $page->body);
         $this->assertStringNotContainsString('1099', $page->body);
         $this->assertStringNotContainsString('W-2', $page->body);
         $this->assertStringNotContainsString('benefit', strtolower($page->body));
@@ -59,8 +59,8 @@ final class CareersTest extends TestCase
 
         $home = $client->get('/');
         $this->assertStringContainsString('href="/careers"', $home->body);
-        $this->assertStringNotContainsString('(229) 595-8852', $home->body);
-        $this->assertStringNotContainsString('229-595-8852', $home->body);
+        $this->assertStringContainsString('(229) 595-8852', $home->body);
+        $this->assertStringContainsString('href="mailto:info@loadedvalet.com"', $home->body);
 
         $map = $client->get('/sitemap.xml');
         $this->assertStringContainsString('/careers', $map->body);

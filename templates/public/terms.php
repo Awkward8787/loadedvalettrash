@@ -11,7 +11,7 @@
     <h2>Community-wide service</h2>
     <p>A community-wide price is whatever written quote we send for that property. It may be a per-door rate or a flat monthly amount. The public site does not lock in a community-wide number.</p>
     <h2>Event cleanup and junk pickup</h2>
-    <p>Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, is a separate request. This page does not set a junk pickup price. Those jobs are separate from the weekly doorstep route.</p>
+    <p>Party and event cleanup is quoted per event. Junk pickup, including furniture and move-out items, is a separate request. Estimate-only ranges are on the <a href="/junk-pickup">junk pickup</a> page. The final price is confirmed with the team. Move-out cleanout is quoted per job. Those jobs are separate from the weekly doorstep route.</p>
     <h2>Trial</h2>
     <p>A free 30-day trial, when we offer one, covers Monday to Friday service on the buildings the manager names. The property gives porters access to the gate and compactor and joins a short check-in around day 14 and day 30. Either side can stop at the end of the trial. After a trial, service continues month to month unless a signed agreement sets a longer term.</p>
     <h2>Missed pickups and violations</h2>

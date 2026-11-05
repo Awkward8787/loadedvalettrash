@@ -39,7 +39,7 @@ Route minutes for a property are `doors × minutes_per_door + minutes_fixed`. Do
 - `reviews` — default `pending`. Public pages read `approved` only.
 - `inquiries` — public proposal, walkthrough, event cleanup, or older move-out requests (`kind` is `proposal`, `walkthrough`, `event_cleanup`, `move_out`, or legacy `other`), linked to a property when one was created or matched. New junk pickup requests do not use this table.
 - `contact_inquiries` — public messages. `role` is `property_manager`, `resident`, or `other`. `need` is `valet_trash`, `junk_pickup`, or `other`. `status` is `new`, `contacted`, or `closed`. `notes` is internal. `ip` is stored for the rate limit.
-- `junk_rates` — one row, `id = 1`. Low and high cents for each item and load size. Null means no rate.
+- `junk_rates` — one row, `id = 1`. Low and high cents for each item and load size. A null pair is omitted from the public rate list. Migration 009 fills a pair only when both sides are still null, using the published estimate-only ranges.
 - `junk_estimates` — junk pickup calculator submissions. `status` is `new`, `quoted`, `booked`, or `closed`. `estimate_low_cents` and `estimate_high_cents` are the range shown at submit time, or null when a chosen line had no rate. `items_json` lists item codes and quantities. `photo_path` is an optional filename under `storage/uploads`.
 - `invoices` — one per property per month. Unique on `(property_id, period_year, period_month)`. Status `draft`, `sent`, `paid`, or `void`. Late is not a stored status. A draft or sent invoice with `due_on` before today is late. `due_on` is the remittance day of that month, clamped to 1–28.
 

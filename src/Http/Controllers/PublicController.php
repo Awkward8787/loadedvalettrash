@@ -21,7 +21,7 @@ final class PublicController extends Controller
     public function home(): Response
     {
         return $this->page('public/home', 'Valet trash in ' . $this->areaName(), $this->defaultDescription(), [
-            'documentTitle' => 'Valet Trash in ' . $this->areaName() . ' | Loaded Valet Trash',
+            'documentTitle' => 'Valet Trash in ' . $this->areaName() . ' | ' . $this->priceWhole() . ' a Month | Loaded Valet Trash',
             'reviews' => $this->approvedReviews(),
             'holidays' => $this->upcomingHolidays(),
             'faqs' => array_slice($this->faqs(), 0, 5),
@@ -34,7 +34,7 @@ final class PublicController extends Controller
         return $this->page(
             'public/services',
             'Services',
-            'Doorstep valet trash for apartment complexes, party and event cleanup quoted per event, and junk pickup for furniture and move-out items. Serving apartment communities in ' . $this->areaName() . '.'
+            'Doorstep valet trash is ' . $this->priceWhole() . ' a month for apartment communities in ' . $this->areaName() . '. Party and event cleanup is quoted per event. Junk pickup estimate ranges are on the junk pickup page.'
         );
     }
 
@@ -47,8 +47,11 @@ final class PublicController extends Controller
 
     public function pricing(): Response
     {
-        return $this->page('public/pricing', 'Pricing', 'Opt-in valet trash is $' . $this->priceWhole() . ' a month, billed by the leasing office. Community-wide service is quoted per property.', [
+        return $this->page('public/pricing', 'Pricing', 'Opt-in valet trash is ' . $this->priceWhole() . ' a month in ' . $this->areaName() . ', billed by the leasing office. Junk pickup ranges are estimates only. Community-wide service is quoted per property.', [
+            'documentTitle' => 'Valet Trash Pricing in Valdosta, Atlanta, and Tampa | Loaded Valet Trash',
             'faqs' => $this->faqs(),
+            'rateBook' => $this->junkRateBook(),
+            'jsonLd' => $this->jsonLd(),
         ]);
     }
 
@@ -121,8 +124,10 @@ final class PublicController extends Controller
 
     public function faq(): Response
     {
-        return $this->page('public/faq', 'FAQ', 'Answers for property managers about valet trash billing, bag rules, missed pickups, and the free 30-day trial in Valdosta. Serving apartment communities in ' . $this->areaName() . '.', [
+        return $this->page('public/faq', 'FAQ', 'Valet trash is ' . $this->priceWhole() . ' a month for apartment communities in ' . $this->areaName() . '. Billing, bag rules, missed pickups, and junk pickup estimates.', [
+            'documentTitle' => 'Valet Trash FAQ for Valdosta, Atlanta, and Tampa | Loaded Valet Trash',
             'faqs' => $this->faqs(),
+            'jsonLd' => $this->jsonLd(),
         ]);
     }
 
@@ -642,28 +647,36 @@ final class PublicController extends Controller
 
     private function junkDescription(): string
     {
-        return 'Junk pickup for apartment communities and residents in ' . $this->areaName() . ', including furniture and move-out items. Request an estimate.';
+        return 'Junk pickup estimates for apartment communities in ' . $this->areaName() . ', including furniture and move-out items. Ranges on this page are estimates only. The final price is confirmed with the team.';
+    }
+
+    /** @return array{items:array<string,array{low:int,high:int}|null>,loads:array<string,array{low:int,high:int}|null>} */
+    private function junkRateBook(): array
+    {
+        return Quote::book(Database::one('SELECT * FROM junk_rates WHERE id = 1'));
     }
 
     /** @return array<string,mixed> */
     private function junkExtra(): array
     {
-        $row = Database::one('SELECT * FROM junk_rates WHERE id = 1');
         $name = (string) (Settings::get()['business_name'] ?? 'Loaded Valet Trash');
         return [
-            'rateBook' => Quote::book($row),
+            'rateBook' => $this->junkRateBook(),
+            'documentTitle' => 'Junk Pickup Estimates in Valdosta, Atlanta, and Tampa | Loaded Valet Trash',
             'jsonLd' => [
                 '@context' => 'https://schema.org',
                 '@type' => 'Service',
                 'name' => 'Junk pickup',
                 'serviceType' => 'Junk pickup',
                 'provider' => [
-                    '@type' => 'ProfessionalService',
+                    '@type' => ['LocalBusiness', 'ProfessionalService'],
                     'name' => $name,
                     'url' => base_url('/'),
+                    'telephone' => published_phone(),
+                    'email' => published_email(),
                 ],
                 'areaServed' => ['Valdosta', 'Lowndes County', 'Atlanta, GA', 'Tampa, FL'],
-                'description' => 'Bulk and junk item removal for apartment communities and residents, including furniture and move-out items.',
+                'description' => 'Estimate-only junk pickup ranges for apartment communities and residents, including furniture. The final price is confirmed with the team. Move-out cleanout is quoted per job.',
             ],
         ];
     }
@@ -720,7 +733,7 @@ final class PublicController extends Controller
             ],
             [
                 'q' => 'Do you clean up after events or pick up junk?',
-                'a' => 'Yes. Party and event cleanup is for residents, properties and clubhouses, and private events. Pricing is quoted per event. Junk pickup is bulk item removal for apartment communities and residents, including furniture and move-out items. There is no published junk pickup price. Use the junk pickup form to request an estimate.',
+                'a' => $this->junkFaqAnswer(),
             ],
             [
                 'q' => 'What if a pickup is missed?',
@@ -761,6 +774,17 @@ final class PublicController extends Controller
             ];
         }
         return $items;
+    }
+
+    private function junkFaqAnswer(): string
+    {
+        $parts = [];
+        foreach (Quote::publishedLines($this->junkRateBook()) as $line) {
+            $parts[] = $line['label'] . ' ' . $line['range'];
+        }
+        $intro = 'Yes. Party and event cleanup is for residents, properties and clubhouses, and private events. Pricing is quoted per event. Junk pickup is bulk item removal for apartment communities and residents, including furniture and move-out items.';
+        $ranges = $parts === [] ? '' : ' Published estimate-only ranges: ' . implode(', ', $parts) . '.';
+        return $intro . $ranges . ' The final price is confirmed with the team. Estimate-only ranges are on the junk pickup page. Move-out cleanout is quoted per job.';
     }
 
     /** @return array{title:string,description:string,setout:string,pickup:string} */
@@ -817,7 +841,7 @@ final class PublicController extends Controller
     private function defaultDescription(): string
     {
         $price = $this->priceWhole();
-        return 'Serving apartment communities in ' . $this->areaName() . '. Residents opt in for ' . $price . ' a month. Monday to Friday evening pickup. Request a proposal.';
+        return 'Valet trash for apartment communities in ' . $this->areaName() . '. Residents opt in for ' . $price . ' a month. Junk pickup estimate ranges are on the site. Request a proposal.';
     }
 
     private function areaName(): string
@@ -880,11 +904,13 @@ final class PublicController extends Controller
         $s = Settings::get();
         $data = [
             '@context' => 'https://schema.org',
-            '@type' => 'ProfessionalService',
+            '@type' => ['LocalBusiness', 'ProfessionalService'],
             'name' => (string) $s['business_name'],
             'url' => base_url('/'),
             'image' => base_url('assets/brand/og-share.jpg'),
             'description' => $this->defaultDescription(),
+            'telephone' => published_phone(),
+            'email' => published_email(),
             'founder' => [
                 '@type' => 'Person',
                 'name' => 'Anthony Jaamal Jones',
@@ -900,12 +926,6 @@ final class PublicController extends Controller
                 ],
             ],
         ];
-        if (filled($s['phone'] ?? null)) {
-            $data['telephone'] = (string) $s['phone'];
-        }
-        if (filled($s['email'] ?? null)) {
-            $data['email'] = (string) $s['email'];
-        }
         if (filled($s['address'] ?? null)) {
             $data['address'] = [
                 '@type' => 'PostalAddress',

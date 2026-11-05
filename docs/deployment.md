@@ -117,6 +117,7 @@ Upload the new files, then run `php bin/migrate.php` again. Migrations that are 
 ## 10. Still yours to decide
 
 - The domain name and DNS (Hostinger, or an outside registrar pointed at Hostinger)
-- The public phone, email, and mailing address
+- The public phone and email, if you need to replace (229) 595-8852 and info@loadedvalet.com
+- A mailing address, only if you have a real one to publish. Do not invent a street
 - The insurance sentence, if you want one on the site and on proposals
 - The first owner’s real email address

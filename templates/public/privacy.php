@@ -28,14 +28,9 @@
     <h2>How long we keep it</h2>
     <p>We keep roster, billing, and issue records for as long as the property is a customer and for a reasonable period after, so we can answer a billing question. You can ask us to correct a website submission by using the contact form.</p>
     <h2>Contact</h2>
-    <?php if (filled($settings['email'] ?? null) || filled($settings['phone'] ?? null) || filled($settings['address'] ?? null)): ?>
-      <p>
-        <?php if (filled($settings['email'] ?? null)): ?><?= e((string) $settings['email']) ?><br><?php endif; ?>
-        <?php if (filled($settings['phone'] ?? null)): ?><?= e((string) $settings['phone']) ?><br><?php endif; ?>
-        <?php if (filled($settings['address'] ?? null)): ?><?= nl((string) $settings['address']) ?><?php endif; ?>
-      </p>
-    <?php else: ?>
-      <p>Use the <a href="/contact">contact form</a>. The message goes to the owner.</p>
+    <p>Call <a href="<?= e(published_phone_href()) ?>"><?= e(published_phone()) ?></a> or email <a href="mailto:<?= e(published_email()) ?>"><?= e(published_email()) ?></a>. You can also use the <a href="/contact">contact form</a>. The message goes to the owner.</p>
+    <?php if (filled($settings['address'] ?? null)): ?>
+      <p><?= nl((string) $settings['address']) ?></p>
     <?php endif; ?>
     <p>Only the owner and managers can see messages and junk pickup estimates. We use them to reply. We do not sell them and we do not share them.</p>
     <p class="muted">Updated November 1, 2026.</p>
