@@ -47,7 +47,7 @@ final class PublicController extends Controller
 
     public function pricing(): Response
     {
-        return $this->page('public/pricing', 'Pricing', 'Opt-in valet trash is $' . $this->priceWhole() . ' a month, billed by the leasing office. Community-wide service is quoted per property.', [
+        return $this->page('public/pricing', 'Pricing', 'Opt-in valet trash is ' . $this->priceWhole() . ' a month, billed by the leasing office. Community-wide service is quoted per property.', [
             'faqs' => $this->faqs(),
         ]);
     }
@@ -811,7 +811,82 @@ final class PublicController extends Controller
         return View::page($template, array_merge([
             'title' => $title,
             'description' => $description,
-        ], $extra));
+        ], $this->withPageSchema($title, $extra)));
+    }
+
+    /**
+     * BreadcrumbList on inner pages. FAQPage only on /faq, where the answers are in the HTML.
+     *
+     * @param array<string,mixed> $extra
+     * @return array<string,mixed>
+     */
+    private function withPageSchema(string $title, array $extra): array
+    {
+        $path = Request::current()->path;
+        if ($path === '/' || $path === '') {
+            return $extra;
+        }
+        $blocks = [];
+        if (isset($extra['jsonLd']) && is_array($extra['jsonLd'])) {
+            $existing = $extra['jsonLd'];
+            if (isset($existing['@type'])) {
+                $blocks[] = $existing;
+            } else {
+                foreach ($existing as $block) {
+                    if (is_array($block)) {
+                        $blocks[] = $block;
+                    }
+                }
+            }
+        }
+        $blocks[] = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Home',
+                    'item' => base_url('/'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => $title,
+                    'item' => base_url(ltrim($path, '/')),
+                ],
+            ],
+        ];
+        if ($path === '/faq' && isset($extra['faqs']) && is_array($extra['faqs'])) {
+            $entities = [];
+            foreach ($extra['faqs'] as $faq) {
+                if (!is_array($faq) || !isset($faq['q'], $faq['a'])) {
+                    continue;
+                }
+                $question = trim((string) $faq['q']);
+                $answer = trim((string) $faq['a']);
+                if ($question === '' || $answer === '') {
+                    continue;
+                }
+                $entities[] = [
+                    '@type' => 'Question',
+                    'name' => $question,
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => $answer,
+                    ],
+                ];
+            }
+            if ($entities !== []) {
+                $blocks[] = [
+                    '@context' => 'https://schema.org',
+                    '@type' => 'FAQPage',
+                    'mainEntity' => $entities,
+                ];
+            }
+        }
+        $extra['jsonLd'] = count($blocks) === 1 ? $blocks[0] : $blocks;
+        return $extra;
     }
 
     private function defaultDescription(): string
