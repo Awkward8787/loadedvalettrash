@@ -81,4 +81,44 @@ final class PublicSiteTest extends TestCase
         $this->assertStringContainsString('Disallow: /admin', $robots->body);
         $this->assertStringContainsString('Disallow: /login', $robots->body);
     }
+
+    public function testPricingDescriptionUsesOneDollarSign(): void
+    {
+        $pricing = $this->client()->get('/pricing');
+        $this->assertSame(200, $pricing->status);
+        $this->assertSame(1, preg_match('/<meta name="description" content="([^"]*)"/', $pricing->body, $meta));
+        $this->assertSame(1, preg_match('/<meta property="og:description" content="([^"]*)"/', $pricing->body, $og));
+        $this->assertStringContainsString('$20 a month', $meta[1]);
+        $this->assertStringContainsString('$20 a month', $og[1]);
+        $this->assertStringNotContainsString('$$', $meta[1]);
+        $this->assertStringNotContainsString('$$', $og[1]);
+        $this->assertStringNotContainsString('$$', $pricing->body);
+    }
+
+    public function testInnerPagesHaveBreadcrumbsAndFaqSchemaStaysOnFaq(): void
+    {
+        $client = $this->client();
+        $home = $client->get('/');
+        $this->assertStringContainsString('"@type":"ProfessionalService"', $home->body);
+        $this->assertStringNotContainsString('BreadcrumbList', $home->body);
+        $this->assertStringNotContainsString('FAQPage', $home->body);
+
+        $services = $client->get('/services');
+        $this->assertStringContainsString('"@type":"BreadcrumbList"', $services->body);
+        $this->assertStringContainsString('"name":"Home"', $services->body);
+        $this->assertStringContainsString('"name":"Services"', $services->body);
+        $this->assertStringContainsString('http://localhost/services', $services->body);
+        $this->assertStringNotContainsString('FAQPage', $services->body);
+
+        $pricing = $client->get('/pricing');
+        $this->assertStringContainsString('"@type":"BreadcrumbList"', $pricing->body);
+        $this->assertStringNotContainsString('FAQPage', $pricing->body);
+
+        $faq = $client->get('/faq');
+        $this->assertStringContainsString('"@type":"BreadcrumbList"', $faq->body);
+        $this->assertStringContainsString('"@type":"FAQPage"', $faq->body);
+        $this->assertStringContainsString('Residents who want the service pay $20 a month through rent.', $faq->body);
+        $this->assertStringContainsString('<summary>What does the property pay?</summary>', $faq->body);
+        $this->assertDoesNotMatchRegularExpression('/<details\b[^>]*\bhidden\b/', $faq->body);
+    }
 }
